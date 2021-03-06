@@ -1,0 +1,148 @@
+/* body{
+    background: blue;
+} */
+.navbar1{
+    margin-left: 30px;
+    margin-right: 30px;
+    font-size: 20px;
+    color:white;
+    display:inline-flex;
+    float:right;
+}
+.nav1{
+    
+    float: right;
+    font-size: 20px;
+    float:right;
+    color:rgb(205, 226, 14);
+    
+}
+.fullName{
+    
+    float: right;
+    font-weight: bold;
+    float:right;
+    color:white 
+    
+}
+/* .card-img-overlay{
+color:white;
+
+
+} */
+
+.card{
+    margin: 20px;
+    width: 400px;
+    height: 500px;
+    color: teal;
+    
+
+}
+/* .card-text{
+    color: teal;
+}
+.card-title{
+    text-align: center;
+font-size: 30px;
+font-weight: bold;
+    color:white; 
+    background: local; 
+    
+    
+}
+.card-body{
+    opacity: 50%;  
+} */ 
+
+.contacts{
+/* padding:25px;
+margin:25px; */
+color:gray;
+font-size: 20px;
+
+
+}
+#h1{
+    float:left;
+    font-size: 46px;
+    color: black;
+    padding: 30px;
+}
+.box1{
+    float:right;
+    width: 50%;
+    padding: 30px;
+    margin: 10px;
+    margin-top: 130px;
+    border: gray 1px;
+    background: gray;
+}
+footer{
+    clear: both;
+    padding: 30px;
+    color:white;
+    background: #333;
+    text-align: center;
+}
+.box {
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    min-height: 200px;
+    width: 50vw;
+    margin: 100px auto;
+    background: white;
+    border-radius: 5px;
+  }
+  .contactJ li{
+      color: #333;
+      font-size: medium;
+
+  }
+  
+  body {
+    background: #EEF2F7;
+  }
+  .imgJ{
+      padding: 0;
+      max-width:30%;
+      margin:30px;
+      float: left;
+      
+      
+
+
+  }
+  .niceText{
+      text-align: justify;
+      max-height: 950px;
+      padding : 30px;
+      
+      
+     
+        font-size: calc( 10px + (22 - 12) * ((100vw - 300px) / (1600 - 300)));
+      
+  }
+  .card{
+    margin: 20px;
+    width: 400px;
+    height: 500px;
+    color: teal;
+    
+
+}
+.card2{
+    margin: 20px !important;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12) !important;
+}
+.card2 .card-image :hover{
+    
+    opacity:50%;
+}
+.github{
+    background: black;
+    color:gray;
+}
+.pdf{
+    background:red;
+    color:white;
+}
