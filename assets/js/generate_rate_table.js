@@ -198,7 +198,19 @@ let rates = [
     }
   }
   
+
+  // function displayShow() {
+  //     console.log("dudu");
+  
+  // }
+
+
+  
+  
   let table = document.querySelector("table");
   let data = Object.keys(rates[0]);
   generateTableHead(table, data);
   generateTable(table, rates);
+
+  // var inputSearch = document.getElementById("mySearch");
+  // inputSearch.onkeydown= function () { displayShow};
