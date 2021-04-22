@@ -146,7 +146,7 @@ let rates = [
 { country: "SWEDEN", Operator_Network: "Telenor (Vodafone)-Sweep", data: 0.005, call:0.336, sms:0.083},
 { country: "SWEDEN", Operator_Network: "Tele2 Sverige Ab", data: 0.008, call:0.336, sms:0.083},
 { country: "SWITZERLAND", Operator_Network: "Salt Mobile Sa", data: 0.016, call:0.288, sms:0.053},
-{ country: "TAIWAN", Operator_Network: "Chunghwa Telecom", data: 0.008, call:0.2904, sms:0.129},
+{ country: "TAIWAN (Republic of China)", Operator_Network: "Chunghwa Telecom", data: 0.008, call:0.2904, sms:0.129},
 { country: "TAJIKISTAN", Operator_Network: "Tacom Llc", data: 0.0214, call:0.2, sms:0.2},
 { country: "TANZANIA", Operator_Network: "Vodacom Tanzania Limited", data: 0.0128, call:2, sms:0.319},
 { country: "THAILAND", Operator_Network: "Advanced Wireless", data: 0.032, call:"n/a", sms:"n/a"},
