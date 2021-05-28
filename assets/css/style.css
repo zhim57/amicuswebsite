@@ -26,9 +26,14 @@
     
 }
 
-.plain1 .plain1:hover {
+.plain1 {
     color:white !important;
     text-decoration: none
+}
+
+.plain1 :hover {
+    color:white !important;
+    text-decoration: none !important
 }
 /* .card-img-overlay{
 color:white;
