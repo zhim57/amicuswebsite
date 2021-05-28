@@ -1,0 +1,1 @@
+https://mybilling.global1tel.com:8442/soap/
