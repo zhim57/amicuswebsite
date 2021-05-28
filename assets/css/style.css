@@ -42,11 +42,10 @@ color:white;
 .bigger1 {
     font-size: 2rem ;
     color: white ;
-    background-color: blue ;
+    background-color: blue !important;
     padding: 5.5% ;
-    margin:17% ;
- 
-    border-radius: 10% 
+    margin:7% ;
+     border-radius: 10% 
 
 
 }
