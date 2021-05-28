@@ -38,8 +38,18 @@
 /* .card-img-overlay{
 color:white;
 
-
 } */
+.bigger1 {
+    font-size: 2rem;
+    color:white;
+    background-color: blue;
+    padding: 5.5%;
+    margin:4%, 6%, 22% , 6%;
+ 
+    border-radius: 10%;
+
+
+}
 
 .card{
     margin: 20px;
