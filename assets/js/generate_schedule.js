@@ -80,12 +80,70 @@ function loadDoc() {
   setTimeout(function () {
     //===table construction========
     data = Object.keys(cleanShips[0]);
-    console.log(data);
+    // console.log(data);
     let table = document.querySelector("table");
     generateTableHead(table, data);
     generateTable(table, cleanShips);
     //========================
 
   }, 4000);
+
+
+ // vessel: "SANTA LINEA", terminal: "Wilmington Container Terminal L194", arrival: "2021-06-06T08:00:00Z", serviceArr: "750"}
+
+  setTimeout(function () {
+    let csvString = "data:text/csv;charset=utf-8,";
+  csvString = [
+    [
+      "Vessel",
+      "Terminal",
+      "Arrival",
+      "Arr Service"
+
+    ],
+    ...cleanShips.map(item => [
+      item.vessel,
+      item.terminal,
+      item.arrival.toLocaleString(),
+      item.serviceArr
+    ])
+  ]
+   .map(e => e.join(",")) 
+   .join("\n");
+ 
+
+console.log(csvString);
+/*
+  "Item ID,Item Reference
+  1,Item 001
+  2,Item 002
+  3,Item 003"
+*/
+// The download function takes a CSV string, the filename and mimeType as parameters
+// Scroll/look down at the bottom of this snippet to see how download is called
+var download = function(content, fileName, mimeType) {
+  var a = document.createElement('a');
+  mimeType = mimeType || 'application/octet-stream';
+
+  if (navigator.msSaveBlob) { // IE10
+    navigator.msSaveBlob(new Blob([content], {
+      type: mimeType
+    }), fileName);
+  } else if (URL && 'download' in a) { //html5 A[download]
+    a.href = URL.createObjectURL(new Blob([content], {
+      type: mimeType
+    }));
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+  }
+}
+
+download(csvString, 'download.csv', 'text/csv;encoding:utf-8');
+
+}, 6000);
 };
 
