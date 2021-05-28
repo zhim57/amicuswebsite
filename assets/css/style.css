@@ -25,11 +25,9 @@
     color:white 
     
 }
-.plain1 {
-    color:white;
-}
-.plain1:hover {
-    color:white;
+
+.plain1 .plain1:hover {
+    color:white !important;
     text-decoration: none
 }
 /* .card-img-overlay{
