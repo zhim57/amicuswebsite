@@ -40,13 +40,13 @@ color:white;
 
 } */
 .bigger1 {
-    font-size: 2rem !important;
-    color: white !important;
-    background-color: blue !important;
-    padding: 5.5% !important;
-    margin:17% !important;
+    font-size: 2rem ;
+    color: white ;
+    background-color: blue ;
+    padding: 5.5% ;
+    margin:17% ;
  
-    border-radius: 10% !important
+    border-radius: 10% 
 
 
 }
