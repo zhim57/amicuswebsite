@@ -25,6 +25,13 @@
     color:white 
     
 }
+.plain1 {
+    color:white;
+}
+.plain1:hover {
+    color:white;
+    text-decoration: none
+}
 /* .card-img-overlay{
 color:white;
 
@@ -39,6 +46,7 @@ color:white;
     
 
 }
+
 /* .card-text{
     color: teal;
 }
