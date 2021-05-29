@@ -1,7 +1,7 @@
 // $( document ).ready(function() {
 //   console.log( "ready!" );
 
-var FileReader = require('filereader')
+
 
 
 let cleanShips = [
@@ -16,8 +16,11 @@ let cleanShips2 = [
 
 // using uploaded Json file from the User =======
 
-document.getElementById('import').onclick = function() {
+// document.getElementById('import').onclick = function() {
+ function loadFile() {
   var files = document.getElementById('selectFiles').files;
+ 
+console.log("hellooo?");
 console.log(files);
 if (files.length <= 0) {
   return false;
