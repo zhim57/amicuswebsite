@@ -19,8 +19,9 @@ let cleanShips2 = [
 // document.getElementById('import').onclick = function() {
  function loadFile() {
    console.log("hellooo?");
-  // var files = document.getElementById('selectFiles').files;
-  var files = $('#selectFiles').files;
+  var files = document.getElementById('selectFiles').files;
+
+  // var files = $("#selectFiles").files;
  
 console.log(files);
 if (files.length <= 0) {
