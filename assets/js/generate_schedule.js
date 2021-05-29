@@ -1,6 +1,7 @@
 // $( document ).ready(function() {
 //   console.log( "ready!" );
 
+var FileReader = require('filereader')
 
 
 let cleanShips = [
