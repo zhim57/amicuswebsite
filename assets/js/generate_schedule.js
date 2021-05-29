@@ -1,6 +1,55 @@
+// $( document ).ready(function() {
+//   console.log( "ready!" );
+
+
+
 let cleanShips = [
 
 ];
+let cleanShips1 = [
+
+];
+let cleanShips2 = [
+
+];
+
+// using uploaded Json file from the User =======
+
+document.getElementById('import').onclick = function() {
+  var files = document.getElementById('selectFiles').files;
+console.log(files);
+if (files.length <= 0) {
+  return false;
+}
+
+var fr = new FileReader();
+
+fr.onload = function(e) { 
+console.log(e);
+  var result = JSON.parse(e.target.result);
+  var formatted = JSON.stringify(result, null, 2);
+      document.getElementById('result').value = formatted;
+      cleanShips1=result.vessels;
+      console.log(cleanShips1);
+}
+
+fr.readAsText(files.item(0));
+};
+
+//===================================
+
+//====== using JSON from file in assets=======
+// setTimeout(function () {
+// $.getJSON("./assets/js/vesselja.json", function(json) {
+// cleanShips1=json.vessels;
+// console.log(cleanShips1);
+// });
+// }, 700);
+
+//================
+
+
+
 
 function generateTableHead(table, data) {
   let thead = table.createTHead();
@@ -11,6 +60,10 @@ function generateTableHead(table, data) {
     th.appendChild(text);
     row.appendChild(th);
   }
+  // let th = document.createElement("th");
+  // let text = document.createTextNode("remarks");
+  // th.appendChild(text);
+  //   row.appendChild(th);
 };
 
 function generateTable(table, data) {
@@ -19,12 +72,41 @@ function generateTable(table, data) {
     for (key in element) {
       let cell = row.insertCell();
       let text = document.createTextNode(element[key]);
+      if(key =="remarks"){
+
+        let x1 = element.vessel;
+        console.log(x1);
+        let x = x1.replaceAll("[^a-zA-Z_0-9-.-]+", "")
+        
+        var toSearch = x;
+        
+        for(var i=0; i<cleanShips1.length; i++) {
+          for(key in cleanShips1[i]) {
+
+            cleanShips1[i][key]= cleanShips1[i][key].replaceAll("[^a-zA-Z_0-9-.-]+", "")
+
+            if(cleanShips1[i][key].indexOf(toSearch)!=-1) {
+              // results.push(cleanShips1[i].Email);
+              let cell = row.insertCell();
+              let text = document.createTextNode(cleanShips1[i].Email);
+              cell.appendChild(text);
+              element.remarks= element.remarks+cleanShips1[i].Email+",";
+              
+            }
+          }
+        }
+        cleanShips2.push(element);
+      }
       cell.appendChild(text);
+
+      
+     
+      
     }
   }
 }
 
-
+// });
 var dateFrom = "";
 var dateTo = "";
 var portid = "";
@@ -62,7 +144,8 @@ function loadDoc() {
         for (k = 0; k < response1.length; k++) {
           const vessel2 = response1[k];
           const { departure, serviceDep, terminalGeoId, vesselCode, voyageArrival, voyageDeparture, ...rest } = vessel2;
-          // console.log(rest);
+          rest.remarks ="";
+          console.log(rest);
           cleanShips.push(rest);
 
         };
@@ -86,7 +169,7 @@ function loadDoc() {
     generateTable(table, cleanShips);
     //========================
 
-  }, 4000);
+  }, 5000);
 
 
  // vessel: "SANTA LINEA", terminal: "Wilmington Container Terminal L194", arrival: "2021-06-06T08:00:00Z", serviceArr: "750"}
@@ -98,14 +181,16 @@ function loadDoc() {
       "Vessel",
       "Terminal",
       "Arrival",
-      "Arr Service"
+      "Arr Service",
+      "Email"
 
     ],
-    ...cleanShips.map(item => [
+    ...cleanShips2.map(item => [
       item.vessel,
       item.terminal,
       item.arrival.toLocaleString(),
-      item.serviceArr
+      item.serviceArr,
+      item.remarks
     ])
   ]
    .map(e => e.join(",")) 

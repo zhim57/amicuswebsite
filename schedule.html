@@ -64,14 +64,21 @@
         </div>
         <div>
             <div class="container">
+                
+                
                 <div class="row">
                     <div class="col-md-3">
+                                    <input type="file" id="selectFiles" value="Import" /><br />
+                                    <button id="import">Import</button>
+                                    <textarea id="result"></textarea>
+                                </div>
+                    <div class="col-md-2">
                         <form action="">
                             <label for="From date">From:</label>
                             <input type="date" id="fromDate" name="From">
                         </form>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <form action="">
                             <label for="To date">To:</label>
                             <input type="date" id="toDate" name="toDate1">
@@ -108,7 +115,7 @@
 
 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <button id="button1" type="button" onclick="loadDoc()">Generate</button>
 
                     </div>
