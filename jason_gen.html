@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
 
     <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
@@ -120,37 +122,45 @@
 
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            
-                                <input type="file" id="selectFilesShips" value="Import" /><br />
-                                <button id="import" type="button" onclick="loadFileShips()">Import</button>
-                                <textarea id="resultShips"></textarea>
-                                <button id="write" type="button" onclick="writeFileShips()">Export Csv</button>
-                        </div>
-                        <div class="col-md-3">
-                            
-                                <input type="text" id="saveJsonFileName"/><br />
-                                <button id="saveJ" type="button" onclick="saveJson()">Save Json</button>
-                                <!-- <textbox id="savefileName"></textbox> -->
-                                
-                        </div>
-                        <div class="col-md-3">
-                            
-                            <!-- <input type="text" id="saveJsonFileName"/><br /> -->
-                            <button id="match2" type="button" onclick="matchAdresses()">Match Adresses</button>
-                            <!-- <textbox id="savefileName"></textbox> -->
-                            
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <input type="file" id="selectFilesShips" value="Import" /><br />
+                        <button id="import" type="button" onclick="loadFileShips()">Import</button>
+                        <textarea id="resultShips"></textarea>
+                        <button id="write" type="button" onclick="writeFileShips()">Export Csv</button>
                     </div>
+                    <div class="col-md-3">
+
+                        <input type="text" id="saveJsonFileName" /><br />
+                        <button id="saveJ" type="button" onclick="saveJson()">Save Json</button>
+                        <!-- <textbox id="savefileName"></textbox> -->
+
+                        <!-- <input type="text" id="saveJsonFileName"/><br /> -->
+                        <button id="match2" type="button" onclick="matchAdresses()">Match Adresses</button>
+                        <!-- <textbox id="savefileName"></textbox> -->
                     </div>
 
+                    <div class="col-md-6 process_spot">
+                        <h6>Jason Generator Module</h6>
 
-
-                    <div id="div1">
-                        <!-- // result here -->
-
+                        <!-- <input type="text" id="saveJsonFileName"/><br /> -->
+                        <!-- <textbox id="savefileName"></textbox> -->
+                        <input type="file" id="selectFileForJason" value="Import" /><br />
+                        <button id="import" type="button" onclick="loadFileForJason()">Import</button>
+                        <textarea class="process_spot" id="resultJson1"></textarea>
+                        <!-- <button id="genJason" type="button" onclick="generateJason()">Jenerate JSON</button> -->
+                        <input type="text" id="saveJsonFileName1" /><br />
+                        <button id="saveJ" type="button" onclick="saveJson1()">Save Json</button>
                     </div>
-               
+                </div>
+
+
+                <div id="div1">
+                    <!-- // result here -->
+
+                </div>
+
             </div>
 
         </div>
@@ -222,7 +232,7 @@
         <div>Copyright &copy; 2021 Amicus Shipping LLC</div>
     </footer>
 </body>
-<script src="./assets/js/one_generate_schedule.js"></script>
+<script src="./assets/js/generate_json.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 

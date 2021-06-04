@@ -1,62 +1,60 @@
 /* body{
     background: blue;
 } */
-.navbar1{
-    margin-left: 3%;
-    margin-right: 3%;
-    font-size: calc(12px + 6 * ((100vw - 320px) / 680));
-    color:white;
-    display:inline-flex;
-    float:right;
+.navbar1 {
+  margin-left: 3%;
+  margin-right: 3%;
+  font-size: calc(12px + 6 * ((100vw - 320px) / 680));
+  color: white;
+  display: inline-flex;
+  float: right;
 }
-.nav1{
-    
-    float: right;
-    font-size: 20px;
-    float:right;
-    color:rgb(205, 226, 14);
-    
+.nav1 {
+  float: right;
+  font-size: 20px;
+  float: right;
+  color: rgb(205, 226, 14);
 }
-.fullName{
-    
-    float: right;
-    font-weight: bold;
-    float:right;
-    color:white 
-    
+.fullName {
+  float: right;
+  font-weight: bold;
+  float: right;
+  color: white;
 }
 
 .plain1 {
-    color:white !important;
-    text-decoration: none
+  color: white !important;
+  text-decoration: none;
 }
 
 .plain1 :hover {
-    color:white !important;
-    text-decoration: none !important
+  color: white !important;
+  text-decoration: none !important;
 }
 /* .card-img-overlay{
 color:white;
 
 } */
+
 .bigger1 {
-    font-size: 2rem ;
-    color: white ;
-    background-color: blue !important;
-    padding: 5.5% ;
-    margin:7% ;
-     border-radius: 10% 
-
-
+  font-size: 2rem;
+  color: white;
+  background-color: blue !important;
+  padding: 5.5%;
+  margin: 7%;
+  border-radius: 10%;
 }
-
-.card{
-    margin: 20px;
-    width: 400px;
-    height: 500px;
-    color: teal;
-    
-
+.process_spot {
+  color: white;
+  background-color: rgb(26, 123, 161);
+  border-radius: 7%;
+  min-height: 350;
+}
+.card {
+  margin: 20px;
+  width: 400px;
+  height: 500px;
+  color: teal;
 }
 
 /* .card-text{
@@ -73,97 +71,90 @@ font-weight: bold;
 }
 .card-body{
     opacity: 50%;  
-} */ 
+} */
 
-.contacts{
-/* padding:25px;
+.contacts {
+  /* padding:25px;
 margin:25px; */
-color:gray;
-font-size: 20px;
-
-
+  color: gray;
+  font-size: 20px;
 }
-#h1{
-    float:left;
-    font-size: calc(18px + 6 * ((100vw - 320px) / 680));
-    color: black;
-    padding: 5%;
+#h1 {
+  float: left;
+  font-size: calc(18px + 6 * ((100vw - 320px) / 680));
+  color: black;
+  padding: 5%;
 }
-.box1{
-    float:right;
-    width: 50%;
-    padding: 30px;
-    margin: 10px;
-    margin-top: 130px;
-    border: gray 1px;
-    background: gray;
+.box1 {
+  float: right;
+  width: 50%;
+  padding: 30px;
+  margin: 10px;
+  margin-top: 130px;
+  border: gray 1px;
+  background: gray;
 }
-footer{
-    clear: both;
-    font-size: calc(10px + 6 * ((100vw - 320px) / 680));
-    padding: 30px;
-    color:white;
-    background: #333;
-    text-align: center;
+footer {
+  clear: both;
+  font-size: calc(10px + 6 * ((100vw - 320px) / 680));
+  padding: 30px;
+  color: white;
+  background: #333;
+  text-align: center;
 }
 .box {
-    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-    min-height: 200px;
-    width: 80vw;
-    margin: 100px auto;
-    background: white;
-    border-radius: 5px;
-  }
-  .contactJ li{
-      color: #333;
-      font-size: medium;
-
-  }
-  
-  body {
-    background: #EEF2F7;
-  }
-  .imgJ{
-      padding: 0;
-      max-width:30%;
-      margin:30px;
-      float: left;
-      
-      
-
-
-  }
-  .niceText{
-      text-align: justify;
-      max-height: 950px;
-      padding : 0 3% 4% 3%;
-      
-      
-     
-        font-size: calc( 10px + (22 - 12) * ((100vw - 300px) / (1600 - 300)));
-      
-  }
-  .card{
-    margin: 2%;
-    width: 280px;
-    height: 360px;
-    color: teal;
-    
-
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  min-height: 200px;
+  width: 80vw;
+  margin: 100px auto;
+  background: white;
+  border-radius: 5px;
 }
-.card2{
-    margin: 20px !important;
-    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12) !important;
+.contactJ li {
+  color: #333;
+  font-size: medium;
 }
-.card2 .card-image :hover{
-    
-    opacity:50%;
+
+body {
+  background: #eef2f7;
 }
-.github{
-    background: black;
-    color:gray;
+.imgJ {
+  padding: 0;
+  max-width: 30%;
+  margin: 30px;
+  float: left;
 }
-.pdf{
-    background:red;
-    color:white;
+.niceText {
+  text-align: justify;
+  max-height: 950px;
+  padding: 0 3% 4% 3%;
+
+  font-size: calc(10px + (22 - 12) * ((100vw - 300px) / (1600 - 300)));
+}
+.card {
+  margin: 2%;
+  width: 280px;
+  height: 360px;
+  color: teal;
+}
+.card2 {
+  margin: 20px !important;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12) !important;
+}
+.card2 .card-image :hover {
+  opacity: 50%;
+}
+.github {
+  background: black;
+  color: gray;
+}
+.pdf {
+  background: red;
+  color: white;
 }
