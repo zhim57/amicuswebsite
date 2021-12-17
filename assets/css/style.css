@@ -50,6 +50,7 @@ color:white;
   background-color: rgb(236, 131, 82) !important;
   padding: 5.5%;
   margin: 7%;
+  border: brown;
   border-radius: 10%;
 }
 .process_spot {
