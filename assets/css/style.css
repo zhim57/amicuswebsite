@@ -48,10 +48,10 @@ color:white;
   font-size: 1.2rem;
   color: rgb(10, 6, 6);
   background-color: rgb(236, 131, 82);
-  padding: 5.5%;
-  margin: 7%;
+  padding: 2.5%;
+  margin: 4%;
   border: brown;
-  border-radius: 10%;
+  border-radius: 3%;
 }
 .process_spot {
   color: white;
