@@ -44,6 +44,14 @@ color:white;
   margin: 7%;
   border-radius: 10%;
 }
+.three {
+  font-size: 1.2rem;
+  color: rgb(10, 6, 6);
+  background-color: rgb(236, 131, 82) !important;
+  padding: 5.5%;
+  margin: 7%;
+  border-radius: 10%;
+}
 .process_spot {
   color: white;
   background-color: rgb(26, 123, 161);
