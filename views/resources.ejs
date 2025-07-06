@@ -13,9 +13,10 @@
             <input type="file" name="file" required>
             <button type="submit">Upload</button>
           </form>
-          <ul id="files">
-            <% files.forEach(function(f){ %>
-              <li><a href="/uploads/<%= encodeURIComponent(f) %>"><%= f %></a></li>
+          <ul id="files" class="file-tabs">
+            <% files.forEach(function(f){
+                 const name = f.replace(/^\d+_/, '').replace(/cheat\s*sheet/ig, '').trim(); %>
+              <li><a class="file-tab-link" href="/uploads/<%= encodeURIComponent(f) %>"><%= name %></a></li>
             <% }) %>
           </ul>
         </section>
@@ -25,6 +26,10 @@
   </div>
 </section>
 <script>
+function cleanName(name){
+ return name.replace(/^\d+_/, '').replace(/cheat\s*sheet/ig, '').trim();
+}
+
 function loadFiles(){
  fetch("/files").then(r=>r.json()).then(files=>{
    const list=document.getElementById("files");
@@ -33,7 +38,8 @@ function loadFiles(){
      const li=document.createElement("li");
      const a=document.createElement("a");
      a.href="/uploads/"+encodeURIComponent(f);
-     a.textContent=f;
+     a.textContent=cleanName(f);
+     a.className="file-tab-link";
      li.appendChild(a);
      list.appendChild(li);
    });
