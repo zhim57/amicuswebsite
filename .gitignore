@@ -105,3 +105,6 @@ dist
 vesselja.json
 combined_Vessels_call_signs_6-4_2021_5906.json
 6-3-2021_json.json
+# Uploaded files
+uploads/*
+!uploads/.gitkeep

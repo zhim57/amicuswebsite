@@ -23,7 +23,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Resourses</title>
+    <title>Resources</title>
   </head>
 
   <body>
@@ -51,7 +51,7 @@
         <div class="container">
           <div class="col-md-12">
             <section class="contacts">
-              <h3>Resourses</h3>
+              <h3>Resources</h3>
               <p> <a href="https://archive.org/" target="blank" ><b>Internet Archive</b></a>
                           
                           
@@ -72,6 +72,12 @@
             <a href="https://mybilling.global1tel.com:8445/" target="_blank"><b><u>Click here to enter/update your
                 account</u></b>
     </a><br><br>
+<form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" required>
+  <button type="submit">Upload</button>
+</form>
+<ul id="files"></ul>
+
 
    
        
@@ -85,5 +91,27 @@
     <footer>
       <div>Copyright &copy;2021 Amicus Shipping LLC</div>
     </footer>
-  </body>
+  <script>
+function loadFiles(){
+ fetch("/files").then(r=>r.json()).then(files=>{
+ const list=document.getElementById("files");
+ list.innerHTML="";
+ files.forEach(f=>{
+ const li=document.createElement("li");
+ const a=document.createElement("a");
+ a.href="/uploads/"+encodeURIComponent(f);
+ a.textContent=f;
+ li.appendChild(a);
+ list.appendChild(li);
+ });
+ });
+}
+loadFiles();
+document.getElementById("uploadForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const data=new FormData(this);
+ fetch("/upload",{method:"POST",body:data}).then(()=>{this.reset();loadFiles();});
+});
+</script>
+</body>
 </html>
