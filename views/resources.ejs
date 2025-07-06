@@ -37,13 +37,40 @@ function loadFiles(){
      li.appendChild(a);
      list.appendChild(li);
    });
- });
+ }).catch(err => console.error('Error loading files:', err));
 }
+
 loadFiles();
+
 document.getElementById("uploadForm").addEventListener("submit",function(e){
  e.preventDefault();
  const data=new FormData(this);
- fetch("/upload",{method:"POST",body:data}).then(()=>{this.reset();loadFiles();});
+ const fileInput = this.querySelector('input[type="file"]');
+ 
+ if (!fileInput.files.length) {
+   alert('Please select a file to upload');
+   return;
+ }
+ 
+ fetch("/upload",{
+   method:"POST",
+   body:data
+ })
+ .then(response => {
+   if (!response.ok) {
+     throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
+   }
+   return response;
+ })
+ .then(() => {
+   this.reset();
+   loadFiles();
+   alert('File uploaded successfully!');
+ })
+ .catch(error => {
+   console.error('Upload error:', error);
+   alert('Upload failed: ' + error.message);
+ });
 });
 </script>
 <%- include('partials/footer') %>
