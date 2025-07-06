@@ -18,13 +18,30 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '_' + file.originalname);
   }
 });
-const upload = multer({ storage });
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: function(req, file, cb) {
+    const allowed = /\.(pdf|jpg|jpeg|png|doc|docx)$/i;
+    if (allowed.test(path.extname(file.originalname))) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'));
+    }
+  }
+});
 
 app.use('/uploads', express.static(uploadDir));
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/upload', upload.single('file'), (req, res) => {
-  res.redirect('/resources.html');
+app.post('/upload', (req, res) => {
+  upload.single('file')(req, res, function(err) {
+    if (err) {
+      return res.status(400).send('Invalid file upload');
+    }
+    res.redirect('/resources.html');
+  });
 });
 
 app.get('/files', (req, res) => {
