@@ -16,3 +16,5 @@ By default the server listens on port 3000.
 ## Uploads
 
 Uploaded files sent to `/upload` are saved inside the `uploads` directory at the project root. The server exposes this folder at `/uploads` so files can be accessed and listed via `/files`.
+
+All HTML, CSS and client-side JavaScript files reside in the `public` directory which Express serves automatically.
