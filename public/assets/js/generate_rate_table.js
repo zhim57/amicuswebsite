@@ -1,216 +1,43 @@
-let rates = [
-    { country: "ALBANIA", Operator_Network: "Vodafone", data: 0.0128, call:0.24, sms:0.033},
-{ country: "ALGERIA", Operator_Network: "Algerie Telecom ", data: 0.0398, call:"n/a", sms:"n/a"},
-{ country: "ARMENIA", Operator_Network: "Armentel", data: 0.0214, call:0.2, sms:0.266},
-{ country: "AUSTRALIA", Operator_Network: "Singtel Optus", data: 0.0118, call:0.24, sms:0.053},
-{ country: "AUSTRIA", Operator_Network: "T-Mobile/Telering", data: 0.008, call:0.384, sms:0.019},
-{ country: "AUSTRIA", Operator_Network: "A1 Telekom", data: 0.0092, call:0.384, sms:0.019},
-{ country: "AUSTRIA", Operator_Network: "H3G", data: 0.0112, call:0.384, sms:0.019},
-{ country: "AZERBAIJAN", Operator_Network: "Azercell Telekom B.M.", data: 0.0266, call:2.1456, sms:0.128},
-{ country: "BELARUS", Operator_Network: "Unitary Enterprise Velcom", data: 0.016, call:2.88, sms:0.067},
-{ country: "BELGIUM", Operator_Network: "Proximus Plc", data: 0.0096, call:0.336, sms:0.083},
-{ country: "BELGIUM", Operator_Network: "Orange Belgium", data: 0.0128, call:0.336, sms:0.083},
-{ country: "BRAZIL", Operator_Network: "Vivo S.A./Telemig-V3", data: 0.0746, call:0.48, sms:0.128},
-{ country: "BULGARIA", Operator_Network: "Mtel (Mobiltel Ead)", data: 0.0092, call:0.336, sms:0.083},
-{ country: "BULGARIA", Operator_Network: "Telenor Bulgaria Ead", data: 0.0106, call:0.336, sms:0.083},
-{ country: "BULGARIA", Operator_Network: "Vivacom ", data: 0.008, call:0.336, sms:0.083},
-{ country: "CAMEROON", Operator_Network: "Orange", data: 0.0796, call:"n/a", sms:"n/a"},
-{ country: "CANADA", Operator_Network: "Bell Mobility Inc", data: 0.0176, call:0.4, sms:0.043},
-{ country: "CANADA", Operator_Network: "Telus Mobility", data: 0.0176, call:0.4, sms:0.043},
-{ country: "CANADA", Operator_Network: "Rogers Communications", data: 0.0144, call:0.4, sms:0.043},
-{ country: "CHINA", Operator_Network: "China Mobile Gsm", data: 0.0266, call:0.5352, sms:0.09},
-{ country: "CONGO, Democratic Republic of (was Zaire)", Operator_Network: "Vodacom Congo Rdc S A", data: 0.0128, call:2, sms:0.319},
-{ country: "COSTA RICA", Operator_Network: "Claro Costa Rica", data: 0.0398, call:"n/a", sms:"n/a"},
-{ country: "CROATIA", Operator_Network: "Hrvatski Telekom D D", data: 0.008, call:0.384, sms:0.032},
-{ country: "CROATIA", Operator_Network: "Tele2 D O O Za ", data: 0.008, call:0.384, sms:0.032},
-{ country: "CROATIA", Operator_Network: "Vipnet D O O", data: 0.0092, call:0.384, sms:0.032},
-{ country: "CYPRUS", Operator_Network: "Mtn Cyprus Limited", data: 0.006, call:0.336, sms:0.083},
-{ country: "CZECH REPUBLIC", Operator_Network: "T Mobile", data: 0.008, call:0.336, sms:0.083},
-{ country: "CZECH REPUBLIC", Operator_Network: "O2 Czech", data: 0.0106, call:0.336, sms:0.083},
-{ country: "CZECH REPUBLIC", Operator_Network: "Vodafone", data: 0.0106, call:0.336, sms:0.083},
-{ country: "DENMARK", Operator_Network: "Hi3G Denmark Aps", data: 0.0112, call:0.336, sms:0.083},
-{ country: "DENMARK", Operator_Network: "Tdc Denmark-Dnktd", data: 0.008, call:0.336, sms:0.083},
-{ country: "DENMARK", Operator_Network: "Telenor A/S", data: 0.005, call:0.336, sms:0.083},
-{ country: "DOMINICAN REPUBLIC", Operator_Network: " Claro", data: 0.0398, call:2, sms:0.319},
-{ country: "ECUADOR", Operator_Network: "Movistar/Otecel", data: 0.0746, call:0.48, sms:0.128},
-{ country: "EGYPT", Operator_Network: "Ems - Mobinil", data: 0.0532, call:3.4944, sms:0.2352},
-{ country: "EL SALVADOR", Operator_Network: "Pers Mobile", data: 0.0398, call:"n/a", sms:"n/a"},
-{ country: "ESTONIA", Operator_Network: "Elisa Eesti As", data: 0.008, call:0.336, sms:0.083},
-{ country: "ESTONIA", Operator_Network: "Tele2 Eesti Aktsiaselts", data: 0.008, call:0.336, sms:0.083},
-{ country: "FAROE ISLANDS", Operator_Network: "Faroese Telecom", data: 0.028, call:"n/a", sms:"n/a"},
-{ country: "FINLAND", Operator_Network: "Dna Ltd", data: 0.005, call:0.336, sms:0.083},
-{ country: "FINLAND", Operator_Network: "Elisa Corporation", data: 0.008, call:0.336, sms:0.083},
-{ country: "FRANCE", Operator_Network: "France - Sfr", data: 0.0106, call:0.336, sms:0.083},
-{ country: "FRANCE", Operator_Network: "Free Mobile ", data: 0.013, call:"n/a", sms:"n/a"},
-{ country: "FRANCE", Operator_Network: "Bouygues T L Com", data: 0.0124, call:0.336, sms:0.083},
-{ country: "FRENCH GUIANA", Operator_Network: "Orange Mobile", data: 0.024, call:"n/a", sms:"n/a"},
-{ country: "GEORGIA", Operator_Network: "Geocell Ltd", data: 0.0214, call:1.0816, sms:"n/a"},
-{ country: "GEORGIA", Operator_Network: "Mobitel Llc", data: 0.0214, call:1.6, sms:0.266},
-{ country: "GERMANY", Operator_Network: "Vodafone Gmbh", data: 0.0106, call:0.64, sms:0.083},
-{ country: "GERMANY", Operator_Network: "T-Mobile/Telekom", data: 0.008, call:"n/a", sms:"n/a"},
-{ country: "GERMANY", Operator_Network: "O2", data: 0.0096, call:0.64, sms:0.083},
-{ country: "GHANA", Operator_Network: "Vodafone", data: 0.0128, call:0.24, sms:0.033},
-{ country: "GIBRALTAR", Operator_Network: "Gibtelecom Limited", data: 0.0288, call:0.336, sms:0.083},
-{ country: "GREECE", Operator_Network: "Cosmote Mobile", data: 0.008, call:"n/a", sms:"n/a"},
-{ country: "GREECE", Operator_Network: "Vodafone", data: 0.0106, call:0.2504, sms:0.033},
-{ country: "GREECE", Operator_Network: "Tim/Wind", data: 0.008, call:0.2504, sms:0.033},
-{ country: "GUAM", Operator_Network: "T-Mobile Usa", data: 0.016, call:"n/a", sms:"n/a"},
-{ country: "GUINEA", Operator_Network: "Orange Mobile", data: 0.0796, call:"n/a", sms:"n/a"},
-{ country: "HONG KONG", Operator_Network: "H3G/Hutchinson", data: 0.0102, call:0.384, sms:0.128},
-{ country: "HUNGARY", Operator_Network: "Pannon/Telenor", data: 0.0106, call:0.384, sms:0.083},
-{ country: "HUNGARY", Operator_Network: "T-Mobile/Magyar", data: 0.008, call:0.384, sms:0.083},
-{ country: "HUNGARY", Operator_Network: "Vodafone Hungary Mobile", data: 0.0106, call:0.384, sms:0.083},
-{ country: "ICELAND", Operator_Network: "Landssiminn - Islps", data: 0.008, call:0.2592, sms:0.083},
-{ country: "ICELAND", Operator_Network: "Fjarskipti Hf", data: 0.012, call:0.2592, sms:0.083},
-{ country: "ICELAND", Operator_Network: "Nova Ehf", data: 0.0072, call:0.2592, sms:0.083},
-{ country: "INDIA", Operator_Network: "Bharti Airtel Limited (Delhi)", data: 0.0374, call:0.48, sms:0.319},
-{ country: "INDONESIA", Operator_Network: "Pt. Excelcom", data: 0.024, call:0.88, sms:0.21},
-{ country: "INDONESIA", Operator_Network: "Pt Hutchison 3 Indonesia", data: 0.016, call:"n/a", sms:"n/a"},
-{ country: "IRELAND", Operator_Network: "Vodafone Ireland Limited", data: 0.0106, call:0.2504, sms:0.033},
-{ country: "IRELAND", Operator_Network: "Three Ireland (Hutchison)  - Irldf", data: 0.0112, call:0.2504, sms:0.033},
-{ country: "ISRAEL", Operator_Network: "Pelephone Communication Ltd", data: 0.0124, call:0.384, sms:0.096},
-{ country: "ISRAEL", Operator_Network: "Partner", data: 0.0124, call:0.384, sms:0.096},
-{ country: "ITALY", Operator_Network: "Vodafone Italia S P A", data: 0.0106, call:0.2504, sms:0.033},
-{ country: "ITALY", Operator_Network: "Wind Telecomunicazioni S P A", data: 0.0112, call:0.2504, sms:0.033},
-{ country: "JAPAN", Operator_Network: "Softbank Corp", data: 0.0426, call:1.6, sms:0.319},
-{ country: "JORDAN", Operator_Network: "Petra Jordanian Mobile Orang", data: 0.048, call:1.4496, sms:0.459},
-{ country: "KAZAKHSTAN", Operator_Network: "Tele2/Neo/Mts", data: 0.0108, call:0.2008, sms:0.029},
-{ country: "KOREA, SOUTH", Operator_Network: "Kt Corporation", data: 0.0086, call:0.48, sms:0.319},
-{ country: "KUWAIT", Operator_Network: "Nmtc (Wataniya Telecom)", data: 0.032, call:"n/a", sms:"n/a"},
-{ country: "KYRGYZSTAN", Operator_Network: "Sky Mobile Llc", data: 0.0214, call:0.2, sms:0.266},
-{ country: "LAOS", Operator_Network: "Lao Telecoms Co (Ltc)", data: 0.0334, call:"n/a", sms:"n/a"},
-{ country: "LATVIA", Operator_Network: "Tele2 Sia", data: 0.008, call:0.336, sms:0.083},
-{ country: "LATVIA", Operator_Network: "Sia Bite Mobile", data: 0.004, call:0.336, sms:0.083},
-{ country: "LESOTHO", Operator_Network: "Vodacom Lesotho Pty Ltd", data: 0.0128, call:0.8, sms:0.04},
-{ country: "LIECHTENSTEIN", Operator_Network: "Telecom Liechtenstein Ag", data: 0.0092, call:0.276, sms:0.067},
-{ country: "LITHUANIA", Operator_Network: "Bite", data: 0.004, call:0.336, sms:0.083},
-{ country: "LITHUANIA", Operator_Network: "Tele2", data: 0.008, call:0.336, sms:0.083},
-{ country: "LUXEMBOURG", Operator_Network: "Tango Sa", data: 0.0096, call:0.336, sms:0.083},
-{ country: "LUXEMBOURG", Operator_Network: "Orange Communications", data: 0.0128, call:0.336, sms:0.083},
-{ country: "MACAU", Operator_Network: "Hutchison Telephone Macau", data: 0.027, call:1.04, sms:0.153},
-{ country: "MACEDONIA", Operator_Network: "Vip Mobile", data: 0.016, call:0.276, sms:0.106},
-{ country: "MALAYSIA", Operator_Network: "Celcom", data: 0.0134, call:"n/a", sms:"n/a"},
-{ country: "MALAYSIA", Operator_Network: "U Mobile Sdn Bhd", data: 0.0134, call:0.672, sms:0.1344},
-{ country: "MALAYSIA", Operator_Network: "Celcom Mobile ", data: 0.0134, call:"n/a", sms:"n/a"},
-{ country: "MALTA", Operator_Network: "Vodafone - Mlttl", data: 0.0106, call:0.24, sms:0.08},
-{ country: "MALTA", Operator_Network: "Go P L C", data: 0.005, call:0.24, sms:0.08},
-{ country: "MALTA", Operator_Network: "Melita", data: 0.0106, call:"n/a", sms:"n/a"},
-{ country: "MEXICO", Operator_Network: "Movistar/Pegaso", data: 0.0746, call:0.556, sms:0.128},
-{ country: "MOLDOVA", Operator_Network: "Moldcell", data: 0.0266, call:0.96, sms:0.128},
-{ country: "MONTENEGRO", Operator_Network: "Mtel D O O Podgorica", data: 0.032, call:0.3008, sms:0.172},
-{ country: "MOZAMBIQUE", Operator_Network: "Vm S A", data: 0.0128, call:0.8, sms:0.16},
-{ country: "MYANMAR", Operator_Network: "Telenor Myanmar Limited", data: 0.064, call:0.28, sms:0.426},
-{ country: "NEPAL", Operator_Network: "Ncell Pvt Ltd", data: 0.0798, call:"n/a", sms:"n/a"},
-{ country: "NETHERLANDS", Operator_Network: "Vodafone Libertel B V", data: 0.0106, call:0.384, sms:0.083},
-{ country: "NETHERLANDS", Operator_Network: "Kpn B V", data: 0.0112, call:0.384, sms:0.083},
-{ country: "NETHERLANDS", Operator_Network: "T-Mobile B.V.", data: 0.008, call:0.384, sms:0.083},
-{ country: "NEW ZEALAND", Operator_Network: "Vodafone New Zealand Ltd", data: 0.0128, call:0.48, sms:0.08},
-{ country: "NICARAGUA", Operator_Network: "Movistar", data: 0.0746, call:"n/a", sms:0.128},
-{ country: "NIGER", Operator_Network: "Orange/Sahelc.", data: 0.0796, call:"n/a", sms:"n/a"},
-{ country: "NIGER", Operator_Network: "Orange Mobile [Neror]", data: 0.0796, call:"n/a", sms:"n/a"},
-{ country: "NIGERIA", Operator_Network: "Airtel/Zain/Econet", data: 0.133, call:2, sms:0.319},
-{ country: "NORWAY", Operator_Network: "Telenor Norge As", data: 0.005, call:0.336, sms:0.083},
-{ country: "PAKISTAN", Operator_Network: "Pakistan Mobile", data: 0.0256, call:4.656, sms:0.096},
-{ country: "PANAMA", Operator_Network: "Telefonica", data: 0.0746, call:0.48, sms:0.128},
-{ country: "PARAGUAY", Operator_Network: "Claro Mobile - Claro", data: 0.0398, call:"n/a", sms:"n/a"},
-{ country: "PERU", Operator_Network: "Movistar", data: 0.0746, call:"n/a", sms:0.213},
-{ country: "PHILIPPINES", Operator_Network: "Globe Telecom Inc", data: 0.032, call:0.48, sms:0.255},
-{ country: "PHILIPPINES", Operator_Network: "Smart Communications Inc", data: 0.032, call:0.48, sms:0.255},
-{ country: "POLAND", Operator_Network: "Polkomtel/Plus - Km", data: 0.0128, call:0.3008, sms:0.067},
-{ country: "POLAND", Operator_Network: "P4 Sp Z O O", data: 0.006, call:0.3008, sms:0.067},
-{ country: "PORTUGAL", Operator_Network: "Sonaecom/Optimus", data: 0.0044, call:0.336, sms:0.083},
-{ country: "QATAR", Operator_Network: "Vodafone Mobile ", data: 0.0668, call:"n/a", sms:"n/a"},
-{ country: "REUNION", Operator_Network: "Orange Reunion", data: 0.0288, call:"n/a", sms:"n/a"},
-{ country: "ROMANIA", Operator_Network: "S C Vodafone Romania S A", data: 0.0106, call:0.24, sms:0.033},
-{ country: "ROMANIA", Operator_Network: "Telekom Romania Mobile", data: 0.008, call:0.24, sms:0.033},
-{ country: "RUSSIAN FEDERATION", Operator_Network: "Ojsc Megafon", data: 0.0214, call:2, sms:0.266},
-{ country: "RUSSIAN FEDERATION", Operator_Network: "Vimpelcom Pjsc", data: 0.0214, call:2, sms:0.266},
-{ country: "SAUDI ARABIA", Operator_Network: "Stc", data: 0.0236, call:2.08, sms:1.04},
-{ country: "SENEGAL", Operator_Network: "Orange Mobile - Sonatel", data: 0.0796, call:"n/a", sms:"n/a"},
-{ country: "SERBIA", Operator_Network: "Vip Mobile D O O", data: 0.016, call:0.276, sms:0.067},
-{ country: "SINGAPORE", Operator_Network: "Singtel Mobile", data: 0.016, call:0.5368, sms:0.069},
-{ country: "SINGAPORE", Operator_Network: "Starhub - Sh", data: 0.016, call:0.5368, sms:0.069},
-{ country: "SLOVAKIA", Operator_Network: "Eurotel Mobile - Tmobile", data: 0.008, call:"n/a", sms:"n/a"},
-{ country: "SLOVAKIA", Operator_Network: "Slovak Telekom (Dt)", data: 0.008, call:"n/a", sms:"n/a"},
-{ country: "SLOVAKIA", Operator_Network: "Orange Slovensko A S", data: 0.0136, call:0.336, sms:0.083},
-{ country: "SLOVAKIA", Operator_Network: "O2 Slovakia S R O", data: 0.0106, call:0.336, sms:0.083},
-{ country: "SLOVENIA", Operator_Network: "A1 Slovenija D D", data: 0.0092, call:0.3368, sms:0.081},
-{ country: "SLOVENIA", Operator_Network: "Telemach", data: 0.0072, call:"n/a", sms:"n/a"},
-{ country: "SOUTH AFRICA", Operator_Network: "Vodacom Group Pty Ltd", data: 0.0128, call:0.24, sms:0.033},
-{ country: "SPAIN", Operator_Network: "France Telecom", data: 0.0144, call:0.336, sms:0.083},
-{ country: "SPAIN", Operator_Network: "Xfera Moviles", data: 0.0124, call:0.336, sms:0.083},
-{ country: "SPAIN", Operator_Network: "Vodafone", data: 0.0106, call:0.336, sms:0.083},
-{ country: "SPAIN", Operator_Network: "Telefonica - Te", data: 0.0096, call:0.336, sms:0.083},
-{ country: "SRI LANKA", Operator_Network: "Mobitel Pvt Limited", data: 0.0426, call:1.12, sms:0.133},
-{ country: "SWEDEN", Operator_Network: "Hi3G Access Ab", data: 0.0112, call:0.336, sms:0.083},
-{ country: "SWEDEN", Operator_Network: "Telenor (Vodafone)-Sweep", data: 0.005, call:0.336, sms:0.083},
-{ country: "SWEDEN", Operator_Network: "Tele2 Sverige Ab", data: 0.008, call:0.336, sms:0.083},
-{ country: "SWITZERLAND", Operator_Network: "Salt Mobile Sa", data: 0.016, call:0.288, sms:0.053},
-{ country: "TAIWAN (Republic of China)", Operator_Network: "Chunghwa Telecom", data: 0.008, call:0.2904, sms:0.129},
-{ country: "TAJIKISTAN", Operator_Network: "Tacom Llc", data: 0.0214, call:0.2, sms:0.2},
-{ country: "TANZANIA", Operator_Network: "Vodacom Tanzania Limited", data: 0.0128, call:2, sms:0.319},
-{ country: "THAILAND", Operator_Network: "Advanced Wireless", data: 0.032, call:"n/a", sms:"n/a"},
-{ country: "THAILAND", Operator_Network: "Dtac Trinet Co Ltd", data: 0.0214, call:0.8, sms:0.266},
-{ country: "THAILAND", Operator_Network: "Total Access Comm", data: 0.0292, call:0.8, sms:0.266},
-{ country: "TUNISIA", Operator_Network: "Orange (Divona) [Tunor]", data: 0.0398, call:"n/a", sms:"n/a"},
-{ country: "TURKEY", Operator_Network: "Turkcell", data: 0.0188, call:0.32, sms:0.179},
-{ country: "TURKEY", Operator_Network: "Vodafone Telekom", data: 0.0128, call:0.32, sms:0.179},
-{ country: "TURKEY", Operator_Network: "Avea/Aria", data: 0.016, call:0.32, sms:0.179},
-{ country: "UKRAINE", Operator_Network: "Mts Ukraine", data: 0.024, call:0.2, sms:0.096},
-{ country: "UKRAINE", Operator_Network: "Kyivstar-Ks", data: 0.0214, call:0.2, sms:0.096},
-{ country: "UKRAINE", Operator_Network: "Lifecell Llc", data: 0.0256, call:0.2, sms:0.096},
-{ country: "UNITED ARAB EMIRATES", Operator_Network: "Etisalat", data: 0.0532, call:0.432, sms:"n/a"},
-{ country: "UNITED ARAB EMIRATES", Operator_Network: "Integrated Telecom", data: 0.0638, call:"n/a", sms:1.04},
-{ country: "UNITED KINGDOM", Operator_Network: "O2 Ltd.", data: 0.0096, call:0.432, sms:0.083},
-{ country: "UNITED KINGDOM", Operator_Network: "Vodafone Ltd", data: 0.0106, call:0.432, sms:0.083},
-{ country: "UNITED KINGDOM", Operator_Network: "Hutchison 3G Uk Limited", data: 0.0112, call:0.432, sms:0.083},
-{ country: "UNITED STATES OF AMERICA", Operator_Network: "At&T Mobility", data: 0.0074, call:0.192, sms:0.024},
-{ country: "URUGUAY", Operator_Network: "Claro Mobile - Cti", data: 0.0398, call:"n/a", sms:"n/a"},
-{ country: "UZBEKISTAN", Operator_Network: "Unitel Llc", data: 0.0426, call:4, sms:0.106},
-{ country: "UZBEKISTAN", Operator_Network: "Ucell Mobile - U-Cell", data: 0.048, call:"n/a", sms:"n/a"},
-{ country: "VIETNAM", Operator_Network: "Viettel Corporation", data: 0.0374, call:0.96, sms:0.053}
+async function loadRates() {
+  const response = await fetch('./assets/data/rates.json');
+  if (!response.ok) {
+    throw new Error('Failed to load rate data');
+  }
+  return response.json();
+}
 
-    
+function generateTableHead(table, data) {
+  const thead = table.createTHead();
+  const row = thead.insertRow();
+  for (const key of data) {
+    const th = document.createElement('th');
+    const text = document.createTextNode(key);
+    th.appendChild(text);
+    row.appendChild(th);
+  }
+}
 
-   
-    
-  ];
-  
-  function generateTableHead(table, data) {
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    for (let key of data) {
-      let th = document.createElement("th");
-      let text = document.createTextNode(key);
-      th.appendChild(text);
-      row.appendChild(th);
+function generateTable(table, data) {
+  for (const element of data) {
+    const row = table.insertRow();
+    for (const key in element) {
+      const cell = row.insertCell();
+      const text = document.createTextNode(element[key]);
+      cell.appendChild(text);
     }
   }
-  
-  function generateTable(table, data) {
-    for (let element of data) {
-      let row = table.insertRow();
-      for (key in element) {
-        let cell = row.insertCell();
-        let text = document.createTextNode(element[key]);
-        cell.appendChild(text);
-      }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const table = document.querySelector('table');
+  try {
+    const rates = await loadRates();
+    if (rates.length > 0) {
+      const headers = Object.keys(rates[0]);
+      generateTableHead(table, headers);
+      generateTable(table, rates);
     }
+  } catch (err) {
+    console.error(err);
   }
-  
-
-  // function displayShow() {
-  //     console.log("dudu");
-  
-  // }
-
-
-  
-  
-  let table = document.querySelector("table");
-  let data = Object.keys(rates[0]);
-  generateTableHead(table, data);
-  generateTable(table, rates);
-
-  // var inputSearch = document.getElementById("mySearch");
-  // inputSearch.onkeydown= function () { displayShow};
+});
