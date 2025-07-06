@@ -108,3 +108,8 @@ combined_Vessels_call_signs_6-4_2021_5906.json
 # Uploaded files
 uploads/*
 !uploads/.gitkeep
+
+# Built assets
+public/assets/js/*.js
+public/assets/css/style.css
+

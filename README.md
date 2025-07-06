@@ -4,10 +4,11 @@ This repository contains the Node.js server and static files for the Amicus webs
 
 ## Installation
 
-Install the dependencies and start the server:
+Install the dependencies, build the frontend assets, and start the server:
 
 ```bash
 npm install
+npm run build
 npm start
 ```
 
