@@ -1,0 +1,50 @@
+<%- include('partials/header', { title: 'Resources' }) %>
+<section>
+  <div class="container box contactJ">
+    <div class="container">
+      <div class="col-md-12">
+        <section class="contacts">
+          <h3>Resources</h3>
+          <p><a href="https://archive.org/" target="blank"><b>Internet Archive</b></a> - Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.</p>
+          <p><a href="http://lib.ru/" target="blank"><b>lib.ru</b></a> - Book Archive in Russian - Библиотека Максима Мошкова</p>
+          <p><a href="https://chitanka.info/" target="blank"><b>chitanka.info</b></a> - Book Archive in Bulgarian - В Моята библиотека посетителите имат възможността да се запознаят с творчеството на относително голям брой български и чуждестранни автори.</p>
+          <a href="https://mybilling.global1tel.com:8445/" target="_blank"><b><u>Click here to enter/update your account</u></b></a><br><br>
+          <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+          </form>
+          <ul id="files">
+            <% files.forEach(function(f){ %>
+              <li><a href="/uploads/<%= encodeURIComponent(f) %>"><%= f %></a></li>
+            <% }) %>
+          </ul>
+        </section>
+      </div>
+      <br />
+    </div>
+  </div>
+</section>
+<script>
+function loadFiles(){
+ fetch("/files").then(r=>r.json()).then(files=>{
+   const list=document.getElementById("files");
+   list.innerHTML="";
+   files.forEach(f=>{
+     const li=document.createElement("li");
+     const a=document.createElement("a");
+     a.href="/uploads/"+encodeURIComponent(f);
+     a.textContent=f;
+     li.appendChild(a);
+     list.appendChild(li);
+   });
+ });
+}
+loadFiles();
+document.getElementById("uploadForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const data=new FormData(this);
+ fetch("/upload",{method:"POST",body:data}).then(()=>{this.reset();loadFiles();});
+});
+</script>
+<%- include('partials/footer') %>
+

@@ -5,6 +5,9 @@ const multer = require('multer');
 
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 const uploadDir = process.env.UPLOAD_DIR
   ? path.resolve(process.env.UPLOAD_DIR)
   : path.join(__dirname, 'uploads');
@@ -34,6 +37,21 @@ const upload = multer({
   }
 });
 
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+function renderResources(req, res) {
+  fs.readdir(uploadDir, (err, files) => {
+    if (err) files = [];
+    res.render('resources', { files });
+  });
+}
+
+app.get('/resources', renderResources);
+app.get('/index.html', (req, res) => res.redirect('/'));
+app.get('/resources.html', (req, res) => res.redirect('/resources'));
+
 app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,7 +60,7 @@ app.post('/upload', (req, res) => {
     if (err) {
       return res.status(400).send('Invalid file upload');
     }
-    res.redirect('/resources.html');
+    res.redirect('/resources');
   });
 });
 

@@ -30,7 +30,11 @@ cp .env.example .env
 
 Uploaded files sent to `/upload` are saved inside the directory specified by `UPLOAD_DIR` (default is `uploads` in the project root). The server exposes this folder at `/uploads` so files can be accessed and listed via `/files`.
 
-All HTML, CSS and client-side JavaScript files reside in the `public` directory which Express serves automatically.
+All HTML, CSS and client-side JavaScript files reside in the `public` directory which Express serves automatically. The home page and the resources page are now rendered with the EJS templating engine to avoid repeating markup.
+
+## Templates
+
+Dynamic pages live in the `views` directory and use [EJS](https://ejs.co/) for rendering. The server renders the index page at `/` and the resources list at `/resources`.
 
 ## Testing
 
