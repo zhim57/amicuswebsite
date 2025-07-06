@@ -31,3 +31,11 @@ cp .env.example .env
 Uploaded files sent to `/upload` are saved inside the directory specified by `UPLOAD_DIR` (default is `uploads` in the project root). The server exposes this folder at `/uploads` so files can be accessed and listed via `/files`.
 
 All HTML, CSS and client-side JavaScript files reside in the `public` directory which Express serves automatically.
+
+## Testing
+
+Run the Jest test suite with:
+
+```bash
+npm test
+```
