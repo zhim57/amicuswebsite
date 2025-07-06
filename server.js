@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const dotenv= require('dotenv')
+
+dotenv.config();
 
 const app = express();
 
@@ -28,7 +31,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: function(req, file, cb) {
-    const allowed = /\.(pdf|jpg|jpeg|png|doc|docx)$/i;
+    const allowed = /\.(pdf|jpg|jpeg|png|doc|docx|html|htm)$/i;
     if (allowed.test(path.extname(file.originalname))) {
       cb(null, true);
     } else {
