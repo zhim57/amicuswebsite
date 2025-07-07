@@ -5,17 +5,32 @@
       <div class="col-md-12">
         <section class="contacts">
           <h3>Resources</h3>
-          <p><a href="https://archive.org/" target="blank"><b>Internet Archive</b></a> - Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.</p>
+          <!-- <p><a href="https://archive.org/" target="blank"><b>Internet Archive</b></a> - Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.</p>
           <p><a href="http://lib.ru/" target="blank"><b>lib.ru</b></a> - Book Archive in Russian - Библиотека Максима Мошкова</p>
-          <p><a href="https://chitanka.info/" target="blank"><b>chitanka.info</b></a> - Book Archive in Bulgarian - В Моята библиотека посетителите имат възможността да се запознаят с творчеството на относително голям брой български и чуждестранни автори.</p>
-          <a href="https://mybilling.global1tel.com:8445/" target="_blank"><b><u>Click here to enter/update your account</u></b></a><br><br>
+          <p><a href="https://chitanka.info/" target="blank"><b>chitanka.info</b></a> - Book Archive in Bulgarian - В Моята библиотека посетителите имат възможността да се запознаят с творчеството на относително голям брой български и чуждестранни автори.</p> -->
+          <a href="https://cards-reward-app-47c3b7cf1eb6.herokuapp.com/" target="_blank"><b><u>Sim card rewards program</u></b></a><br><br>
           <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="file" required>
             <button type="submit">Upload</button>
           </form>
-          <ul id="files">
-            <% files.forEach(function(f){ %>
-              <li><a href="/uploads/<%= encodeURIComponent(f) %>"><%= f %></a></li>
+          <ul id="files" class="file-tabs">
+            <% files.forEach(function(f){
+                 // Clean the filename for display
+                 const cleanName = (name) => {
+                   return name
+                     .replace(/^\d+_/, '')                    // Remove timestamp prefix (e.g., "1734567890_")
+                     .replace(/\.[^/.]+$/, '')                // Remove file extension
+                     .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
+                     .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
+                     .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
+                     .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
+                     .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
+                     .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters
+                     .trim();
+                 };
+                 const displayName = cleanName(f); 
+            %>
+              <li><a class="file-tab-link" href="/uploads/<%= encodeURIComponent(f) %>"><%= displayName %></a></li>
             <% }) %>
           </ul>
         </section>
@@ -25,6 +40,19 @@
   </div>
 </section>
 <script>
+function cleanName(name) {
+  return name
+    .replace(/^\d+_/, '')                    // Remove timestamp prefix (e.g., "1734567890_")
+    .replace(/\.[^/.]+$/, '')                // Remove file extension (.pdf, .docx, .html, etc.)
+    .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
+    .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
+    .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
+    .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
+    .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
+    .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters (numbers, symbols)
+    .trim();                                 // Final trim
+}
+
 function loadFiles(){
  fetch("/files").then(r=>r.json()).then(files=>{
    const list=document.getElementById("files");
@@ -33,7 +61,8 @@ function loadFiles(){
      const li=document.createElement("li");
      const a=document.createElement("a");
      a.href="/uploads/"+encodeURIComponent(f);
-     a.textContent=f;
+     a.textContent=cleanName(f);
+     a.className="file-tab-link";
      li.appendChild(a);
      list.appendChild(li);
    });
@@ -74,4 +103,3 @@ document.getElementById("uploadForm").addEventListener("submit",function(e){
 });
 </script>
 <%- include('partials/footer') %>
-
