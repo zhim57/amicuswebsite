@@ -1,105 +1,203 @@
-<%- include('partials/header', { title: 'Resources' }) %>
-<section>
-  <div class="container box contactJ">
-    <div class="container">
-      <div class="col-md-12">
-        <section class="contacts">
-          <h3>Resources</h3>
-          <!-- <p><a href="https://archive.org/" target="blank"><b>Internet Archive</b></a> - Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.</p>
-          <p><a href="http://lib.ru/" target="blank"><b>lib.ru</b></a> - Book Archive in Russian - Библиотека Максима Мошкова</p>
-          <p><a href="https://chitanka.info/" target="blank"><b>chitanka.info</b></a> - Book Archive in Bulgarian - В Моята библиотека посетителите имат възможността да се запознаят с творчеството на относително голям брой български и чуждестранни автори.</p> -->
-          <a href="https://cards-reward-app-47c3b7cf1eb6.herokuapp.com/" target="_blank"><b><u>Sim card rewards program</u></b></a><br><br>
-          <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <button type="submit">Upload</button>
-          </form>
-          <ul id="files" class="file-tabs">
-            <% files.forEach(function(f){
-                 // Clean the filename for display
-                 const cleanName = (name) => {
-                   return name
-                     .replace(/^\d+_/, '')                    // Remove timestamp prefix (e.g., "1734567890_")
-                     .replace(/\.[^/.]+$/, '')                // Remove file extension
-                     .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
-                     .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
-                     .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
-                     .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
-                     .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
-                     .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters
-                     .trim();
-                 };
-                 const displayName = cleanName(f); 
-            %>
-              <li><a class="file-tab-link" href="/uploads/<%= encodeURIComponent(f) %>"><%= displayName %></a></li>
-            <% }) %>
-          </ul>
-        </section>
-      </div>
-      <br />
+<%- include('partials/header', { title: 'Resources - Amicus Shipping LLC' }) %>
+
+<div class="resources-page">
+  <div class="container">
+
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+      <h1 class="section-title">Resources & Cheatsheets</h1>
+      <p class="section-subtitle">Helpful guides and documents for maritime professionals</p>
     </div>
+
+    <!-- Rewards Program Callout -->
+    <div class="row mb-5">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="alert alert-info text-center" style="background: linear-gradient(135deg, var(--ocean-deep), var(--primary-blue)); border: none; color: white; border-radius: 15px; padding: 2rem;">
+          <i class="fas fa-gift fa-2x mb-3"></i>
+          <h4 class="mb-3">Join Our Rewards Program</h4>
+          <p class="mb-3">Earn benefits with every service you use. Sign up today and start earning rewards!</p>
+          <a href="https://cards-reward-app-47c3b7cf1eb6.herokuapp.com/" target="_blank" class="btn btn-light btn-lg">
+            <i class="fas fa-external-link-alt"></i> Join Rewards Program
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <h3 class="mb-4"><i class="fas fa-cloud-upload-alt text-primary"></i> Upload Resources</h3>
+      <p class="text-muted mb-4">Share helpful cheatsheets and guides with the community</p>
+      <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="row align-items-end">
+          <div class="col-md-8 mb-3 mb-md-0">
+            <div class="custom-file">
+              <input type="file" name="file" class="custom-file-input" id="customFile" required>
+              <label class="custom-file-label" for="customFile">Choose file (PDF, DOC, Images)</label>
+            </div>
+            <small class="form-text text-muted">
+              <i class="fas fa-info-circle"></i> Supported formats: PDF, JPG, PNG, DOC, DOCX, HTML (Max 5MB)
+            </small>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-primary btn-block" style="height: 48px;">
+              <i class="fas fa-upload"></i> Upload File
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Files Grid -->
+    <div class="files-section">
+      <h3 class="mb-4"><i class="fas fa-folder-open text-primary"></i> Available Resources</h3>
+      <ul id="files" class="file-tabs">
+        <% files.forEach(function(f){
+             // Clean the filename for display
+             const cleanName = (name) => {
+               return name
+                 .replace(/^\d+_/, '')                    // Remove timestamp prefix
+                 .replace(/\.[^/.]+$/, '')                // Remove file extension
+                 .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
+                 .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
+                 .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
+                 .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
+                 .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
+                 .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters
+                 .trim();
+             };
+             const displayName = cleanName(f);
+
+             // Get file extension for icon
+             const ext = f.split('.').pop().toLowerCase();
+             let icon = 'fa-file';
+             if (ext === 'pdf') icon = 'fa-file-pdf';
+             else if (['jpg', 'jpeg', 'png'].includes(ext)) icon = 'fa-file-image';
+             else if (['doc', 'docx'].includes(ext)) icon = 'fa-file-word';
+             else if (['html', 'htm'].includes(ext)) icon = 'fa-file-code';
+        %>
+          <li>
+            <a class="file-tab-link" href="/uploads/<%= encodeURIComponent(f) %>" target="_blank">
+              <i class="fas <%= icon %> fa-2x mb-2"></i><br>
+              <%= displayName || f %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+
+      <% if (files.length === 0) { %>
+        <div class="text-center py-5">
+          <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+          <p class="text-muted">No resources uploaded yet. Be the first to share!</p>
+        </div>
+      <% } %>
+    </div>
+
   </div>
-</section>
+</div>
 <script>
+// Update file input label with selected filename
+document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+  const fileName = e.target.files[0]?.name || 'Choose file (PDF, DOC, Images)';
+  const label = document.querySelector('.custom-file-label');
+  label.textContent = fileName;
+});
+
 function cleanName(name) {
   return name
-    .replace(/^\d+_/, '')                    // Remove timestamp prefix (e.g., "1734567890_")
-    .replace(/\.[^/.]+$/, '')                // Remove file extension (.pdf, .docx, .html, etc.)
+    .replace(/^\d+_/, '')                    // Remove timestamp prefix
+    .replace(/\.[^/.]+$/, '')                // Remove file extension
     .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
     .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
     .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
     .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
     .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
-    .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters (numbers, symbols)
-    .trim();                                 // Final trim
+    .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters
+    .trim();
+}
+
+function getFileIcon(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  if (ext === 'pdf') return 'fa-file-pdf';
+  if (['jpg', 'jpeg', 'png'].includes(ext)) return 'fa-file-image';
+  if (['doc', 'docx'].includes(ext)) return 'fa-file-word';
+  if (['html', 'htm'].includes(ext)) return 'fa-file-code';
+  return 'fa-file';
 }
 
 function loadFiles(){
- fetch("/files").then(r=>r.json()).then(files=>{
-   const list=document.getElementById("files");
-   list.innerHTML="";
-   files.forEach(f=>{
-     const li=document.createElement("li");
-     const a=document.createElement("a");
-     a.href="/uploads/"+encodeURIComponent(f);
-     a.textContent=cleanName(f);
-     a.className="file-tab-link";
-     li.appendChild(a);
-     list.appendChild(li);
-   });
- }).catch(err => console.error('Error loading files:', err));
+  fetch("/files").then(r=>r.json()).then(files=>{
+    const list=document.getElementById("files");
+    list.innerHTML="";
+
+    if (files.length === 0) {
+      list.innerHTML = '<div class="text-center py-5" style="grid-column: 1/-1;"><i class="fas fa-inbox fa-4x text-muted mb-3"></i><p class="text-muted">No resources uploaded yet. Be the first to share!</p></div>';
+      return;
+    }
+
+    files.forEach(f=>{
+      const li=document.createElement("li");
+      const a=document.createElement("a");
+      a.href="/uploads/"+encodeURIComponent(f);
+      a.target="_blank";
+      a.className="file-tab-link";
+
+      const icon = document.createElement("i");
+      icon.className = `fas ${getFileIcon(f)} fa-2x mb-2`;
+
+      const br = document.createElement("br");
+      const text = document.createTextNode(cleanName(f) || f);
+
+      a.appendChild(icon);
+      a.appendChild(br);
+      a.appendChild(text);
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  }).catch(err => console.error('Error loading files:', err));
 }
 
 loadFiles();
 
 document.getElementById("uploadForm").addEventListener("submit",function(e){
- e.preventDefault();
- const data=new FormData(this);
- const fileInput = this.querySelector('input[type="file"]');
- 
- if (!fileInput.files.length) {
-   alert('Please select a file to upload');
-   return;
- }
- 
- fetch("/upload",{
-   method:"POST",
-   body:data
- })
- .then(response => {
-   if (!response.ok) {
-     throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
-   }
-   return response;
- })
- .then(() => {
-   this.reset();
-   loadFiles();
-   alert('File uploaded successfully!');
- })
- .catch(error => {
-   console.error('Upload error:', error);
-   alert('Upload failed: ' + error.message);
- });
+  e.preventDefault();
+  const data=new FormData(this);
+  const fileInput = this.querySelector('input[type="file"]');
+  const submitBtn = this.querySelector('button[type="submit"]');
+
+  if (!fileInput.files.length) {
+    alert('Please select a file to upload');
+    return;
+  }
+
+  // Disable button during upload
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+  fetch("/upload",{
+    method:"POST",
+    body:data
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
+    }
+    return response;
+  })
+  .then(() => {
+    this.reset();
+    document.querySelector('.custom-file-label').textContent = 'Choose file (PDF, DOC, Images)';
+    loadFiles();
+    alert('File uploaded successfully!');
+  })
+  .catch(error => {
+    console.error('Upload error:', error);
+    alert('Upload failed: ' + error.message);
+  })
+  .finally(() => {
+    // Re-enable button
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-upload"></i> Upload File';
+  });
 });
 </script>
 <%- include('partials/footer') %>

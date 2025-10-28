@@ -1,19 +1,162 @@
-<%- include('partials/header', { title: 'Amicus Shipping LLC' }) %>
-<div class="container">
-  <div class="row">
-    <h2 id="h1">About Us</h2>
-    <p class="niceText">
-      <img src="/assets/images/cs1.jpg" alt="responsive image pic jivko 3" class="img-fluid imgJ">
-      At Amicus Shipping LLC we love people and shipping and would like to help everyone achieve a better and fuller life with the help of technology, hard work and a lot of passion! <br><br>
-      The world of the 21st century presented us with new challenges that require from us to do more, communicate better and reach further.<br><br>
-      Our mission is to bring the technology and cumulative human intelect to work together towards improving quality of life one little step after the other.<br><br>
-      We are calling for all that wish to help for improving the quality of life for the proffessionals of international transportation to either by donate funds or share their ideas.<br>
-      <a class="btn btn-primary" href="/buy_sim.html" target="blank" role="button">Power Sim</a>
-      <a class="btn btn-primary github" href="/power_sim.html" target="blank" role="button">Services</a>
-      <a class="btn btn-primary pdf" href="/resources" role="button">Resources</a>
-      <a class="btn btn-primary" href="/buy_Dsim.html" target="blank" role="button">Data Sim -70 countries</a>
-    </p>
+<%- include('partials/header', { title: 'Amicus Shipping LLC - Your Maritime Partner' }) %>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title animate-fade-in">Amicus Shipping LLC</h1>
+    <p class="hero-subtitle animate-fade-in-delay">Your Trusted Partner in Maritime Services</p>
+    <p class="hero-description">Connecting the world through innovative shipping solutions, SIM services, and maritime expertise</p>
+    <div class="hero-buttons">
+      <a href="#services" class="btn btn-hero btn-primary">Our Services</a>
+      <a href="/resources" class="btn btn-hero btn-outline">Resources</a>
+    </div>
   </div>
-</div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <div class="about-image-wrapper">
+          <img src="/assets/images/cs1.jpg" alt="Amicus Shipping Team" class="img-fluid rounded shadow-lg">
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <h2 class="section-title">Welcome Aboard</h2>
+        <p class="lead">At Amicus Shipping LLC, we combine maritime expertise with cutting-edge technology to deliver exceptional services to the shipping industry.</p>
+        <p>With years of experience in international shipping and maritime services, we're dedicated to making your operations smoother, more efficient, and more connected than ever before.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-subtitle">Comprehensive maritime solutions tailored to your needs</p>
+    </div>
+
+    <div class="row">
+      <!-- SIM Cards Service -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-sim-card"></i>
+          </div>
+          <h3>Global SIM Solutions</h3>
+          <p>Stay connected anywhere in the world with our international SIM card services designed for maritime professionals.</p>
+          <span class="badge badge-success">Available Now</span>
+        </div>
+      </div>
+
+      <!-- Crew Change Service -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Crew Change Services</h3>
+          <p>Professional crew change programming and logistics support for seamless crew transitions.</p>
+          <span class="badge badge-warning">Coming Soon</span>
+        </div>
+      </div>
+
+      <!-- Husbandry Service -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-anchor"></i>
+          </div>
+          <h3>Ship Husbandry</h3>
+          <p>Complete port agency and ship husbandry services to support your vessels in port.</p>
+          <span class="badge badge-warning">Coming Soon</span>
+        </div>
+      </div>
+
+      <!-- Cash to Master Service -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-hand-holding-usd"></i>
+          </div>
+          <h3>Cash to Master</h3>
+          <p>Reliable and secure cash delivery services to ship masters worldwide.</p>
+          <span class="badge badge-warning">Coming Soon</span>
+        </div>
+      </div>
+
+      <!-- Resources Service -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="service-card service-card-highlight">
+          <div class="service-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <h3>Resources & Cheatsheets</h3>
+          <p>Access our library of helpful guides, cheatsheets, and maritime resources.</p>
+          <a href="/resources" class="btn btn-sm btn-primary mt-2">View Resources</a>
+        </div>
+      </div>
+
+      <!-- Rewards Program Service -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="service-card service-card-highlight">
+          <div class="service-icon">
+            <i class="fas fa-gift"></i>
+          </div>
+          <h3>Rewards Program</h3>
+          <p>Join our rewards program and earn benefits with every service you use.</p>
+          <a href="https://cards-reward-app-47c3b7cf1eb6.herokuapp.com/" target="_blank" class="btn btn-sm btn-primary mt-2">Join Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Our Work</h2>
+      <p class="section-subtitle">Serving the maritime industry with excellence</p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="gallery-item">
+          <img src="/assets/images/ctm.jpg" alt="Maritime Service" class="img-fluid rounded shadow">
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="gallery-item">
+          <img src="/assets/images/constructor.jpg" alt="Ship Services" class="img-fluid rounded shadow">
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="gallery-item">
+          <img src="/assets/images/planner1.jpg" alt="Planning Services" class="img-fluid rounded shadow">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container text-center">
+    <h2 class="mb-4">Ready to Set Sail?</h2>
+    <p class="lead mb-4">Let's discuss how Amicus Shipping can support your maritime operations</p>
+    <a href="/resources" class="btn btn-lg btn-light">Explore Resources</a>
+  </div>
+</section>
+
 <%- include('partials/footer') %>
 
