@@ -419,6 +419,76 @@ body {
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
   }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-outline-light {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .inquiry-form-wrapper {
+    max-width: 600px;
+    margin: 2.5rem auto 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    text-align: left;
+
+    &[hidden] {
+      display: none;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--dark-gray);
+    }
+
+    textarea.form-control {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .inquiry-status {
+      margin: 1rem 0 0;
+      min-height: 1.5rem;
+      font-weight: 600;
+
+      &.error {
+        color: var(--gold-accent);
+      }
+
+      &.success {
+        color: #b6f5c5;
+      }
+    }
+  }
 }
 
 /* Footer */

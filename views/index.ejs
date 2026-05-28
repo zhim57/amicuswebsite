@@ -165,42 +165,130 @@
   </div>
 </section>
 
-<!-- Gallery Section -->
-<section class="gallery-section">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="section-title">Our Work</h2>
-      <p class="section-subtitle">Serving the maritime industry with excellence</p>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="gallery-item">
-          <img src="/assets/images/ctm.jpg" alt="Maritime Service" class="img-fluid rounded shadow">
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="gallery-item">
-          <img src="/assets/images/constructor.jpg" alt="Ship Services" class="img-fluid rounded shadow">
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="gallery-item">
-          <img src="/assets/images/planner1.jpg" alt="Planning Services" class="img-fluid rounded shadow">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CTA Section -->
 <section class="cta-section">
   <div class="container text-center">
     <h2 class="mb-4">Ready to Set Sail?</h2>
     <p class="lead mb-4">Let's discuss how Amicus Shipping can support your maritime operations</p>
-    <a href="/resources" class="btn btn-lg btn-light">Explore Resources</a>
+    <div class="cta-buttons">
+      <button type="button" class="btn btn-lg btn-light" id="inquiryToggle" aria-expanded="false" aria-controls="inquiryForm">Send an Inquiry</button>
+      <a href="/resources" class="btn btn-lg btn-outline-light">Explore Resources</a>
+    </div>
+
+    <div class="inquiry-form-wrapper" id="inquiryForm" hidden>
+      <form id="inquiryFormEl" novalidate>
+        <div class="form-group">
+          <label for="inqName">Name</label>
+          <input type="text" class="form-control" id="inqName" name="name" maxlength="100" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label for="inqEmail">Your Email</label>
+          <input type="email" class="form-control" id="inqEmail" name="email" maxlength="150" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label for="inqMessage">Your Inquiry</label>
+          <textarea class="form-control" id="inqMessage" name="message" maxlength="2000" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-light btn-lg" id="inquirySubmit">Send</button>
+        <p class="inquiry-status" id="inquiryStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var RATE_KEY = 'amicus_inquiry_last';
+  var SIX_HOURS = 6 * 60 * 60 * 1000;
+  var RECIPIENT = 'zhim57@yahoo.com';
+
+  var toggle = document.getElementById('inquiryToggle');
+  var wrapper = document.getElementById('inquiryForm');
+  var form = document.getElementById('inquiryFormEl');
+  var statusEl = document.getElementById('inquiryStatus');
+  var submitBtn = document.getElementById('inquirySubmit');
+  if (!toggle || !wrapper || !form) return;
+
+  function lastSent() {
+    try {
+      var v = parseInt(localStorage.getItem(RATE_KEY) || '0', 10);
+      return isNaN(v) ? 0 : v;
+    } catch (e) {
+      return 0;
+    }
+  }
+  function markSent() {
+    try { localStorage.setItem(RATE_KEY, String(Date.now())); } catch (e) {}
+  }
+  function msRemaining() {
+    return SIX_HOURS - (Date.now() - lastSent());
+  }
+  function rateLimited() {
+    return msRemaining() > 0;
+  }
+  function formatRemaining(ms) {
+    var mins = Math.ceil(ms / 60000);
+    var h = Math.floor(mins / 60);
+    var m = mins % 60;
+    return h > 0 ? h + 'h ' + m + 'm' : m + 'm';
+  }
+  function setStatus(msg, type) {
+    statusEl.textContent = msg;
+    statusEl.className = 'inquiry-status' + (type ? ' ' + type : '');
+  }
+  function applyLimitState() {
+    if (rateLimited()) {
+      submitBtn.disabled = true;
+      setStatus('You have already sent an inquiry recently. Please try again in ' + formatRemaining(msRemaining()) + '.', 'error');
+    } else {
+      submitBtn.disabled = false;
+      if (statusEl.classList.contains('error')) setStatus('', '');
+    }
+  }
+
+  toggle.addEventListener('click', function () {
+    if (wrapper.hasAttribute('hidden')) {
+      wrapper.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+      applyLimitState();
+      var nameField = document.getElementById('inqName');
+      if (nameField) nameField.focus();
+    } else {
+      wrapper.setAttribute('hidden', '');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (rateLimited()) {
+      applyLimitState();
+      return;
+    }
+    if (!form.checkValidity()) {
+      if (form.reportValidity) form.reportValidity();
+      else setStatus('Please fill in all fields.', 'error');
+      return;
+    }
+    var name = document.getElementById('inqName').value.trim();
+    var email = document.getElementById('inqEmail').value.trim();
+    var message = document.getElementById('inqMessage').value.trim();
+
+    var subject = 'Website Inquiry from ' + name;
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+    var mailto = 'mailto:' + RECIPIENT +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    markSent();
+    window.location.href = mailto;
+    setStatus('Opening your email app to send the inquiry. Thank you!', 'success');
+    submitBtn.disabled = true;
+  });
+
+  applyLimitState();
+})();
+</script>
 
 <%- include('partials/footer') %>
 
