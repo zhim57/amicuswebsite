@@ -427,19 +427,6 @@ body {
     flex-wrap: wrap;
   }
 
-  .btn-outline-light {
-    padding: 1rem 3rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-  }
-
   .inquiry-form-wrapper {
     max-width: 600px;
     margin: 2.5rem auto 0;
