@@ -1,27 +1,48 @@
-name: Deploy to VPS
-
+name: Validate and deploy to VPS
 on:
   push:
-    branches:
-      - master
-
+    branches: [master]
+  pull_request:
+    branches: [master]
+permissions:
+  contents: read
+concurrency:
+  group: amicus-deploy-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
-  deploy:
+  validate:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Deploy to VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /var/www/amicusshipping
-          git pull origin master
-          npm install
-          pm2 restart amicusshippingllc
-          pm2 save
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test -- --runInBand
+      - run: npm run build
+      - run: npm run check:links
+      - run: npx playwright install --with-deps --no-shell chromium
+      - run: npm run test:browser
+  deploy:
+    if: github.event_name == 'push'
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy validated source
+        uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17 # v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -eu
+            cd /var/www/amicusshipping
+            git pull --ff-only origin master
+            test "$(git rev-parse HEAD)" = "${{ github.sha }}"
+            npm ci --include=dev
+            npm run build
+            pm2 restart amicusshippingllc --update-env
+            pm2 save

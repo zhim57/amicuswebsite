@@ -1,79 +1,181 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const multer = require('multer');
-const dotenv= require('dotenv')
+const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
-const app = express();
+const { site, pages, resources } = require('./src/site-data');
+const { securityHeaders, parseTrustProxy } = require('./src/server/security');
+const { createContact, visitorTypes, interests } = require('./src/server/contact');
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+function createApp(environment = process.env) {
+  const app = express();
+  const assetsDir = path.join(__dirname, 'public', 'assets');
+  const quarantinedPhoto = path.join(assetsDir, 'images', 'ps4.jpg');
+  const uploadDir = environment.UPLOAD_DIR
+    ? path.resolve(environment.UPLOAD_DIR)
+    : path.join(__dirname, 'uploads');
 
-const uploadDir = process.env.UPLOAD_DIR
-  ? path.resolve(process.env.UPLOAD_DIR)
-  : path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+  app.disable('x-powered-by');
+  app.set('trust proxy', parseTrustProxy(environment.TRUST_PROXY));
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, 'views'));
+  // Preserve the deployment setting and existing files without creating or serving storage.
+  app.locals.uploadDir = uploadDir;
+  app.locals.analyticsEnabled = environment.NODE_ENV === 'production' && environment.ANALYTICS_ENABLED !== 'false';
+  app.use(securityHeaders({ production: environment.NODE_ENV === 'production', analyticsOrigin: site.analyticsOrigin }));
+
+  const contact = createContact({ secret: environment.CONTACT_FORM_SECRET });
+  const canonicalOrigin = new URL(site.url).origin;
+
+  function renderPage(req, res, route = req.path, extra = {}) {
+    const page = pages[route];
+    return res.render(page.view, {
+      site, page, resources,
+      currentPath: route,
+      canonicalUrl: canonicalOrigin + (route === '/' ? '/' : route),
+      currentYear: new Date().getFullYear(),
+      contactOptions: { visitorTypes, interests },
+      form: contact.emptyForm(),
+      ...extra,
+    });
+  }
+
+  function gone(req, res) {
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    res.set('Cache-Control', 'no-store');
+    return res.status(410).type('text').send('This public resource is no longer available. Please visit /resources for curated maritime information.');
+  }
+
+  // All methods are blocked before parsing bodies or touching the filesystem.
+  app.use(['/upload', '/uploads', '/files'], gone);
+
+  const redirects = {
+    '/index.html': '/',
+    '/resources.html': '/resources',
+    '/contact.html': '/contact',
+    '/services.html': '/solutions',
+    '/about.html': '/about',
+    '/buy_sim.html': '/contact#existing-sim',
+    '/buy_Dsim.html': '/contact#existing-sim',
+    '/crew_change.html': '/solutions#operations',
+    '/operators-agencies': '/operators',
+    '/privacy_policy.html': '/privacy',
+    '/Terms_and_conditions.html': '/terms',
+    '/deleted_code/contact.html': '/contact',
+    '/deleted_code/services.html': '/solutions',
+    '/deleted_code/resources.html': '/resources',
+    '/deleted_code/buy_sim.html': '/contact#existing-sim',
+    '/deleted_code/buy_Dsim.html': '/contact#existing-sim',
+    '/deleted_code/crew_change.html': '/solutions#operations',
+    '/deleted_code/privacy_policy.html': '/privacy',
+    '/deleted_code/Terms_and_conditions.html': '/terms',
+  };
+  for (const [from, to] of Object.entries(redirects)) {
+    app.get(from, (req, res) => {
+      if (from.startsWith('/deleted_code/')) res.set('X-Robots-Tag', 'noindex, nofollow');
+      res.redirect(301, to);
+    });
+  }
+  app.use('/deleted_code', gone);
+
+  // Only reviewed site assets are public. Never expose an UPLOAD_DIR nested here,
+  // including an asset symlink that resolves into retained upload storage.
+  app.use('/assets', (req, res, next) => {
+    try {
+      const candidate = path.resolve(assetsDir, '.' + decodeURIComponent(req.path));
+      if (!isWithin(assetsDir, candidate) || isWithin(uploadDir, candidate) || isWithin(quarantinedPhoto, candidate)) return gone(req, res);
+      if (fs.existsSync(candidate)) {
+        const realAsset = fs.realpathSync(candidate);
+        const realUploads = fs.existsSync(uploadDir) ? fs.realpathSync(uploadDir) : uploadDir;
+        if (!isWithin(assetsDir, realAsset) || isWithin(realUploads, realAsset) || isWithin(quarantinedPhoto, realAsset)) return gone(req, res);
+      }
+      return next();
+    } catch (error) {
+      return res.status(400).type('text').send('Invalid asset path.');
+    }
+  }, express.static(assetsDir, {
+    dotfiles: 'deny', index: false, redirect: false, maxAge: '1h',
+    setHeaders(res, assetPath) {
+      if (isWithin(path.join(assetsDir, 'docs'), assetPath)) {
+        res.set('X-Robots-Tag', 'noindex, nofollow');
+        res.attachment(path.basename(assetPath));
+      }
+    },
+  }));
+
+  app.get('/robots.txt', (req, res) => {
+    // Allow crawlers to see the 410/noindex response for retired upload URLs.
+    res.type('text').send(`User-agent: *\nAllow: /\n\nSitemap: ${canonicalOrigin}/sitemap.xml\n`);
+  });
+
+  app.get('/sitemap.xml', (req, res) => {
+    const urls = Object.entries(pages)
+      .filter(([, page]) => page.sitemap !== false && !page.noindex)
+      .map(([route]) => `  <url><loc>${escapeXml(canonicalOrigin + route)}</loc></url>`);
+    res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>`);
+  });
+
+  app.post('/contact',
+    (req, res, next) => {
+      res.set('Cache-Control', 'no-store');
+      res.set('X-Robots-Tag', 'noindex, nofollow');
+      next();
+    },
+    contact.rateLimit,
+    express.urlencoded({ extended: false, limit: '16kb', parameterLimit: 20 }),
+    (req, res) => {
+      const form = contact.process(req, canonicalOrigin, site.email);
+      res.status(form.status);
+      return renderPage(req, res, '/contact', { form });
+    });
+
+  for (const route of Object.keys(pages)) {
+    app.get(route, (req, res) => {
+      if (route === '/contact') res.set('Cache-Control', 'no-store');
+      if (pages[route].noindex) res.set('X-Robots-Tag', 'noindex, follow');
+      return renderPage(req, res, route);
+    });
+  }
+
+  app.use((req, res) => {
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    const page = { title: 'Page not found', description: 'Find your way back to Amicus Shipping.', status: 404, heading: 'Page not found', message: 'Find the maritime solutions, resources and contact information you need below.', noindex: true };
+    res.status(404).render('error', {
+      site, page, resources, currentPath: '', canonicalUrl: canonicalOrigin + '/', currentYear: new Date().getFullYear(),
+    });
+  });
+
+  app.use((error, req, res, next) => {
+    if (res.headersSent) return next(error);
+    res.set('Cache-Control', 'no-store');
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    const status = error.type === 'entity.too.large' || error.type === 'parameters.too.many' ? 413 : [400, 429].includes(error.status) ? error.status : 500;
+    if (req.path === '/contact' && status < 500) {
+      res.status(status);
+      return renderPage(req, res, '/contact', {
+        form: { ...contact.emptyForm(), errors: { form: status === 429 ? 'Too many inquiry attempts. Please try again in 15 minutes, or use the email address below.' : 'The inquiry could not be read. Please keep the message below 2,000 characters and try again.' } },
+      });
+    }
+    // Do not log request bodies, form contents, credentials, or stack traces to clients.
+    if (status === 500) console.error('Request failed', { method: req.method, status });
+    return res.status(status).type('text').send(status === 500 ? 'Something went wrong. Please try again later.' : 'Invalid request.');
+  });
+
+  return app;
 }
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + '_' + file.originalname);
-  }
-});
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: function(req, file, cb) {
-    const allowed = /\.(pdf|jpg|jpeg|png|doc|docx|html|htm)$/i;
-    if (allowed.test(path.extname(file.originalname))) {
-      cb(null, true);
-    } else {
-      cb(new Error('Invalid file type'));
-    }
-  }
-});
-
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-function renderResources(req, res) {
-  fs.readdir(uploadDir, (err, files) => {
-    if (err) files = [];
-    res.render('resources', { files });
-  });
+function isWithin(directory, candidate) {
+  const relative = path.relative(directory, candidate);
+  return relative === '' || (!relative.startsWith('..' + path.sep) && relative !== '..' && !path.isAbsolute(relative));
 }
 
-app.get('/resources', renderResources);
-app.get('/index.html', (req, res) => res.redirect('/'));
-app.get('/resources.html', (req, res) => res.redirect('/resources'));
+function escapeXml(value) {
+  return value.replace(/[<>&"']/g, (character) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[character]));
+}
 
-app.use('/uploads', express.static(uploadDir));
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.post('/upload', (req, res) => {
-  upload.single('file')(req, res, function(err) {
-    if (err) {
-      return res.status(400).send('Invalid file upload');
-    }
-    res.redirect('/resources');
-  });
-});
-
-app.get('/files', (req, res) => {
-  fs.readdir(uploadDir, (err, files) => {
-    if (err) return res.status(500).json([]);
-    res.json(files);
-  });
-});
-
+const app = createApp();
 const PORT = process.env.PORT || 3016;
 
 if (require.main === module) {
@@ -83,3 +185,4 @@ if (require.main === module) {
 }
 
 module.exports = app;
+module.exports.createApp = createApp;

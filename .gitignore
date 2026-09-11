@@ -71,6 +71,8 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.*
+!.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -112,4 +114,5 @@ uploads/*
 # Built assets
 public/assets/js/*.js
 public/assets/css/style.css
+.qa/
 

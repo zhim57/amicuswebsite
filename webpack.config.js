@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'production',
   entry: {
+    site: './src/js/site.js',
     'generate_schedule': './src/js/generate_schedule.js',
     'generate_rate_table': './src/js/generate_rate_table.js',
     style: './src/scss/style.scss'
@@ -21,7 +22,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', { loader: 'sass-loader', options: { sassOptions: { outputStyle: 'compressed' } } }]
       }
     ]
   },
@@ -30,7 +31,7 @@ module.exports = {
   ],
   optimization: {
     usedExports: false,
-    minimize: false
+    minimize: true
   },
   resolve: {
     extensions: ['.ts', '.js']

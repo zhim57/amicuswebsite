@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+<main id="main-content">
+  <section class="page-intro">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Operators &amp; Agencies</li></ol></nav>
+      <p class="eyebrow">For operators, managers, manning companies &amp; agents</p>
+      <h1>Practical support for the people behind the crew.</h1>
+      <p class="lead">Explore connectivity and digital tools around the daily realities of crew travel and coordination. Start with your operational requirement.</p>
+      <div class="inline-links"><a class="button button-primary" href="/contact" data-event="operator_inquiry">Talk to Amicus</a><a class="text-link" href="/solutions">Explore the solutions</a></div>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="crew-needs-heading">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">Where we can start</p><h2 id="crew-needs-heading">Three practical conversations.</h2></div>
+      <div class="grid-three">
+        <article class="feature-card"><p class="eyebrow">01 / Connectivity</p><h3>Help crews prepare for travel.</h3><p>Give seafarers a clear route to mobile data plans and setup guidance. For repeat or group requirements, share your destinations, timing and expected crew numbers so we can discuss the options.</p><a class="text-link" href="/solutions#connectivity">Explore crew connectivity</a></article>
+        <article class="feature-card"><p class="eyebrow">02 / Operations</p><h3>Explore the crew-change workflow.</h3><p>Review the existing application and discuss how it could fit your coordination process. Local arrangements, service availability and responsibilities need to be confirmed for each operation.</p><a class="text-link" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_tool_click">Open crew-change tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></article>
+        <article class="feature-card"><p class="eyebrow">03 / Practical tools</p><h3>Describe a recurring problem.</h3><p>If your team keeps working around the same information gap or repetitive task, tell us how the process works today. That is a useful starting point for a conversation about digital tools.</p><a class="text-link" href="/contact" data-event="operator_inquiry">Discuss an operational need</a></article>
+      </div>
+    </div>
+  </section>
+  <section class="section section-soft" aria-labelledby="inquiry-details-heading">
+    <div class="container split">
+      <div><p class="eyebrow">Make the first conversation useful</p><h2 id="inquiry-details-heading">Tell us what needs to happen.</h2><p>A short outline is enough to get started. The contact form lets you identify your role and the area you want to discuss.</p><a class="text-link" href="/contact" data-event="operator_inquiry">Send a business inquiry</a></div>
+      <ol class="numbered-list">
+        <li><h3>Your team and its role</h3><p>Operator, ship manager, manning company or agency, and who will use the service or tool.</p></li>
+        <li><h3>Location, timing and scale</h3><p>Relevant ports or travel destinations, expected dates, and whether the requirement is occasional or recurring.</p></li>
+        <li><h3>The problem to solve</h3><p>What happens today, where it becomes difficult, and what a useful outcome would look like.</p></li>
+      </ol>
+    </div>
+  </section>
+  <section class="section"><div class="container split"><div><p class="eyebrow">A guide to share with your crew</p><h2>Connectivity is part of travel preparation.</h2><p>Our crew-change connectivity guide brings the essential questions together before departure.</p></div><div><a class="button button-secondary" href="/resources/crew-change-connectivity" data-event="resource_view">Read the crew travel guide</a></div></div></section>
+</main>
+<%- include('partials/footer') %>

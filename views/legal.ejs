@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+<main id="main-content">
+  <section class="page-intro"><div class="container"><nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><%= page.kind === 'privacy' ? 'Privacy' : 'Terms' %></li></ol></nav><p class="eyebrow">Amicus Shipping LLC</p><h1><%= page.kind === 'privacy' ? 'Privacy notice' : 'Website terms' %></h1></div></section>
+  <section class="section"><div class="container legal-content">
+  <% if (page.kind === 'privacy') { %>
+    <p>This notice describes how the Amicus Shipping corporate website works. The eSIM store and other linked applications have their own privacy information.</p>
+    <h2>Contact details you provide</h2><p>When you use the inquiry form, your name, email, selections and message are sent to this website to validate the fields and prepare an email link. The application does not save that submission in a database or send email automatically. You choose whether to send the prepared message through your email provider.</p><p>If you send us an email, Amicus and the email providers involved will handle the message to respond to your inquiry. Avoid including payment card details, passwords or sensitive personal documents.</p>
+    <h2>Site usage and technical information</h2><p>The production site uses our existing analytics service at analytics.amicusshippingllc.com to understand page visits and clicks on key links. Our event hooks do not include contact fields, message text or email-draft links. The analytics service may process technical visit information such as the page, browser, device and referring site.</p><p>The corporate application does not set login or advertising cookies. Short-lived request information, including IP addresses, is used in server memory to limit repeated form submissions. Hosting and proxy services may keep technical request logs separately.</p>
+    <h2>Your choices and questions</h2><p>You can contact us directly instead of using the form. The configured tracker is instructed to respect the browser’s Do Not Track setting. For a question about your information or to request its correction or deletion, email <a href="mailto:<%= site.email %>"><%= site.email %></a>.</p>
+  <% } else { %>
+    <p>This website introduces Amicus Shipping LLC and provides routes to connectivity, crew tools and maritime resources.</p>
+    <h2>Information and resources</h2><p>Guides on this site provide general preparation information. Check the current instructions for your device, plan, provider or operational process before acting. A study tool does not issue a qualification or replace official training requirements.</p>
+    <h2>Separate services and purchases</h2><p>Purchases take place in the dedicated eSIM store or another clearly linked service. Review that service’s current product details, coverage, eligibility, pricing and terms before placing an order. A link from this website does not guarantee availability or establish a service booking.</p>
+    <h2>Inquiries</h2><p>The contact form prepares an email draft. You must send the email yourself. An inquiry does not confirm transport, connectivity provisioning or another commercial arrangement.</p>
+    <h2>Using the site</h2><p>Please do not misuse the forms, attempt unauthorized access or submit harmful content. Public file uploads are not offered. If you find an error or want to discuss a service, <a href="/contact">contact Amicus</a>.</p>
+  <% } %>
+  </div></section>
+</main>
+<%- include('partials/footer') %>

@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+<main id="main-content">
+  <section class="page-intro">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Solutions</li></ol></nav>
+      <p class="eyebrow">Amicus solutions</p>
+      <h1>Practical tools for maritime life.</h1>
+      <p class="lead">Connectivity for the journey. Tools for the work. Find the right starting point for you or your crew.</p>
+      <div class="inline-links"><a href="#connectivity" class="text-link">Crew connectivity</a><a href="#operations" class="text-link">Crew change &amp; operations</a><a href="#tools" class="text-link">Maritime resources</a></div>
+    </div>
+  </section>
+  <section class="section" id="connectivity" aria-labelledby="connectivity-heading">
+    <div class="container split">
+      <div><p class="eyebrow">01 / Crew connectivity</p><h2 id="connectivity-heading">Mobile data between ship and shore.</h2></div>
+      <div class="stack">
+        <p>Explore eSIM plans for crew-change travel, international transit, port calls and shore leave. The dedicated Amicus store brings plan selection and setup guidance into one place.</p>
+        <p>Check your device, destinations, data allowance and plan validity before buying. Coverage and activation conditions depend on the plan you choose.</p>
+        <div class="inline-links"><a class="button button-primary" href="<%= site.shopUrl %>" target="_blank" rel="noopener noreferrer" data-event="buy_esim_click">Explore eSIM plans <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="/seafarers">Connectivity for seafarers</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="section section-soft" id="operations" aria-labelledby="operations-heading">
+    <div class="container split">
+      <div><p class="eyebrow">02 / Crew change &amp; operations</p><h2 id="operations-heading">A clearer starting point for crew-change planning.</h2></div>
+      <div class="stack">
+        <p>The Amicus crew-change application gives crews and maritime teams a dedicated place to begin their crew-change workflow.</p>
+        <p>Open the tool to register, or contact us with your location, timing and operational requirements to discuss how it could fit your work. Confirm local arrangements and availability with the people handling your crew change.</p>
+        <div class="inline-links"><a class="button button-primary" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_tool_click">Open crew-change tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="/operators">For operators &amp; agencies</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="tools" aria-labelledby="tools-heading">
+    <div class="container split">
+      <div><p class="eyebrow">03 / Maritime tools &amp; resources</p><h2 id="tools-heading">Useful preparation for the work ahead.</h2></div>
+      <div class="stack">
+        <p>Read focused guides on travel connectivity and choosing the right Amicus tool. Petroleum inspection practice is also available through the existing study application.</p>
+        <p>The inspection application is an independent study tool. It does not award certification or replace official training and examination materials.</p>
+        <div class="inline-links"><a class="button button-primary" href="/resources">Browse resources</a><a class="text-link" href="<%= site.inspectionUrl %>" target="_blank" rel="noopener noreferrer">Petroleum inspection practice <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+      </div>
+    </div>
+  </section>
+  <section class="section section-dark">
+    <div class="container split"><div><p class="eyebrow">Talk to Amicus</p><h2>Have a recurring crew or operations need?</h2><p>Tell us what your team needs to get done, and where the current process gets difficult.</p></div><div><a class="button button-light" href="/contact" data-event="operator_inquiry">Discuss your requirements</a></div></div>
+  </section>
+</main>
+<%- include('partials/footer') %>

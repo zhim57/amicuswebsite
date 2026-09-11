@@ -1,53 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="Description" content="Amicus Shipping LLC - Your trusted partner in maritime services, global SIM solutions, and shipping support" />
-
-  <!-- Favicon - prevents browser from repeatedly searching for it -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page.title %></title>
+  <meta name="description" content="<%= page.description %>">
+  <% if (page.noindex) { %><meta name="robots" content="noindex, follow"><% } %>
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <meta name="theme-color" content="#102d3b">
+  <meta property="og:type" content="<%= page.view === 'article' ? 'article' : 'website' %>">
+  <meta property="og:site_name" content="<%= site.name %>">
+  <meta property="og:title" content="<%= page.title %>">
+  <meta property="og:description" content="<%= page.description %>">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+  <meta property="og:image" content="<%= site.url %>/assets/images/cs1.jpg">
+  <meta property="og:image:alt" content="A vessel making its way through port at sunset">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= page.title %>">
+  <meta name="twitter:description" content="<%= page.description %>">
+  <meta name="twitter:image" content="<%= site.url %>/assets/images/cs1.jpg">
   <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-  <!-- Preconnect to external resources to reduce latency -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
-  <link rel="stylesheet" href="/assets/css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <title><%= title %></title>
-  <script defer src="https://analytics.amicusshippingllc.com/script.js" data-website-id="6340d256-68a3-48d9-b975-787cb32959b0"></script>
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script defer src="/assets/js/site.js"></script>
+  <% if (analyticsEnabled) { %>
+  <script defer src="<%= site.analyticsOrigin %>/script.js" data-website-id="<%= site.analyticsWebsiteId %>" data-domains="amicusshippingllc.com,www.amicusshippingllc.com" data-do-not-track="true" data-exclude-search="true"></script>
+  <% } %>
+  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: site.url + '/assets/images/favicon.svg', contactPoint: { '@type': 'ContactPoint', email: site.email, contactType: 'customer inquiries' } }).replace(/</g, '\\u003c') %></script>
+  <% if (currentPath !== '/' && !page.noindex) { %>
+  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' }, ...(page.view === 'article' ? [{ '@type': 'ListItem', position: 2, name: 'Resources', item: site.url + '/resources' }] : []), { '@type': 'ListItem', position: page.view === 'article' ? 3 : 2, name: page.heading || page.title.split(' | ')[0], item: canonicalUrl }] }).replace(/</g, '\\u003c') %></script>
+  <% } %>
 </head>
 <body>
-
-   <!-- Modern Navigation -->
- <nav class="navbar navbar-expand-lg navbar-dark modern-navbar fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <i class="fas fa-ship"></i> Amicus Shipping LLC
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Amicus Shipping LLC home">
+        <img src="/assets/images/favicon.svg" width="40" height="40" alt="">
+        <span class="brand-type">AMICUS<span>SHIPPING LLC</span></span>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/#services">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/resources">Resources</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://cards-reward-app-47c3b7cf1eb6.herokuapp.com/" target="_blank">Rewards</a>
-          </li>
-        </ul>
-      </div> 
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <% site.nav.forEach(item => { %><a href="<%= item.href %>" <%- currentPath === item.href || (item.href === '/resources' && currentPath.startsWith('/resources/')) ? 'aria-current="page"' : '' %>><%= item.label %></a><% }) %>
+      </nav>
+      <a class="button button-primary header-cta" href="<%= site.shopUrl %>" data-event="buy_esim_click">Buy eSIM <span aria-hidden="true">↗</span></a>
+      <details class="mobile-nav">
+        <summary aria-label="Main menu"><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></summary>
+        <nav aria-label="Mobile navigation">
+          <% site.nav.forEach(item => { %><a href="<%= item.href %>" <%- currentPath === item.href ? 'aria-current="page"' : '' %>><%= item.label %></a><% }) %>
+        </nav>
+      </details>
     </div>
-  </nav>
-
+  </header>

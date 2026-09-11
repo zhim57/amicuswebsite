@@ -1,203 +1,35 @@
-<%- include('partials/header', { title: 'Resources - Amicus Shipping LLC' }) %>
-
-<div class="resources-page">
-  <div class="container">
-
-    <!-- Page Header -->
-    <div class="text-center mb-5">
-      <h1 class="section-title">Resources & Cheatsheets</h1>
-      <p class="section-subtitle">Helpful guides and documents for maritime professionals</p>
+<%- include('partials/header') %>
+<main id="main-content">
+  <section class="page-intro">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Resources</li></ol></nav>
+      <p class="eyebrow">Amicus field notes</p>
+      <h1>A little preparation goes a long way.</h1>
+      <p class="lead">Focused guides for seafarers and the people supporting them. Start with travel connectivity, crew-change preparation or the right tool for the job.</p>
     </div>
-
-    <!-- Rewards Program Callout -->
-    <div class="row mb-5">
-      <div class="col-lg-8 offset-lg-2">
-        <div class="alert alert-info text-center" style="background: linear-gradient(135deg, var(--ocean-deep), var(--primary-blue)); border: none; color: white; border-radius: 15px; padding: 2rem;">
-          <i class="fas fa-gift fa-2x mb-3"></i>
-          <h4 class="mb-3">Join Our Rewards Program</h4>
-          <p class="mb-3">Earn benefits with every service you use. Sign up today and start earning rewards!</p>
-          <a href="https://cards-reward-app-47c3b7cf1eb6.herokuapp.com/" target="_blank" class="btn btn-light btn-lg">
-            <i class="fas fa-external-link-alt"></i> Join Rewards Program
-          </a>
-        </div>
+  </section>
+  <section class="section" aria-labelledby="guides-heading">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">Practical reading</p><h2 id="guides-heading">Guides from Amicus.</h2></div>
+      <div class="resource-list">
+        <% resources.forEach(function(resource) { %>
+          <article class="resource-row">
+            <div><p class="meta"><%= resource.category %> <span aria-hidden="true">/</span> <%= resource.readTime %></p><h3><a href="/resources/<%= resource.slug %>" data-event="resource_view"><%= resource.title %></a></h3><p><%= resource.summary %></p></div>
+            <a class="text-link" href="/resources/<%= resource.slug %>" data-event="resource_view" aria-label="Read <%= resource.title %>">Read guide <span aria-hidden="true">→</span></a>
+          </article>
+        <% }) %>
       </div>
     </div>
-
-    <!-- Upload Section -->
-    <div class="upload-section">
-      <h3 class="mb-4"><i class="fas fa-cloud-upload-alt text-primary"></i> Upload Resources</h3>
-      <p class="text-muted mb-4">Share helpful cheatsheets and guides with the community</p>
-      <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
-        <div class="row align-items-end">
-          <div class="col-md-8 mb-3 mb-md-0">
-            <div class="custom-file">
-              <input type="file" name="file" class="custom-file-input" id="customFile" required>
-              <label class="custom-file-label" for="customFile">Choose file (PDF, DOC, Images)</label>
-            </div>
-            <small class="form-text text-muted">
-              <i class="fas fa-info-circle"></i> Supported formats: PDF, JPG, PNG, DOC, DOCX, HTML (Max 5MB)
-            </small>
-          </div>
-          <div class="col-md-4">
-            <button type="submit" class="btn btn-primary btn-block" style="height: 48px;">
-              <i class="fas fa-upload"></i> Upload File
-            </button>
-          </div>
-        </div>
-      </form>
+  </section>
+  <section class="section section-soft" aria-labelledby="resources-tools-heading">
+    <div class="container split">
+      <div><p class="eyebrow">Working tools</p><h2 id="resources-tools-heading">Ready to take the next step?</h2><p>Go directly to the application or guidance you need.</p></div>
+      <div class="stack">
+        <div><h3>eSIM help &amp; installation</h3><p>Use the store's help pages for device checks, plan questions and installation guidance.</p><a class="text-link" href="<%= site.helpUrl %>" target="_blank" rel="noopener noreferrer">Open the eSIM help center <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+        <div><h3>Petroleum inspection practice</h3><p>An independent study tool for petroleum inspection exam preparation. It does not award certification or replace official examination materials.</p><a class="text-link" href="<%= site.inspectionUrl %>" target="_blank" rel="noopener noreferrer">Open inspection practice <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+      </div>
     </div>
-
-    <!-- Files Grid -->
-    <div class="files-section">
-      <h3 class="mb-4"><i class="fas fa-folder-open text-primary"></i> Available Resources</h3>
-      <ul id="files" class="file-tabs">
-        <% files.forEach(function(f){
-             // Clean the filename for display
-             const cleanName = (name) => {
-               return name
-                 .replace(/^\d+_/, '')                    // Remove timestamp prefix
-                 .replace(/\.[^/.]+$/, '')                // Remove file extension
-                 .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
-                 .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
-                 .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
-                 .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
-                 .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
-                 .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters
-                 .trim();
-             };
-             const displayName = cleanName(f);
-
-             // Get file extension for icon
-             const ext = f.split('.').pop().toLowerCase();
-             let icon = 'fa-file';
-             if (ext === 'pdf') icon = 'fa-file-pdf';
-             else if (['jpg', 'jpeg', 'png'].includes(ext)) icon = 'fa-file-image';
-             else if (['doc', 'docx'].includes(ext)) icon = 'fa-file-word';
-             else if (['html', 'htm'].includes(ext)) icon = 'fa-file-code';
-        %>
-          <li>
-            <a class="file-tab-link" href="/uploads/<%= encodeURIComponent(f) %>" target="_blank">
-              <i class="fas <%= icon %> fa-2x mb-2"></i><br>
-              <%= displayName || f %>
-            </a>
-          </li>
-        <% }) %>
-      </ul>
-
-      <% if (files.length === 0) { %>
-        <div class="text-center py-5">
-          <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
-          <p class="text-muted">No resources uploaded yet. Be the first to share!</p>
-        </div>
-      <% } %>
-    </div>
-
-  </div>
-</div>
-<script>
-// Update file input label with selected filename
-document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-  const fileName = e.target.files[0]?.name || 'Choose file (PDF, DOC, Images)';
-  const label = document.querySelector('.custom-file-label');
-  label.textContent = fileName;
-});
-
-function cleanName(name) {
-  return name
-    .replace(/^\d+_/, '')                    // Remove timestamp prefix
-    .replace(/\.[^/.]+$/, '')                // Remove file extension
-    .replace(/[-_]/g, ' ')                   // Replace dashes and underscores with spaces
-    .replace(/\s+/g, ' ')                    // Replace multiple spaces with single space
-    .replace(/cheat\s*sheet/ig, '')          // Remove "cheat sheet" text
-    .replace(/\bhtml\b/ig, '')               // Remove standalone "html" word
-    .replace(/^\s+|\s+$/g, '')               // Trim leading/trailing spaces
-    .replace(/^[^a-zA-Z]*/, '')              // Remove leading non-letters
-    .trim();
-}
-
-function getFileIcon(filename) {
-  const ext = filename.split('.').pop().toLowerCase();
-  if (ext === 'pdf') return 'fa-file-pdf';
-  if (['jpg', 'jpeg', 'png'].includes(ext)) return 'fa-file-image';
-  if (['doc', 'docx'].includes(ext)) return 'fa-file-word';
-  if (['html', 'htm'].includes(ext)) return 'fa-file-code';
-  return 'fa-file';
-}
-
-function loadFiles(){
-  fetch("/files").then(r=>r.json()).then(files=>{
-    const list=document.getElementById("files");
-    list.innerHTML="";
-
-    if (files.length === 0) {
-      list.innerHTML = '<div class="text-center py-5" style="grid-column: 1/-1;"><i class="fas fa-inbox fa-4x text-muted mb-3"></i><p class="text-muted">No resources uploaded yet. Be the first to share!</p></div>';
-      return;
-    }
-
-    files.forEach(f=>{
-      const li=document.createElement("li");
-      const a=document.createElement("a");
-      a.href="/uploads/"+encodeURIComponent(f);
-      a.target="_blank";
-      a.className="file-tab-link";
-
-      const icon = document.createElement("i");
-      icon.className = `fas ${getFileIcon(f)} fa-2x mb-2`;
-
-      const br = document.createElement("br");
-      const text = document.createTextNode(cleanName(f) || f);
-
-      a.appendChild(icon);
-      a.appendChild(br);
-      a.appendChild(text);
-      li.appendChild(a);
-      list.appendChild(li);
-    });
-  }).catch(err => console.error('Error loading files:', err));
-}
-
-loadFiles();
-
-document.getElementById("uploadForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  const data=new FormData(this);
-  const fileInput = this.querySelector('input[type="file"]');
-  const submitBtn = this.querySelector('button[type="submit"]');
-
-  if (!fileInput.files.length) {
-    alert('Please select a file to upload');
-    return;
-  }
-
-  // Disable button during upload
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-
-  fetch("/upload",{
-    method:"POST",
-    body:data
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
-    }
-    return response;
-  })
-  .then(() => {
-    this.reset();
-    document.querySelector('.custom-file-label').textContent = 'Choose file (PDF, DOC, Images)';
-    loadFiles();
-    alert('File uploaded successfully!');
-  })
-  .catch(error => {
-    console.error('Upload error:', error);
-    alert('Upload failed: ' + error.message);
-  })
-  .finally(() => {
-    // Re-enable button
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<i class="fas fa-upload"></i> Upload File';
-  });
-});
-</script>
+  </section>
+  <section class="section"><div class="container split"><div><p class="eyebrow">Help improve these guides</p><h2>Have a maritime question or a correction?</h2><p>Tell us which guide you are reading and what would make it more useful.</p></div><div><a class="button button-secondary" href="/contact">Contact Amicus</a></div></div></section>
+</main>
 <%- include('partials/footer') %>

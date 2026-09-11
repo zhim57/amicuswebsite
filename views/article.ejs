@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+<main id="main-content">
+  <section class="page-intro">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/resources">Resources</a></li><li aria-current="page"><%= page.heading %></li></ol></nav>
+      <p class="eyebrow">Amicus field notes</p>
+      <h1><%= page.heading %></h1>
+      <p class="lead"><%= page.description %></p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container article-layout">
+      <article class="article-body" aria-label="Guide">
+        <% if (page.slug === 'esim-before-you-travel') { %>
+          <h2>Start with the phone you will carry.</h2>
+          <p>Check the exact phone model, rather than the brand alone. Confirm that it supports eSIM and is network-unlocked. If you are unsure, use the Amicus store's help guidance before buying a plan.</p>
+          <h2>Read the plan against your itinerary.</h2>
+          <ul><li>List the countries where you expect to use mobile data, including transit stops.</li><li>Check that the chosen plan covers those destinations.</li><li>Review the data allowance, validity period and activation conditions.</li><li>Check whether any calls or messages you need are included; do not assume a data plan includes them.</li></ul>
+          <h2>Prepare before departure.</h2>
+          <p>Read the installation instructions while you have a reliable connection. Follow the instructions supplied for your plan and device, including when to install and activate it. Keep your order details and the help page easy to find.</p>
+          <p>Save essential travel and contact information where you can reach it without mobile data. A plan purchase should be one part of travel preparation, alongside the information supplied by your agent or employer.</p>
+          <div class="callout"><h3>For the current setup instructions</h3><p>Use the Amicus store as the reference for the plan you purchase. Device menus and plan conditions can differ.</p><a class="text-link" href="<%= site.installationUrl %>" target="_blank" rel="noopener noreferrer">Read installation guidance <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+        <% } else if (page.slug === 'crew-change-connectivity') { %>
+          <h2>Plan for the whole journey.</h2>
+          <p>A crew change may involve a departure country, a flight connection, an arrival airport and travel to a port. Write down where you will need mobile data, rather than choosing a plan only for the final destination.</p>
+          <h2>Agree the contact arrangements.</h2>
+          <p>Before departure, confirm who to contact if an arrival time changes or a pickup is unclear. Keep the relevant agent or coordinator's details and your travel instructions available offline.</p>
+          <ul><li>Check the travel dates against the plan's validity and activation rules.</li><li>Confirm device compatibility before purchasing.</li><li>Review coverage for each country where you need a connection.</li><li>Follow the plan's installation guidance before you need to use it.</li></ul>
+          <h2>If you are coordinating a crew</h2>
+          <p>Give crew members one clear source for travel instructions and a named contact for changes. Ask them to check their own devices early, and share the store's setup guidance with anyone using an eSIM.</p>
+          <p>For repeat connectivity requirements, send Amicus a short outline of the destinations, travel frequency and expected crew numbers. This helps us understand the requirement before discussing options.</p>
+          <div class="callout"><h3>Keep the local arrangements clear.</h3><p>Mobile connectivity and a planning tool do not confirm a transfer or other local service. Confirm pickup details and arrangements with the responsible agent or coordinator.</p></div>
+        <% } else if (page.slug === 'maritime-tools') { %>
+          <h2>For mobile data and setup</h2>
+          <p>Use the dedicated Amicus eSIM store to review plans. Its help pages are the starting point for compatibility and installation questions. Check the selected plan's coverage and conditions before purchasing.</p>
+          <p><a class="text-link" href="<%= site.shopUrl %>" target="_blank" rel="noopener noreferrer" data-event="buy_esim_click">Explore the eSIM store <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></p>
+          <h2>For crew-change coordination</h2>
+          <p>The crew-change application has its own registration and workflow. Open the application to get started, and contact Amicus if you want to discuss how it could fit your team's process.</p>
+          <p><a class="text-link" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_tool_click">Open the crew-change tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></p>
+          <h2>For petroleum inspection practice</h2>
+          <p>The existing petroleum inspection application offers a place for exam practice. It is an independent study tool, does not award certification, and should be used alongside the applicable official training and examination materials.</p>
+          <p><a class="text-link" href="<%= site.inspectionUrl %>" target="_blank" rel="noopener noreferrer">Open petroleum inspection practice <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></p>
+          <h2>For a requirement that needs a conversation</h2>
+          <p>If you are an operator, manager, manning company or ship agent, describe the task you need to complete and the difficulty with your current process. Include relevant locations and timing so we can start with the right context.</p>
+        <% } %>
+      </article>
+      <aside class="article-aside" aria-labelledby="guide-next-heading">
+        <p class="eyebrow">Your next step</p>
+        <h2 id="guide-next-heading">Put the preparation to use.</h2>
+        <p>Review plans in the store or get in touch about a crew or business requirement.</p>
+        <div class="stack"><a class="button button-primary" href="<%= site.shopUrl %>" target="_blank" rel="noopener noreferrer" data-event="buy_esim_click">Explore eSIM plans <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="/contact">Contact Amicus</a><a class="text-link" href="/resources">All resources</a></div>
+      </aside>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>
