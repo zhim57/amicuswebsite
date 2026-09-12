@@ -1,6 +1,8 @@
 ﻿# Amicus Shipping LLC — Phase 2 refinement report
 
-Completed locally: September 12, 2026. This report supersedes the earlier Phase 2 draft-workflow/media handoff. The existing Express/EJS/Sass website and visual system are retained. No production deployment, DNS change, mailbox creation, external email, registration or purchase was performed.
+> Follow-up: deployment and live email delivery are now verified. See [current release status](release-status.md). The dated implementation report below preserves the original handoff and test baseline; its pending deployment/SMTP entries are superseded.
+
+Completed locally: September 12, 2026. This report supersedes the earlier Phase 2 draft-workflow/media handoff. The existing Express/EJS/Sass website and visual system are retained. No production deployment, DNS change, mailbox creation, external email, registration or purchase was performed during that initial implementation.
 
 ## 1. Phase 2 summary
 

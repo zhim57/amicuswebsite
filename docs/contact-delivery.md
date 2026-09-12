@@ -4,6 +4,8 @@
 
 No SMTP settings or corporate-domain inquiry mailbox were found in repository configuration. Only environment key names were inspected. The existing corporate email remains the direct fallback; store support is a separate destination. No external email was sent during implementation or tests.
 
+> Production follow-up: corrected SMTP environment names and hostname are loaded. The live form returned 200 for test `AMICUS-SMTP-20260912154939591`, and the owner confirmed inbox receipt. SMTP provisioning is complete; see [release status](release-status.md). The configuration instructions below remain useful for maintenance.
+
 ## Deployment configuration
 
 Provision these settings privately in the existing server/PM2 environment; `.env.example` contains names and comments only:

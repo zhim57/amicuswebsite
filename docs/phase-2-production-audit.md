@@ -1,6 +1,8 @@
 ﻿# Phase 2 production verification
 
-Read-only audit: 2026-09-12T13:31:42Z. Command: `npm.cmd run audit:production -- --phase2`. No live files, accounts, DNS, SMTP settings or deployment processes were changed.
+> Follow-up: deployed pages now match the refinement, and the owner confirmed receipt of a live inquiry. See [current release status](release-status.md) for the newer audit and retirement checks. The dated pre-deployment observations below are historical.
+
+Read-only audit: 2026-09-12T13:31:42Z. Command: `npm.cmd run audit:production -- --phase2`. No live files, accounts, DNS, SMTP settings or deployment processes were changed during that audit.
 
 ## Acceptance result
 

@@ -106,6 +106,8 @@ The browser runner owns a fresh server on a random loopback port and closes it w
 
 ## VPS and PM2 deployment
 
+Current status: commit `5f8b143` was successfully deployed, and live contact delivery has been confirmed by the owner. See [release status](docs/release-status.md) for verified results and remaining operational checks. Historical implementation reports preserve their original pre-deployment observations.
+
 The existing deployment remains `/var/www/amicusshipping` with PM2 process `amicusshippingllc` and the existing GitHub SSH secrets. No hosting migration is introduced.
 
 The workflow validates pull requests and pushes to `master` with install, lint, typecheck, Jest, production build, internal links, media checks and Chromium browser tests. CI installs Chromium with `playwright install --with-deps --no-shell chromium` before running `test:browser`. Deployment runs only for a validated push. On the VPS it fast-forwards `master`, verifies the checkout matches the triggering commit, runs `npm ci --include=dev` and `npm run build`, then explicitly exports `NODE_ENV=production` and restarts the existing PM2 process with `--update-env` and saves PM2 state. Build dependencies must be present even if the VPS already sets `NODE_ENV=production`.
