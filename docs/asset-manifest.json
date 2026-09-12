@@ -1,0 +1,412 @@
+{
+  "version": 1,
+  "project": "Amicus Shipping LLC",
+  "updated": "2026-09-11",
+  "baseline_commit": "b77e66c",
+  "purpose": "Phase 2 media commissioning and integration plan; not a runtime asset loader.",
+  "order_status": "No purchases, generation jobs, or new media files created.",
+  "production_brief": "docs/asset-manifest.md",
+  "first_batch": [
+    "AS-002",
+    "AS-003"
+  ],
+  "delivery_policy": {
+    "staging_directory": "media-staging/",
+    "staging_is_public": false,
+    "public_directory": "public/assets/media/",
+    "publish_only_when": "Selected, rights-reviewed, content-reviewed, optimized and integrated.",
+    "website_audio": "No background audio. Optional soundtrack belongs only to a user-started video.",
+    "generated_scene_caption": "Illustrative image",
+    "no_claims": [
+      "Actual Amicus employees or customers",
+      "Amicus vessel or equipment ownership",
+      "Verified coverage or product UI",
+      "Credentials or operational evidence"
+    ],
+    "image_derivatives": [
+      {
+        "width": 480,
+        "height": 360,
+        "max_bytes": 50000
+      },
+      {
+        "width": 800,
+        "height": 600,
+        "max_bytes": 85000
+      },
+      {
+        "width": 1200,
+        "height": 900,
+        "max_bytes": 140000
+      }
+    ],
+    "image_formats": [
+      "webp",
+      "jpg fallback; optional avif after visual review"
+    ],
+    "media_size_limits_are": "Project delivery targets, not vendor export guarantees."
+  },
+  "assets": [
+    {
+      "id": "AS-001",
+      "name": "Existing port photograph",
+      "type": "photo",
+      "priority": "retain",
+      "provider": "Existing repository",
+      "status": "in_use_rights_unconfirmed",
+      "current_path": "public/assets/images/cs1.jpg",
+      "source_master_path": "public/assets/images/cs1b.jpg",
+      "placements": [
+        {
+          "route": "/",
+          "template": "views/index.ejs",
+          "location": ".hero-image"
+        },
+        {
+          "route": "all",
+          "template": "views/partials/header.ejs",
+          "location": "og:image and twitter:image until AS-004"
+        }
+      ],
+      "current_dimensions": {
+        "width": 806,
+        "height": 605
+      },
+      "current_bytes": 55629,
+      "candidate_master_dimensions": {
+        "width": 4032,
+        "height": 3024
+      },
+      "synthetic": false,
+      "provenance_status": "Existing photograph; creator and rights not verified",
+      "alt_text": "A container vessel passing through port at sunset",
+      "caption": "Port scene; no Amicus fleet ownership claim.",
+      "order_required": false,
+      "do_not_use_as": [
+        "Customer endorsement",
+        "Fleet photograph"
+      ],
+      "focal_point": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "review": {
+        "owner": null,
+        "rights_evidence": null,
+        "approved_at": null
+      }
+    },
+    {
+      "id": "AS-002",
+      "name": "Crew ashore connectivity",
+      "type": "illustration",
+      "priority": "first_batch",
+      "provider": "Leonardo.ai",
+      "status": "brief_ready_not_ordered",
+      "brief_anchor": "as-002--crew-ashore-connectivity",
+      "placements": [
+        {
+          "route": "/seafarers",
+          "template": "views/seafarers.ejs",
+          "location": "Below existing intro actions; integrate beside before-travel-heading without removing checklist"
+        }
+      ],
+      "master": {
+        "width": 2400,
+        "height": 1800,
+        "format": "png",
+        "filename": "amicus-crew-ashore-connectivity-v01-master.png"
+      },
+      "proposed_public_files": [
+        "amicus-crew-ashore-connectivity-480.webp",
+        "amicus-crew-ashore-connectivity-800.webp",
+        "amicus-crew-ashore-connectivity-1200.webp",
+        "amicus-crew-ashore-connectivity-1200.jpg"
+      ],
+      "synthetic": true,
+      "caption": "Illustrative image",
+      "alt_text": "Illustration of a maritime traveler checking a phone in a shoreside terminal.",
+      "focal_point": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "fallback": "Current text, checklist and help links; no empty image frame",
+      "candidate_limit": 3,
+      "selected_deliverables": 1,
+      "review": {
+        "owner": null,
+        "provider_asset_id": null,
+        "model": null,
+        "prompt_version": "1",
+        "generation_date": null,
+        "plan_at_generation": null,
+        "private_mode": null,
+        "rights_evidence": null,
+        "content_approved_at": null,
+        "published_at": null
+      }
+    },
+    {
+      "id": "AS-003",
+      "name": "Port-call preparation",
+      "type": "illustration",
+      "priority": "first_batch",
+      "provider": "Leonardo.ai",
+      "status": "brief_ready_not_ordered",
+      "brief_anchor": "as-003--port-call-preparation",
+      "placements": [
+        {
+          "route": "/operators",
+          "template": "views/operators.ejs",
+          "location": "Near inquiry-details-heading; keep inquiry CTA and required-details list intact"
+        }
+      ],
+      "master": {
+        "width": 2400,
+        "height": 1800,
+        "format": "png",
+        "filename": "amicus-port-call-preparation-v01-master.png"
+      },
+      "proposed_public_files": [
+        "amicus-port-call-preparation-480.webp",
+        "amicus-port-call-preparation-800.webp",
+        "amicus-port-call-preparation-1200.webp",
+        "amicus-port-call-preparation-1200.jpg"
+      ],
+      "synthetic": true,
+      "caption": "Illustrative image",
+      "alt_text": "Illustration of two maritime coordinators preparing travel arrangements at a desk.",
+      "focal_point": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "fallback": "Current operator copy and contact path",
+      "candidate_limit": 3,
+      "selected_deliverables": 1,
+      "review": {
+        "owner": null,
+        "provider_asset_id": null,
+        "model": null,
+        "prompt_version": "1",
+        "generation_date": null,
+        "plan_at_generation": null,
+        "private_mode": null,
+        "rights_evidence": null,
+        "content_approved_at": null,
+        "published_at": null
+      }
+    },
+    {
+      "id": "AS-004",
+      "name": "Corporate sharing card",
+      "type": "designed_graphic",
+      "priority": "first_batch_derivative",
+      "provider": "Local design using existing brand and cleared source",
+      "status": "planned_not_created",
+      "brief_anchor": "as-004--corporate-sharing-card",
+      "dependencies": [
+        "Rights-cleared AS-001 or selected AS-002"
+      ],
+      "placements": [
+        {
+          "route": "all",
+          "template": "views/partials/header.ejs",
+          "location": "og:image, twitter:image and matching alt metadata"
+        }
+      ],
+      "master": {
+        "width": 1200,
+        "height": 630,
+        "format": "editable SVG or layout source",
+        "filename": "amicus-social-card-source.svg"
+      },
+      "proposed_public_files": [
+        "amicus-social-card-1200x630.jpg"
+      ],
+      "max_bytes": 180000,
+      "text": [
+        "AMICUS SHIPPING LLC",
+        "Maritime knowledge. Practical tools."
+      ],
+      "synthetic": "Depends on selected background; record source ID",
+      "alt_text": "Amicus Shipping LLC — Maritime knowledge. Practical tools.",
+      "fallback": "Existing social photograph",
+      "order_required": false,
+      "review": {
+        "owner": null,
+        "source_asset_id": null,
+        "rights_evidence": null,
+        "approved_at": null,
+        "published_at": null
+      }
+    },
+    {
+      "id": "AS-005",
+      "name": "Authentic owner or work photograph",
+      "type": "photo",
+      "priority": "optional_owner_supplied",
+      "provider": "Owner or commissioned photographer",
+      "status": "awaiting_optional_real_material",
+      "brief_anchor": "as-005--one-authentic-photo-if-available",
+      "placements": [
+        {
+          "route": "/about",
+          "template": "views/about.ejs",
+          "location": "Near about-approach-heading after owner verifies caption"
+        }
+      ],
+      "master": {
+        "minimum_long_edge": 2000,
+        "format": "Original phone JPEG/HEIC or camera file"
+      },
+      "proposed_public_files": [
+        "amicus-real-work-1200.webp"
+      ],
+      "max_bytes": 160000,
+      "synthetic": false,
+      "alt_text": null,
+      "caption": null,
+      "fallback": "Current factual About copy",
+      "generation_permitted": false,
+      "review": {
+        "subject_identity": null,
+        "photographer": null,
+        "permission_evidence": null,
+        "caption_approved_at": null,
+        "published_at": null
+      }
+    },
+    {
+      "id": "VD-001",
+      "name": "Before your next crew journey",
+      "type": "video",
+      "priority": "optional_after_stills",
+      "provider": "Leonardo.ai clips plus local editing",
+      "status": "deferred_not_ordered",
+      "brief_anchor": "vd-001--optional-20-second-explainer",
+      "dependencies": [
+        "Selected AS-002",
+        "Readable approved on-screen copy",
+        "Poster and text alternative"
+      ],
+      "placements": [
+        {
+          "route": "/seafarers",
+          "template": "views/seafarers.ejs",
+          "location": "Optional Watch the preparation guide after existing help content"
+        }
+      ],
+      "master": {
+        "width": 1920,
+        "height": 1080,
+        "duration_seconds": 20,
+        "frame_rate": 24,
+        "format": "Highest-quality available export and editable timeline"
+      },
+      "proposed_public_files": [
+        "amicus-crew-travel-explainer-1080.mp4",
+        "amicus-crew-travel-explainer-poster.jpg",
+        "amicus-crew-travel-explainer-en.vtt"
+      ],
+      "max_bytes": 4000000,
+      "poster": {
+        "width": 1280,
+        "height": 720,
+        "max_bytes": 100000
+      },
+      "playback": {
+        "autoplay": false,
+        "loop": false,
+        "controls": true,
+        "preload": "none",
+        "playsinline": true,
+        "initial_video_bytes": 0
+      },
+      "audio_dependency": "MU-001 optional; silent edit acceptable",
+      "captions": "Required for any speech or meaningful audio; provide text alternative for essential visual information.",
+      "fallback": "Poster and adjacent written checklist",
+      "synthetic": "Generated illustrative clips; identify in credits",
+      "review": {
+        "owner": null,
+        "model": null,
+        "provider_asset_ids": [],
+        "generation_date": null,
+        "plan_at_generation": null,
+        "rights_evidence": null,
+        "approved_at": null,
+        "published_at": null
+      }
+    },
+    {
+      "id": "MU-001",
+      "name": "Travel preparation instrumental",
+      "type": "music",
+      "priority": "only_with_approved_video",
+      "provider": "Mureka.ai",
+      "status": "deferred_not_ordered",
+      "brief_anchor": "mu-001--optional-instrumental-for-vd-001",
+      "dependencies": [
+        "VD-001 edit has a real use"
+      ],
+      "placements": [
+        {
+          "route": "/seafarers",
+          "location": "Mixed into optional VD-001 only; no standalone site audio"
+        }
+      ],
+      "master": {
+        "requested_duration_seconds": 30,
+        "format": "WAV, preferably 48 kHz / 24-bit stereo if available",
+        "filename": "amicus-travel-preparation-v01-master.wav"
+      },
+      "proposed_public_files": [],
+      "tempo_bpm": 84,
+      "vocals": false,
+      "artist_reference": null,
+      "mix_target": "Quiet background; conservative -18 LUFS integrated / -1 dBTP peak as an adjustable starting point.",
+      "fallback": "Silent VD-001",
+      "synthetic": true,
+      "review": {
+        "owner": null,
+        "provider_asset_id": null,
+        "model": null,
+        "generation_date": null,
+        "plan_at_generation": null,
+        "commercial_use_evidence": null,
+        "approved_at": null
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "path": "public/assets/images/ps4.jpg",
+      "reason": "Quarantined legacy photo. Never upload to a generation service or restore to public use."
+    },
+    {
+      "group": "Unreviewed legacy product images, portraits and documents",
+      "reason": "Not approved references; check relevance, privacy and rights before selection."
+    }
+  ],
+  "provider_sources": [
+    {
+      "provider": "Leonardo.ai",
+      "url": "https://www.leonardo.ai/terms-of-service",
+      "checked": "2026-09-11"
+    },
+    {
+      "provider": "Leonardo.ai help",
+      "url": "https://intercom.help/leonardo-ai/en/articles/8044018-commercial-usage",
+      "checked": "2026-09-11"
+    },
+    {
+      "provider": "Leonardo.ai video",
+      "url": "https://www.leonardo.ai/ai-video-generator",
+      "checked": "2026-09-11"
+    },
+    {
+      "provider": "Mureka.ai",
+      "url": "https://www.mureka.ai/static/terms-20260513.pdf",
+      "checked": "2026-09-11"
+    }
+  ]
+}

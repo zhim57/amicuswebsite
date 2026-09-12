@@ -116,3 +116,7 @@ public/assets/js/*.js
 public/assets/css/style.css
 .qa/
 
+# Media commissioning drafts and private source/license records
+media-staging/*
+!media-staging/README.md
+

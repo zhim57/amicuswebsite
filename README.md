@@ -104,6 +104,8 @@ The Phase 1 implementation did **not** deploy or modify the VPS. Before deployme
 
 ## Audits and next work
 
+- [Phase 2 plan](docs/phase-2-plan.md)
+- [Asset manifest and Leonardo/Mureka briefs](docs/asset-manifest.md) ([structured register](docs/asset-manifest.json))
 - [Phase 1 assessment and ranked follow-up](docs/phase-1-audit.md)
 - [Security findings and deployment checks](docs/security-audit.md)
 - [External applications, factual evidence and legacy payment paths](docs/external-links-audit.md)
