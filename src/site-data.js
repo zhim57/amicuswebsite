@@ -6,6 +6,17 @@ const site = {
   shopUrl: 'https://sim.amicusshippingllc.com/shop',
   helpUrl: 'https://sim.amicusshippingllc.com/help',
   installationUrl: 'https://sim.amicusshippingllc.com/help#installation',
+  supportUrl: 'https://sim.amicusshippingllc.com/support',
+  accountUrl: 'https://sim.amicusshippingllc.com/account',
+  businessUrl: 'https://sim.amicusshippingllc.com/crew',
+  socialImage: '/assets/media/amicus-social-card-1200x630.jpg',
+  socialImageAlt: 'Amicus Shipping LLC — Maritime knowledge. Practical tools.',
+  inquiryUrls: {
+    connectivity: '/contact?interest=Crew%20Connectivity',
+    operations: '/contact?interest=Crew%20Change',
+    tools: '/contact?interest=Maritime%20Tools',
+    seafarer: '/contact?visitorType=Seafarer&interest=Crew%20Connectivity'
+  },
   crewUrl: 'https://crew.ship-port.com/register',
   inspectionUrl: 'https://calm-ridge-53583.herokuapp.com/',
   analyticsOrigin: 'https://analytics.amicusshippingllc.com',

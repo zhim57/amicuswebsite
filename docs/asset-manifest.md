@@ -3,16 +3,16 @@ Prepared: 2026-09-11. Baseline: repository commit `b77e66c`.
 
 **Recommendation: commission two supporting illustrations in Leonardo first. Keep the existing port photograph. Create a sharing card from an approved asset. Defer video and Mureka music until a short explainer has a clear use.**
 
-This is an ordering and integration package. No new media has been generated, purchased or published. The companion [JSON manifest](asset-manifest.json) tracks filenames, destinations, status, dimensions, dependencies and approval evidence. [Phase 2 plan](phase-2-plan.md) puts the asset work alongside the remaining site improvements.
+AS-004 has now been designed locally and integrated for the next deployment. No paid media order or Leonardo/Mureka generation job has been started. The [JSON manifest](asset-manifest.json) tracks status, filenames and review evidence. The [Phase 2 plan](phase-2-plan.md) and [media integration guide](media-integration.md) explain the remaining work and how to activate reviewed illustrations.
 
 ## First order
 
 | ID | Asset | Intended placement | Priority |
 | --- | --- | --- | --- |
-| AS-001 | Existing port photograph | Homepage hero; current social fallback | Retain; confirm rights |
+| AS-001 | Existing port photograph | Homepage hero | Retain; confirm rights |
 | AS-002 | Crew ashore connectivity | Seafarers page, below initial purchase/help actions | Order first |
 | AS-003 | Port-call preparation | Operators page, alongside inquiry preparation | Order second, matching AS-002 |
-| AS-004 | Corporate sharing card | Link previews in messaging and social platforms | Design locally from cleared material |
+| AS-004 | Corporate sharing card | Link previews in messaging and social platforms | Created locally; integrated, awaiting deployment |
 | AS-005 | One authentic owner/work photo | About page | Optional; a good phone photo is enough |
 | VD-001 | 20-second preparation explainer | Optional play button on Seafarers page | Defer until stills are approved |
 | MU-001 | Original instrumental | Soundtrack within VD-001 only | Defer; silent video remains an option |
@@ -71,14 +71,14 @@ Use selected AS-002 as a style reference only after its rights and privacy setti
 
 ### AS-004 — Corporate sharing card
 
-No extra AI image commission. Compose a 1200 × 630 JPG using the actual brand mark, navy background and a rights-cleared crop of AS-001 or AS-002. Render text through a design/layout tool so it is exact:
+No extra AI image commission. The Phase 2 implementation uses a 1200 × 630 JPG with the existing brand geometry, navy background, brass rules and exact typeset text. A photograph is not needed for this card, avoiding an additional dependency on photo approval:
 
 - AMICUS SHIPPING LLC
 - Maritime knowledge. Practical tools.
 
-Keep essential text and the mark at least 60px from edges. Aim for at most 180 KB. Preserve an editable layout source privately. Filename: `amicus-social-card-1200x630.jpg`.
+Essential text and the mark sit at least 60px from edges. The export is 58,346 bytes, below the 180 KB target. Editable source: `src/brand/social-card.svg`. Public filename: `amicus-social-card-1200x630.jpg`. Regenerate with `npm run render:social` using the existing Playwright setup. The produced JPG is an ordinary public asset; server startup needs no browser tooling.
 
-Update Open Graph/Twitter image and alt fields in `views/partials/header.ejs` only after this file exists and looks clear in a small link preview. No fabricated ratings, coverage counts or partner logos.
+Open Graph/Twitter image and alt fields in `views/partials/header.ejs` now use this produced file, including its dimensions. The card was inspected locally; messaging-service cache refresh remains a post-deployment check. No fabricated ratings, coverage counts or partner logos.
 
 ### AS-005 — One authentic photo, if available
 

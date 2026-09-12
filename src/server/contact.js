@@ -3,7 +3,18 @@ const crypto = require('crypto');
 const visitorTypes = ['Ship Operator / Manager', 'Manning Company', 'Ship Agent', 'Seafarer', 'Other'];
 const interests = ['Crew Connectivity', 'Crew Change', 'Maritime Tools', 'General Inquiry'];
 const fieldLimits = { name: 100, email: 254, company: 140, visitorType: 40, interest: 40, message: 2000, phone: 60 };
+const contactOptions = { visitorTypes, interests, fieldLimits };
 const tokenLifetimeMs = 60 * 60 * 1000;
+
+// Only explicit, known intent selections may arrive through a shareable URL.
+// Names, addresses, messages, arrays and arbitrary query values are never copied.
+function getContactDefaults(query = {}) {
+  const source = query && typeof query === 'object' && !Array.isArray(query) ? query : {};
+  return {
+    visitorType: Object.hasOwn(source, 'visitorType') && typeof source.visitorType === 'string' && visitorTypes.includes(source.visitorType) ? source.visitorType : '',
+    interest: Object.hasOwn(source, 'interest') && typeof source.interest === 'string' && interests.includes(source.interest) ? source.interest : '',
+  };
+}
 
 function createTokens(secret = crypto.randomBytes(32).toString('hex')) {
   if (typeof secret !== 'string' || secret.length < 32) throw new Error('CONTACT_FORM_SECRET must contain at least 32 characters.');
@@ -66,11 +77,12 @@ function validateFields(body = {}) {
   for (const [field, maximum] of Object.entries(fieldLimits)) {
     const raw = body[field];
     if (raw !== undefined && typeof raw !== 'string') errors[field] = 'Please enter a single value.';
-    const value = typeof raw === 'string' ? raw.trim().replace(/\r\n?/g, '\n') : '';
+    const normalized = typeof raw === 'string' ? raw.replace(/\r\n?/g, '\n') : '';
+    const value = normalized.trim();
     values[field] = value.slice(0, maximum);
     if (value.length > maximum) errors[field] = `Please use no more than ${maximum} characters.`;
     const controls = field === 'message' ? /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/ : /[\u0000-\u001F\u007F]/;
-    if (controls.test(value)) errors[field] = 'Please remove unsupported control characters.';
+    if (controls.test(normalized)) errors[field] = 'Please remove unsupported control characters.';
   }
   if (!values.name) errors.name = 'Please enter your name.';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) errors.email = 'Please enter a valid email address.';
@@ -83,8 +95,9 @@ function validateFields(body = {}) {
 
 function createContact({ secret } = {}) {
   const tokens = createTokens(secret || undefined);
-  function emptyForm() {
-    return { values: Object.fromEntries(Object.keys(fieldLimits).map((field) => [field, ''])), errors: {}, token: tokens.issue(), preparedMailto: '', preparedBody: '', success: false };
+  function emptyForm(query = {}) {
+    const values = { ...Object.fromEntries(Object.keys(fieldLimits).map((field) => [field, ''])), ...getContactDefaults(query) };
+    return { values, errors: {}, token: tokens.issue(), preparedMailto: '', preparedBody: '', preparedSubject: '', success: false };
   }
   return {
     emptyForm,
@@ -110,7 +123,8 @@ function createContact({ secret } = {}) {
         `Visitor type: ${values.visitorType}`, `Interested in: ${values.interest}`,
         `Phone / WhatsApp: ${values.phone || 'Not provided'}`, '', values.message,
       ].join('\n');
-      form.preparedMailto = `mailto:${recipient}?subject=${encodeURIComponent(`Amicus inquiry: ${values.interest}`)}&body=${encodeURIComponent(body)}`;
+      form.preparedSubject = `Amicus inquiry: ${values.interest}`;
+      form.preparedMailto = `mailto:${recipient}?subject=${encodeURIComponent(form.preparedSubject)}&body=${encodeURIComponent(body)}`;
       form.preparedBody = body;
       form.status = 200;
       // This endpoint prepares a draft. No mail transport or delivery exists here.
@@ -119,4 +133,4 @@ function createContact({ secret } = {}) {
   };
 }
 
-module.exports = { createContact, createTokens, createRateLimit, validateFields, visitorTypes, interests };
+module.exports = { createContact, createTokens, createRateLimit, validateFields, getContactDefaults, contactOptions, fieldLimits, visitorTypes, interests };

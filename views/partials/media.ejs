@@ -1,0 +1,9 @@
+<% if (media) { %>
+<figure class="supporting-media">
+  <picture>
+    <source type="image/webp" srcset="<%= media.srcSet %>" sizes="<%= media.sizes %>">
+    <img src="<%= media.src %>" width="<%= media.width %>" height="<%= media.height %>" alt="<%= media.alt %>" loading="lazy" decoding="async">
+  </picture>
+  <figcaption><%= media.caption %></figcaption>
+</figure>
+<% } %>

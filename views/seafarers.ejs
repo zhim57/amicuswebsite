@@ -11,7 +11,7 @@
   </section>
   <section class="section" aria-labelledby="before-travel-heading">
     <div class="container split">
-      <div><p class="eyebrow">Before you travel</p><h2 id="before-travel-heading">Three checks before you buy.</h2><p>A little preparation helps when your itinerary includes several countries or a short connection between flights.</p></div>
+      <div><p class="eyebrow">Before you travel</p><h2 id="before-travel-heading">Three checks before you buy.</h2><p>A little preparation helps when your itinerary includes several countries or a short connection between flights.</p><%- include('partials/media', { media: media.crewConnectivity }) %></div>
       <ol class="numbered-list">
         <li><h3>Check your phone.</h3><p>Confirm the exact model supports eSIM and that your phone is network-unlocked. Use the store's help guidance before purchasing.</p></li>
         <li><h3>Match the plan to your journey.</h3><p>Review every destination where you need data, including transit stops. Check the data allowance, validity and coverage on the plan page.</p></li>
@@ -27,9 +27,14 @@
         <article class="feature-card"><h3>Already have a plan?</h3><p>Use the Amicus store's installation guidance for the next step in setting up your eSIM.</p><a class="text-link" href="<%= site.installationUrl %>" target="_blank" rel="noopener noreferrer">Installation help <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></article>
         <article class="feature-card"><h3>Using the crew-change tool</h3><p>Register in the crew-change application to begin its workflow. Confirm arrangements with your responsible agent or coordinator.</p><a class="text-link" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_tool_click">Open crew-change tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></article>
       </div>
-      <div class="callout"><h3>Plan for time ashore.</h3><p>Travel eSIM plans use mobile networks. Do not assume a plan provides connectivity at sea; review its coverage before relying on it for your journey.</p></div>
+      <div class="callout support-links"><div><h3>Need help with an existing order?</h3><p>Use your store account for order information, or contact the eSIM support team.</p></div><div class="inline-links"><a class="text-link" href="<%= site.accountUrl %>" data-event="account_visit">Your eSIM account ↗</a><a class="text-link" href="<%= site.supportUrl %>" data-event="support_visit">Order &amp; connection support ↗</a></div></div>
     </div>
   </section>
-  <section class="section section-dark"><div class="container split"><div><p class="eyebrow">A question about your journey?</p><h2>Let us help you find the right starting point.</h2><p>Include your destination, travel dates and phone model so your inquiry has the details that matter.</p></div><div><a class="button button-light" href="/contact">Contact Amicus</a></div></div></section>
+  <section class="section"><div class="container faq-layout"><div><p class="eyebrow">Before you rely on a plan</p><h2>A few useful answers.</h2></div><div class="faq-list">
+    <details><summary>Will this work while the ship is at sea?</summary><div><p>Travel eSIMs use land-based mobile networks. They are not a substitute for the ship’s satellite connection. Check the plan’s destinations and coverage for ports and time ashore.</p></div></details>
+    <details><summary>Does an eSIM-capable phone guarantee compatibility?</summary><div><p>Your exact model and regional variant matter, and the phone must be carrier-unlocked. Check both before buying.</p><a class="text-link" href="<%= site.helpUrl %>">Read the device checks ↗</a></div></details>
+    <details><summary>Does installation start the plan’s validity?</summary><div><p>That depends on the selected plan. Read the plan and delivery instructions before installing or activating it.</p><a class="text-link" href="<%= site.installationUrl %>">Follow the installation guidance ↗</a></div></details>
+  </div></div></section>
+  <section class="section section-dark"><div class="container split"><div><p class="eyebrow">A question about your journey?</p><h2>Let us help you find the right starting point.</h2><p>Include your destination, travel dates and phone model so your inquiry has the details that matter.</p></div><div><a class="button button-light" href="<%= site.inquiryUrls.seafarer %>">Contact Amicus</a></div></div></section>
 </main>
 <%- include('partials/footer') %>

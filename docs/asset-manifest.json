@@ -1,10 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "project": "Amicus Shipping LLC",
   "updated": "2026-09-11",
   "baseline_commit": "b77e66c",
-  "purpose": "Phase 2 media commissioning and integration plan; not a runtime asset loader.",
-  "order_status": "No purchases, generation jobs, or new media files created.",
+  "purpose": "Phase 2 media commissioning register; runtime reviewed slots are configured separately in src/media.js.",
+  "order_status": "AS-004 created locally and integrated, pending deployment. No paid media orders or Leonardo/Mureka generation jobs started.",
   "production_brief": "docs/asset-manifest.md",
   "first_batch": [
     "AS-002",
@@ -61,11 +61,6 @@
           "route": "/",
           "template": "views/index.ejs",
           "location": ".hero-image"
-        },
-        {
-          "route": "all",
-          "template": "views/partials/header.ejs",
-          "location": "og:image and twitter:image until AS-004"
         }
       ],
       "current_dimensions": {
@@ -144,7 +139,8 @@
         "rights_evidence": null,
         "content_approved_at": null,
         "published_at": null
-      }
+      },
+      "integration_status": "Optional figure wired; null until reviewed files and static registry entry are present. No placeholder rendered."
     },
     {
       "id": "AS-003",
@@ -194,18 +190,19 @@
         "rights_evidence": null,
         "content_approved_at": null,
         "published_at": null
-      }
+      },
+      "integration_status": "Optional figure wired; null until reviewed files and static registry entry are present. No placeholder rendered."
     },
     {
       "id": "AS-004",
       "name": "Corporate sharing card",
       "type": "designed_graphic",
       "priority": "first_batch_derivative",
-      "provider": "Local design using existing brand and cleared source",
-      "status": "planned_not_created",
+      "provider": "Local vector design extending the existing brand",
+      "status": "integrated_pending_deployment",
       "brief_anchor": "as-004--corporate-sharing-card",
       "dependencies": [
-        "Rights-cleared AS-001 or selected AS-002"
+        "Existing code-native brand mark"
       ],
       "placements": [
         {
@@ -218,7 +215,7 @@
         "width": 1200,
         "height": 630,
         "format": "editable SVG or layout source",
-        "filename": "amicus-social-card-source.svg"
+        "filename": "social-card.svg"
       },
       "proposed_public_files": [
         "amicus-social-card-1200x630.jpg"
@@ -228,17 +225,26 @@
         "AMICUS SHIPPING LLC",
         "Maritime knowledge. Practical tools."
       ],
-      "synthetic": "Depends on selected background; record source ID",
+      "synthetic": false,
       "alt_text": "Amicus Shipping LLC — Maritime knowledge. Practical tools.",
       "fallback": "Existing social photograph",
       "order_required": false,
       "review": {
         "owner": null,
-        "source_asset_id": null,
+        "source_asset_id": "Existing favicon.svg brand geometry and approved site copy; no photograph or generated scene",
         "rights_evidence": null,
         "approved_at": null,
-        "published_at": null
-      }
+        "published_at": null,
+        "implementation_review": "Typography, safe margins, dimensions and 58 KB export visually checked in local implementation pass."
+      },
+      "current_path": "public/assets/media/amicus-social-card-1200x630.jpg",
+      "source_path": "src/brand/social-card.svg",
+      "current_dimensions": {
+        "width": 1200,
+        "height": 630
+      },
+      "current_bytes": 58346,
+      "sha256": "f695be15569dfe65078670582eb09e011e1846244b72a232c6811baed7dd4e03"
     },
     {
       "id": "AS-005",
@@ -408,5 +414,8 @@
       "url": "https://www.mureka.ai/static/terms-20260513.pdf",
       "checked": "2026-09-11"
     }
-  ]
+  ],
+  "phase2_baseline_commit": "5a873b9",
+  "runtime_registry": "src/media.js",
+  "integration_instructions": "docs/media-integration.md"
 }

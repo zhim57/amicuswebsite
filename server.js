@@ -7,7 +7,8 @@ dotenv.config({ quiet: true });
 
 const { site, pages, resources } = require('./src/site-data');
 const { securityHeaders, parseTrustProxy } = require('./src/server/security');
-const { createContact, visitorTypes, interests } = require('./src/server/contact');
+const { createContact, contactOptions } = require('./src/server/contact');
+const { getMedia } = require('./src/media');
 
 function createApp(environment = process.env) {
   const app = express();
@@ -24,7 +25,15 @@ function createApp(environment = process.env) {
   // Preserve the deployment setting and existing files without creating or serving storage.
   app.locals.uploadDir = uploadDir;
   app.locals.analyticsEnabled = environment.NODE_ENV === 'production' && environment.ANALYTICS_ENABLED !== 'false';
+  app.locals.media = { crewConnectivity: getMedia('crewConnectivity'), operations: getMedia('operations') };
   app.use(securityHeaders({ production: environment.NODE_ENV === 'production', analyticsOrigin: site.analyticsOrigin }));
+  app.use((req, res, next) => {
+    // Canonicalize only the known company alias; never construct a redirect from an arbitrary Host.
+    if (['GET', 'HEAD'].includes(req.method) && req.hostname === 'www.amicusshippingllc.com') {
+      return res.redirect(301, site.url + req.originalUrl);
+    }
+    return next();
+  });
 
   const contact = createContact({ secret: environment.CONTACT_FORM_SECRET });
   const canonicalOrigin = new URL(site.url).origin;
@@ -36,8 +45,8 @@ function createApp(environment = process.env) {
       currentPath: route,
       canonicalUrl: canonicalOrigin + (route === '/' ? '/' : route),
       currentYear: new Date().getFullYear(),
-      contactOptions: { visitorTypes, interests },
-      form: contact.emptyForm(),
+      contactOptions,
+      form: contact.emptyForm(route === '/contact' && req.method === 'GET' ? req.query : {}),
       ...extra,
     });
   }

@@ -27,10 +27,14 @@
     "test": "jest",
     "start": "node server.js",
     "build": "webpack",
-    "lint": "eslint server.js src/server src/site-data.js src/js/site.js scripts __tests__ browser-tests *.config.js",
+    "lint": "eslint server.js src/server src/site-data.js src/media.js src/js/site.js src/js/contact.js src/js/analytics.js scripts __tests__ browser-tests *.config.js",
     "typecheck": "tsc -p tsconfig.site.json",
     "test:browser": "node scripts/test-browser.js",
-    "check:links": "node scripts/check-links.js"
+    "check:links": "node scripts/check-links.js",
+    "check:assets": "node scripts/check-assets.js",
+    "audit:production": "node scripts/audit-production.js",
+    "measure:performance": "node scripts/measure-performance.js",
+    "render:social": "node scripts/render-social-card.js"
   },
   "repository": {
     "type": "git",

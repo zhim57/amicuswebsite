@@ -3,7 +3,7 @@ Prepared: 2026-09-11. Baseline: committed Phase 1 rebuild `b77e66c`.
 
 Phase 2 should improve trust and customer journeys while adding a small, deliberate asset set. The owner has limited photography, so the plan keeps the existing maritime hero and uses two clearly illustrative supporting scenes. The [asset manifest and ready-to-paste prompts](asset-manifest.md) are ready; the [structured register](asset-manifest.json) records order and integration status.
 
-This document is a work plan. It does not claim that production deployment, inbox delivery, analytics configuration, asset generation or all Phase 2 work is complete. Phase 1 test results in the prior audit are historical evidence until rerun against a changed implementation.
+Implementation status is recorded in the [Phase 2 report](phase-2-report.md). The sharing card, inquiry improvements, help paths, optional-media handling and validation tooling are implemented locally; ordered illustrations remain deferred. This document remains the work plan. Production acceptance, inbox delivery, private analytics and actual phone checks still need their separate evidence.
 
 ## Execution order
 

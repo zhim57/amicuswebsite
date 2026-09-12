@@ -54,7 +54,7 @@ test('contact prepares an honest draft and preserves user input', async ({ page 
   await expect(page.getByRole('heading', { name: 'Your email draft is ready' })).toBeVisible();
   await expect(page.getByText('Your inquiry has not been sent yet.', { exact: false })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Open email draft' })).toHaveAttribute('href', /^mailto:/);
-  await expect(page.getByLabel('Copy your prepared message')).toContainText('Preparing crew connectivity');
+  await expect(page.getByLabel('Your prepared message')).toContainText('Preparing crew connectivity');
   const response = await page.goto('/not-a-real-page');
   expect(response.status()).toBe(404);
   await expect(page.getByRole('link', { name: 'Back to home' })).toBeVisible();
@@ -68,8 +68,10 @@ test('visual review captures desktop, mobile and contact', async ({ page }) => {
   await page.screenshot({ path: '.qa/home-mobile.png', fullPage: true });
   await page.goto('/contact');
   await page.screenshot({ path: '.qa/contact-mobile.png', fullPage: true });
+  await page.goto('/seafarers');
+  await page.screenshot({ path: '.qa/seafarers-mobile.png', fullPage: true });
   await page.setViewportSize({ width: 1440, height: 1000 });
-  for (const route of ['/solutions', '/about', '/resources']) {
+  for (const route of ['/solutions', '/about', '/resources', '/seafarers', '/operators']) {
     await page.goto(route);
     await page.screenshot({ path: '.qa/' + route.slice(1) + '-desktop.png', fullPage: true });
   }

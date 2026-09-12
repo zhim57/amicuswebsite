@@ -47,7 +47,9 @@ The contact throttle is held in memory per process. Sharing the form secret does
 | `src/server/security.js` | Security headers, CSP nonces and explicit proxy-trust parsing. |
 | `views/` | EJS page templates and shared header/footer; `article.ejs` contains initial curated guide content. |
 | `src/scss/style.scss` | Shared responsive visual system. |
-| `src/js/site.js` | Mobile-menu enhancement, form-result focus and optional analytics hooks. |
+| `src/js/site.js`, `contact.js`, `analytics.js` | Menu enhancement, form-result focus, clipboard fallback and optional analytics hooks. |
+| `src/media.js`, `views/partials/media.ejs` | Reviewed illustration slots; pending assets render nothing. |
+| `src/brand/social-card.svg` | Editable source for the produced corporate sharing card. |
 | `public/assets/` | Only this reviewed asset directory is served statically. |
 | `public/deleted_code/` and old HTML files | Preserved legacy source, not a public archive or publishing mechanism. |
 | `__tests__/`, `browser-tests/`, `scripts/check-links.js` | Application regression tests, browser/accessibility checks and internal-link checks. |
@@ -61,13 +63,13 @@ Known old content URLs redirect permanently to relevant replacements. `/upload`,
 
 `POST /contact` validates submitted fields and prepares an email draft for the existing corporate recipient. The visitor then opens their email app and sends it, or copies the prepared text. **A prepared draft is not a delivered message.** No inquiry is persisted in a database or dispatched to an email provider by this app.
 
-The form supports visitor type and interest, with optional company and phone/WhatsApp fields. Validation failures preserve bounded inputs and expose accessible errors. Tokens expire after one hour; a honeypot, cross-origin checks and an in-memory five-attempt/15-minute limit reduce simple abuse. Read [the security audit](docs/security-audit.md) for implementation limits and operational requirements.
+The form supports visitor type and interest, with optional company and phone/WhatsApp fields collapsed until needed. Reviewed links may preselect only an allowlisted role/topic; query parameters never prefill contact details or messages. The prepared draft shows subject and body, with a Copy action and selectable-text fallback. Validation failures preserve bounded inputs and expose accessible errors. Tokens expire after one hour; a honeypot, cross-origin checks and an in-memory five-attempt/15-minute limit reduce simple abuse. Read [the security audit](docs/security-audit.md) for implementation limits and operational requirements.
 
 ## Analytics
 
 The existing Umami service at `analytics.amicusshippingllc.com` is retained for production. Site configuration and its public website ID live in `src/site-data.js`. The tracker is instructed to respect Do Not Track, exclude search strings and limit tracking to corporate domains. Browser hooks send only an allowlisted event name and page pathname, never form fields or email-draft URLs.
 
-Supported names include `buy_esim_click`, `shop_visit`, `contact_submit`, `operator_inquiry`, `seafarer_cta_click`, `crew_tool_click`, `resource_view` and `resource_download`. Only interactions marked in templates emit events; `contact_submit` must not be treated as proof of email delivery. No new analytics vendor was added. Cross-subdomain attribution, retention and privacy configuration need separate verification in the existing service.
+Supported names include `buy_esim_click`, `shop_visit`, `contact_submit`, `operator_inquiry`, `seafarer_cta_click`, `crew_tool_click`, `resource_view` and `resource_download`. Phase 2 distinguishes inquiry entry, draft readiness, email-app handoff, successful copying and store support/account visits. `contact_submit` remains a legacy handoff event and never proves delivery. See the Phase 2 report for event definitions. No new analytics vendor was added. Cross-subdomain attribution, retention and privacy configuration need separate verification in the existing service.
 
 ## Validation
 
@@ -79,10 +81,11 @@ npm.cmd run typecheck
 npm.cmd test -- --runInBand
 npm.cmd run build
 npm.cmd run check:links
+npm.cmd run check:assets
 npm.cmd audit
 ```
 
-The typecheck uses `checkJs` for the new browser script and central site data; this is not a claim that all legacy JavaScript has been converted to TypeScript. The link checker renders the application and validates internal pages, assets and known anchors. It does not repeat the external-service audit or make purchases.
+The typecheck uses `checkJs` for the current browser modules and central site data; legacy JavaScript has not been converted to TypeScript. The link checker validates internal pages, assets and known anchors. The asset checker validates reviewed media files and records pending slots without rendering placeholders.
 
 Install Chromium once and keep the same browser-directory environment variable for browser runs:
 
@@ -98,12 +101,15 @@ The browser runner owns a fresh server on a random loopback port and closes it w
 
 The existing deployment remains `/var/www/amicusshipping` with PM2 process `amicusshippingllc` and the existing GitHub SSH secrets. No hosting migration is introduced.
 
-The workflow validates pull requests and pushes to `master` with install, lint, typecheck, Jest, production build, internal links and Chromium browser tests. CI installs Chromium with `playwright install --with-deps --no-shell chromium` before running `test:browser`. Deployment runs only for a validated push. On the VPS it fast-forwards `master`, verifies the checkout matches the triggering commit, runs `npm ci --include=dev` and `npm run build`, then restarts the existing PM2 process with `--update-env` and saves PM2 state. Build dependencies must be present even if the VPS already sets `NODE_ENV=production`.
+The workflow validates pull requests and pushes to `master` with install, lint, typecheck, Jest, production build, internal links, media checks and Chromium browser tests. CI installs Chromium with `playwright install --with-deps --no-shell chromium` before running `test:browser`. Deployment runs only for a validated push. On the VPS it fast-forwards `master`, verifies the checkout matches the triggering commit, runs `npm ci --include=dev` and `npm run build`, then explicitly exports `NODE_ENV=production` and restarts the existing PM2 process with `--update-env` and saves PM2 state. Build dependencies must be present even if the VPS already sets `NODE_ENV=production`.
 
-The Phase 1 implementation did **not** deploy or modify the VPS. Before deployment, verify Node compatibility, environment/secret provisioning, PM2 working directory and HTTPS/proxy settings. Inspect Nginx (or the actual reverse proxy) for direct `/uploads`, `/files`, `/deleted_code` or repository-root aliases: these could bypass Express restrictions. After deployment, verify retired routes return the intended status from the public hostname.
+A subsequent direct audit confirmed Phase 1 is live. These Phase 2 changes have **not** been deployed by this task; see the production verification report. Before deployment, verify Node compatibility, environment/secret provisioning, PM2 working directory and HTTPS/proxy settings. Inspect Nginx (or the actual reverse proxy) for direct `/uploads`, `/files`, `/deleted_code` or repository-root aliases: these could bypass Express restrictions. After deployment, verify retired routes return the intended status from the public hostname.
 
 ## Audits and next work
 
+- [Phase 2 implementation report](docs/phase-2-report.md)
+- [Production verification](docs/phase-2-production-audit.md) and [local performance snapshot](docs/phase-2-performance.md)
+- [Media integration guide](docs/media-integration.md)
 - [Phase 2 plan](docs/phase-2-plan.md)
 - [Asset manifest and Leonardo/Mureka briefs](docs/asset-manifest.md) ([structured register](docs/asset-manifest.json))
 - [Phase 1 assessment and ranked follow-up](docs/phase-1-audit.md)

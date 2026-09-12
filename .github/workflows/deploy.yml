@@ -24,6 +24,7 @@ jobs:
       - run: npm test -- --runInBand
       - run: npm run build
       - run: npm run check:links
+      - run: npm run check:assets
       - run: npx playwright install --with-deps --no-shell chromium
       - run: npm run test:browser
   deploy:
@@ -44,5 +45,6 @@ jobs:
             test "$(git rev-parse HEAD)" = "${{ github.sha }}"
             npm ci --include=dev
             npm run build
+            export NODE_ENV=production
             pm2 restart amicusshippingllc --update-env
             pm2 save
