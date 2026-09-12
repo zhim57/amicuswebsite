@@ -1,5 +1,19 @@
 # Phase 2 production verification
 
+## Deployment follow-up — 2026-09-12
+
+After the owner's VPS pull, restart and environment update, `npm run audit:production -- --phase2` passed **184 checks, with 0 failures and 0 inconclusive results**, at `2026-09-12T04:04:28.805Z`. The local repository revision was `f6b1dea`.
+
+The public responses now verify HSTS, canonical `www` redirects, upload/legacy-content retirement, current sharing-image metadata/dimensions and JPEG availability. The homepage declares the configured analytics script. Script presence does not prove analytics ingestion, and public HTTP checks do not expose or verify private environment secrets, inbox delivery or physical-phone behavior.
+
+An initial run encountered transient network/DNS timeouts; the full rerun passed. No forms, purchases or analytics events were sent by this verification. The latest sanitized machine report is `.qa/production-audit.json`.
+
+A separate direct check also confirmed the deployed corporate JavaScript (2,792 bytes) and CSS (16,140 bytes) match the validated local build byte-for-byte by SHA-256. This rules out stale frontend bundles for those two files.
+
+Next priorities: a real-phone inquiry/copy/email test, analytics and Search Console confirmation, then the two planned Leonardo illustrations. The earlier baseline below is retained as history; its HSTS and hostname failures are resolved in this follow-up.
+
+## Earlier baseline, before the VPS update
+
 Verified **2026-09-11 in America/New_York / 2026-09-12 UTC** using direct, uncached public HTTP requests. The exact timestamp and individual results are saved locally in `.qa/production-audit.json`. This task did not deploy, push, restart PM2, change DNS/Nginx, submit forms, register accounts or send analytics events.
 
 The Phase 1 rebuild is now visible on the live corporate domain. The historical Phase 1 report's observation of the previous application directory no longer describes the current public response.
