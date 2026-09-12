@@ -17,7 +17,7 @@ const allowedOrigins = new Set([
   expectedOrigin, expectedOrigin.replace('https:', 'http:'),
   expectedOrigin.replace('://', '://www.'),
   expectedOrigin.replace('https://', 'http://www.'),
-  'https://sim.amicusshippingllc.com', 'https://crew.ship-port.com',
+  'https://sim.amicusshippingllc.com', 'https://crew.ship-port.com', 'https://calm-ridge-53583.herokuapp.com',
 ]);
 
 function safeUrl(value) {
@@ -127,7 +127,7 @@ async function runAudit({ phase2 = false } = {}) {
   });
 
   // These known retired paths are deliberately never read or enumerated.
-  for (const route of ['/upload', '/uploads/probe.html', '/files', '/deleted_code/schedule.html', '/assets/images/ps4.jpg']) {
+  for (const route of ['/upload', '/uploads/probe.html', '/files', '/deleted_code/schedule.html', '/assets/images/ps4.jpg', ...(phase2 ? ['/api/upload', '/resources/upload', '/rewards.html'] : [])]) {
     for (const method of ['GET', 'HEAD']) {
       const response = await probe(expectedOrigin + route, { method });
       const id = `retired:${route}:${method}`;
@@ -175,7 +175,7 @@ async function runAudit({ phase2 = false } = {}) {
   let organization = false;
   try {
     const schema = JSON.parse(jsonLd || 'null');
-    organization = schema?.['@type'] === 'Organization' && schema?.name === site.name && schema?.url === expectedOrigin;
+    organization = schema?.['@type'] === 'Organization' && schema?.name === site.name && [expectedOrigin, expectedOrigin + '/'].includes(schema?.url);
   } catch { /* Invalid JSON-LD fails the acceptance check without printing content. */ }
   add('seo:organization', organization, 'Homepage must have valid Organization JSON-LD with the configured name and URL', homeResponse);
 
@@ -229,6 +229,7 @@ async function runAudit({ phase2 = false } = {}) {
     ['support', 'https://sim.amicusshippingllc.com/support'],
     ['crew-inquiry', 'https://sim.amicusshippingllc.com/crew'],
     ['crew-registration', 'https://crew.ship-port.com/register'],
+    ['inspection-study', site.inspectionUrl],
   ];
   for (const [name, url] of destinations) {
     const response = await probe(url, { readBody: true, follow: true });

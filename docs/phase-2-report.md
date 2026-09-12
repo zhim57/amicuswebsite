@@ -1,84 +1,118 @@
-# Phase 2 implementation report
+﻿# Amicus Shipping LLC — Phase 2 refinement report
 
-Deployment follow-up (2026-09-12): the owner subsequently updated the VPS, and the live Phase 2 acceptance audit passed all 184 checks. HSTS, canonical redirects, retired paths and the sharing card now pass; analytics script presence is confirmed. See [current production verification](phase-2-production-audit.md). Deployment-status statements below describe the original implementation handoff.
-Date: 2026-09-11 (America/New_York). Starting revision: `5a873b9`.
+Completed locally: September 12, 2026. This report supersedes the earlier Phase 2 draft-workflow/media handoff. The existing Express/EJS/Sass website and visual system are retained. No production deployment, DNS change, mailbox creation, external email, registration or purchase was performed.
 
-The Phase 2 repository work improves inquiry completion, existing-customer help, sharing metadata, accessibility and media readiness. It includes two deployment corrections identified by direct live checks. **These Phase 2 changes have not been deployed by this task.** The Leonardo illustrations are intentionally pending; video and music remain deferred.
+## 1. Phase 2 summary
 
-## Live findings and prepared corrections
+Amicus now presents a documented maritime background and clear product paths: eSIM purchases first, crew connectivity for businesses second, then coordination tools and maritime knowledge. The homepage remains a concise company introduction; the founder story belongs on About. Corporate Seafarers explains the vessel-to-home journey while prices, coverage, device checks and checkout stay in the dedicated store.
 
-Direct uncached HTTP checks confirm Phase 1 is live, including the upload retirement and quarantined-image block. Cached search-tool responses still showed older content, so they were not used as the deployment verdict. The [production audit](phase-2-production-audit.md) recorded 144 passing assertions and 14 failures representing two actual gaps:
+Contact is a real server submission: validate, send through SMTP, confirm only after the configured recipient is accepted. The repository contains no SMTP configuration, so production sending needs the settings in [contact-delivery.md](contact-delivery.md). An unconfigured site displays a direct-email notice and safely rejects sending rather than reporting false success.
 
-- HSTS was missing on all 12 public corporate pages. The workflow now explicitly exports `NODE_ENV=production` before PM2 restarts, enabling the application's existing production headers. Missing production mode is a plausible explanation, not a privately verified VPS setting.
-- `www` remained a duplicate public hostname. Express now redirects GET/HEAD requests for that specific hostname to the configured primary HTTPS origin, preserving path/query without trusting an arbitrary redirect host.
+## 2. Legacy cleanup and actual Resources cause
 
-The existing HTTPS redirects, tested retired paths and six customer destinations were reachable. The crew tool check proves its public application shell loads, not that registrations succeed. Private Nginx/PM2 settings, a shared form secret, actual proxy trust and direct Node-port exposure still require infrastructure access.
+Deleted these obsolete files:
 
-After deploying, run `npm run audit:production -- --phase2`. This additionally checks the new sharing-image URLs, dimensions and JPEG availability. It must not be counted as a production pass before those changes are deployed.
+- `public/deleted_code/resources.html`: the archived upload form, file listing and upload/list JavaScript.
+- `public/deleted_code/rewards_program.html`: obsolete Rewards promotion.
+- `rewards.html`: unused standalone Rewards stub.
+- `public/index.html`: obsolete static homepage with a competing legacy phone-compatibility link.
 
-## Customer-facing changes
+Removed Rewards links from the retained `public/deleted_code/buy_sim.html` and `buy_Dsim.html`. Those private archive payment records and unrelated scheduling source were preserved because their business function was not proven obsolete. They are not served as static pages or advertised. Current support remains available for existing SIM/recharge customers; no rewards-balance migration is promised.
 
-- Seafarer inquiries carry only the reviewed visitor type and interest into Contact. Operational-tool inquiries preselect the appropriate topic; arbitrary query values and contact details are ignored.
-- Company/phone fields are optional and collapsible. Entered values and associated errors remain visible when needed. Form field limits/options now come from the server's shared definitions.
-- A prepared draft has an explicit subject, selectable message, Copy action and manual fallback when Clipboard access is unavailable. The original form collapses under “Edit inquiry details” after preparation.
-- Form results receive focus below the sticky header. Enlarged-text testing found and fixed a header overflow.
-- Seafarers have direct account/support links and three concise expandable answers covering land-based coverage, device checks and activation timing.
-- Operators can reach the existing store's dedicated crew eSIM inquiry. The corporate site still does not duplicate checkout, guarantee transport or invent a new fulfillment service.
+The repository and configured local upload directory were inspected, including ignored files. The directory is empty: **zero cheat-sheet files and zero active-content uploads were present locally to delete**. There is no database/resource seed system. No fictional deletion inventory is claimed.
 
-**Email behavior remains honest:** the visitor must send the email. No server email transport, new database or external message submission was added. The copy action sends no inquiry data to analytics.
+Historical server code (`2652ec3` and `b9be5e7`) explicitly routed `/resources` to a template populated with `fs.readdir(uploadDir)`, registered Multer, served `/uploads` and the whole public directory, and exposed `/files`. The current checkout had already replaced that handler and removed Multer. Live `/resources` also returned the corporate shell, so the alleged Phase 1 route-ordering failure is **not currently reproducible**. The remaining local cause of possible resurfacing was archived uploader/static homepage source; it has now been removed. The server's page registry is authoritative.
 
-## Assets and visual work
+All methods on `/upload`, `/uploads`, `/files`, `/api/upload`, `/api/uploads`, `/api/resources` and `/resources/upload` return 410 before body parsing. Old Rewards routes also return 410. Existing Resources-page aliases redirect 301 to `/resources`; unknown unrelated URLs remain 404. Every old filename under `/uploads` is covered without enumerating or redirecting cheat sheets to the homepage.
 
-The 1200 × 630 sharing card is now produced and wired into Open Graph/Twitter metadata, including size/type/alt information. It is a 58,346-byte JPEG built from the existing vector brand geometry and real site copy, with an editable SVG source. No photograph or generated person was needed.
+## 3. Credibility changes
 
-- Source: `src/brand/social-card.svg`
-- Web file: `public/assets/media/amicus-social-card-1200x630.jpg`
-- Rebuild command: `npm run render:social` with the documented Playwright browser setup
+About identifies founder Jivko Atanassov and uses the existing 2020 CV for ship-agent work, a marine-superintendent role, petroleum inspection, cargo/bunker survey background, crew/spares arrangements and spreadsheet-based document improvements. Historical IFIA certification is described as professional history, without claiming a current certification, company accreditation or unsupported ASBA credential. No precise experience total, testimonial, partner logo, customer count or incorporation date was invented.
 
-AS-002/AS-003 remain ready-to-order Leonardo briefs in the [asset manifest](asset-manifest.md). Their supporting-page integration is wired but emits no figure, image request or blank frame until an explicit reviewed registry entry and all approved raster files are present. The checker validates fixed paths, local containment, signatures, byte budgets and accessible metadata. Those checks do not certify image content, dimensions or rights: human review remains part of activation.
+The existing named portrait is used, resized proportionally from 655,397 to 68,416 bytes. No generated likeness or compositional change was made. The homepage adds specific ship-agency/inspection experience and a clear founder link. Detailed evidence and its boundaries are in [content-evidence.md](content-evidence.md).
 
-No Leonardo/Mureka jobs, purchases or account changes were made. Mureka audio is still reserved for an optional user-started video. Existing photography and private/legacy files remain preserved.
+## 4. Commercial and product changes
 
-## Measurement definitions
+- **Operators:** before departure, multi-country transit, shore time and repeat rotations; a segmented “Discuss Crew Connectivity” CTA. The documented current purchasing path is individual discount-code batches followed by each crew member's purchase and setup. Centralized payment, invoicing and alternative distribution invite discussion; no fleet dashboard is claimed. Source: [current Amicus crew ordering information](https://sim.amicusshippingllc.com/crew).
+- **Seafarers:** covers joining, travelling, sign-off, support, coordination and resources. The dedicated eSIM store owns purchase intent and product details. Cellular service is explicitly distinguished from onboard satellite connectivity.
+- **Contact:** required name, email, interest and message; optional visitor type, company and phone/WhatsApp. Browser success/failure states, preserved invalid fields, optional field expansion, keyboard focus and ordinary HTML submission without JavaScript. Yahoo remains a centralized corporate fallback because no corporate inquiry mailbox was configured; the store's published branded support address remains the store-support path.
+- **Crew Change:** new `/solutions/crew-change` explains the problem, supported trip/participant/journey/message capabilities, audiences and four steps before launching registration. Features were checked against current adjacent application source, not inferred from a registration shell. Live operational readiness remains separate. No fake screenshots were added.
+- **Inspection:** new `/solutions/inspection` explains petroleum question practice and independent-study limitations. Raw Heroku branding is replaced by a clear Amicus landing and named launch action; the working underlying host remains unchanged.
+- **Hierarchy/navigation:** eSIM and B2B connectivity lead; tools and resources follow. All store links use the same tab. External Crew Change/inspection launches use a separate tab with appropriate rel attributes and an accessible notice.
 
-The existing optional Umami service is preserved. Public website IDs are not credentials. Hooks send allowlisted event names and the corporate pathname; they do not send inquiry fields, draft contents, query strings or mailto URLs.
+## 5. Resources, SEO and indexing
 
-| Event | Meaning | Does not prove |
-| --- | --- | --- |
-| `buy_esim_click` / `seafarer_cta_click` | Marked purchase/audience action clicked | Purchase or provisioning |
-| `shop_visit` | A reviewed store /shop link clicked, including seafarer CTAs | Destination completed loading or conversion |
-| `inquiry_start` | A corporate Contact link clicked | Form submitted |
-| `operator_inquiry` | Existing marked business-inquiry CTA clicked | Qualified lead or delivery |
-| `email_draft_ready` | Validated draft page displayed, if tracker is available | Message sent |
-| `contact_submit` / `email_app_open` | Legacy/current email-app handoff click | Email app launch success or inbox delivery |
-| `inquiry_copy` | Clipboard write succeeded | User pasted or sent anything |
-| `support_visit` / `account_visit` / `business_store_visit` | Marked store support/account/business link clicked | Authenticated action or sent inquiry |
-| `crew_tool_click` / `resource_view` | Marked tool/resource link clicked | Tool registration or resource read to completion |
+Four concise articles cover a three-airport crew change, phone/eSIM preparation, vessel-to-home connection changes, and choosing crew/inspection tools. All three existing article slugs remain; `/resources/vessel-to-home-connectivity` is added. Only three populated categories appear. Technical statements link to authoritative Apple, Samsung, FCC, Inmarsat or TIC Council sources; see [resource-evidence.md](resource-evidence.md).
 
-`resource_download` remains an available hook without a new downloadable guide UI. Custom events respect Do Not Track and Global Privacy Control; this is not a claim that every private analytics-server setting was verified. Automatic tracker behavior remains subject to its configuration. Cross-subdomain session stitching was not enabled or claimed; corporate outbound intent can be measured without inventing cross-domain attribution.
+Unique page titles/descriptions distinguish company, audience and product intent. Organization data adds legal name, founder, stable identity and the supported product-company link. About adds modest Person data. Articles add author, headline, canonical identity and actual modification date; breadcrumbs include product parents. JSON syntax and relevant identities are verified by tests.
 
-A [reproducible local performance snapshot](phase-2-performance.md) records initial requests and timing for three mobile-width pages. It is a local lab comparison, not a field Core Web Vitals score or real-phone measurement.
+The sitemap automatically includes all 15 current public routes and excludes retired uploads/Rewards. Robots lets crawlers see 410/noindex responses. Known equivalent aliases use 301, including historical Crew Change URLs to its new landing; unknown pages use 404. Existing restrictive headers and canonical-host redirect remain. `/favicon.ico` now permanently redirects to the declared valid SVG icon; touch icon and sharing JPEG are checked.
 
-## Validation and evidence
+## 6. Security, analytics and performance
 
-- `npm run build`: production Webpack build passes without warnings.
-- `npm run lint`, `npm run typecheck`: pass; strict `checkJs` includes current browser modules and central data.
-- `npm test -- --runInBand`: 104 passing server/media/inquiry/deployment tests.
-- `npm run test:browser`: 10 passing Chromium tests, including the 12-page accessibility sweep and 49 viewport/route overflow checks.
-- Browser coverage includes safe prefill, clipboard success/denial, no contact-data analytics, pending-media suppression, keyboard FAQs/menu, JavaScript-disabled menu, draft focus/visibility and 200% text enlargement.
-- `npm run check:links`: 13 rendered pages and 18 internal destinations pass.
-- `npm run check:assets`: existing hero/sharing card pass; two illustration slots explicitly pending.
-- `npm audit` and `npm audit --omit=dev`: zero reported vulnerabilities on successful final checks; no dependency packages were added or upgraded in this pass. One full-audit attempt encountered a transient registry DNS failure before the successful retry.
-- Production baseline audit intentionally exits nonzero for the two live configuration gaps above.
-- Visual review covers the sharing card, homepage, seafarer/operator pages, mobile Contact and the prepared-draft state. Git whitespace checks pass.
+Upload middleware/storage/listing is absent; public serving is restricted to assets with path, realpath, legacy-upload and sensitive-photo denial checks. Removed archived source cannot revive the uploader. No upload dependency remains. SMTP uses TLS, certificate checking, a fixed envelope/sender, structured Reply-To and plain text. File/URL attachments and SMTP debug logging are disabled.
 
-All browser form data was synthetic, and no email, account registration or purchase was submitted externally. Tests use a fresh local app on an isolated port and close their server/browser afterward.
+Contact retains body-size/field limits, allowlisted choices, signed expiring tokens, origin checks, honeypot and five-attempt/15-minute rate limiting. Concurrent repeats share one in-flight send; errors expose only generic text while logs record an allowlisted code. Rate limits and duplicate suppression remain per process; a cluster needs shared state for cross-worker guarantees. SMTP acceptance is not proof of inbox placement, and a lost SMTP acknowledgement can make a deliberate retry duplicate mail.
 
-## Remaining work
+Existing Umami hooks distinguish `buy_esim_click`, `operator_inquiry`, `contact_submit`, `crew_change_click`, `resource_view` and `resource_cta_click`. Contact success records acceptance, not a draft; resource views are article loads. Events contain only an allowlisted name and pathname. No new tracker or analytics identifier was introduced; existing cross-subdomain/account configuration was not changed.
 
-1. Deploy the prepared repository changes, then rerun the Phase 2 production acceptance audit; verify proxy/environment settings privately.
-2. Order AS-002/AS-003 when ready, record provenance/permission evidence, and follow [media integration](media-integration.md). The current pages remain complete without them.
-3. Verify actual phones, email-client behavior and controlled authenticated customer journeys.
-4. Confirm company biography/photo rights and legacy recharge/rewards policies before publishing new claims or migrating customers.
-5. Connect owner-authorized Search Console/analytics evidence and establish deployed performance baselines. Choose a real email delivery provider only if that workflow is wanted.
-6. Reconsider video/music only when there is a defined explanatory or marketing use.
+The built corporate script is about 2.44 KiB and CSS about 15.9 KiB before transfer compression. System fonts, an eager dimensioned 55.6 KB hero, lazy dimensioned founder portrait and no extra third-party scripts keep pages small. Seven local lab observations had zero observed initial CLS; these are not field Core Web Vitals or real mobile-network claims. See [performance evidence](phase-2-performance.md).
+
+## 7. External infrastructure still requiring action
+
+1. Configure real SMTP host/sender/credentials and the intended recipient; verify inbox/spam placement and reply routing with a controlled live inquiry. Create a branded corporate mailbox if desired, then update configuration. Never publish a nonexistent mailbox.
+2. Deploy the validated source/build through the existing VPS/PM2 workflow. Inspect actual reverse-proxy aliases and privately remove or quarantine any obsolete upload files remaining on that server. **Git deployment does not delete untracked VPS uploads.** Local emptiness and public 410 probes do not prove remote storage is empty.
+3. Verify trusted-proxy topology, Node access restrictions, shared form secret and worker layout. Confirm hostname TLS/canonical behavior, CDN response handling and Search Console removal after deployment.
+4. For `crew.amicusshippingllc.com` and `inspection.amicusshippingllc.com` (or `training`), configure DNS, TLS and the actual application/custom-domain routing before changing links. No imaginary hostnames were published.
+5. Verify real Crew Change invitations/onboarding and eSIM customer paths on phones. Public HTTP 200 proves page/shell delivery, not purchase, registration, provisioning or operation completion.
+
+The read-only production audit returned 191 passing checks, 38 failures and 7 inconclusive checks. Most failures reflect the new pages/metadata not being deployed; network failures remain explicitly inconclusive. Existing upload probes were 410 and corporate Resources was 200. Details: [production audit](phase-2-production-audit.md).
+
+## 8. Tests run and actual outcomes
+
+Environment: Windows PowerShell, Node 24.19.0; CI remains Node 22. The browser test server injects synthetic acceptance locally, and Nodemailer's real MIME generation is tested without sending external email.
+
+| Command | Final outcome |
+| --- | --- |
+| `npm.cmd install nodemailer --cache .npm` | Installed maintained SMTP transport; audit reported zero vulnerabilities |
+| `npm.cmd ci --cache .npm` | Passed; lockfile installs cleanly. Default cache initially lacked write permission, resolved with workspace cache |
+| `npm.cmd run lint` | Passed |
+| `npm.cmd run typecheck` | Passed |
+| `npm.cmd test -- --runInBand` | **153 tests passed**, five suites |
+| `npm.cmd run build` | Production Webpack build passed |
+| `npm.cmd run check:links` | 16 rendered pages including 404; 22 internal pages/assets; no broken destinations |
+| `npm.cmd run check:assets` | Three served images checked; two optional illustration slots remain unused |
+| `npm.cmd run test:browser` with workspace Playwright browser path | **11 tests passed**; all 15 pages checked with axe; 105 viewport checks at 320/375/390/430/768/1024/1440; keyboard, no-JS contact, error focus, metadata/link behavior, 200% text and screenshots |
+| `npm.cmd audit --json --cache .npm` | **0 reported vulnerabilities** |
+| `npm.cmd run measure:performance` | Seven successful local Chromium observations; no local failed requests, script errors or initial observed CLS |
+| `npm.cmd run audit:production -- --phase2` | Exit 1: 191 pass / 38 fail / 7 inconclusive; not a deployment acceptance pass |
+| `git diff --check` | Passed |
+
+An initial browser run exposed two test issues: the new descendant navigation uses valid `aria-current="location"`, and Playwright's click-stability check stalled during a no-JS mobile scroll. The expected aria state was corrected and the no-JS workflow was verified through keyboard activation. The subsequent complete browser run passed. No failing implementation check is represented as passed.
+
+After tightening spacing between resource categories, the three affected route/accessibility, viewport and screenshot tests also passed again. Lint, typecheck, build and the expanded three-image asset check passed on that final layout.
+
+Manual screenshots were reviewed as a first-time visitor, seafarer on a phone, crew manager and maritime professional. The company purpose and buy action are prominent, B2B workflow/CTA explicit, existing visual continuity intact, and product launches follow explanations. Optional illustration slots produce neither missing images nor empty frames.
+
+## 9. Important files changed
+
+- `server.js`, `src/server/contact.js`, new `src/server/mail.js`: routing, retirement and actual contact delivery.
+- `src/site-data.js`, new `src/resources.js`: destinations, hierarchy, metadata and sourced guides.
+- `views/`: homepage, audiences, About, Contact, Resources/articles, legal wording, shared shell and two new product landings.
+- `src/js/`, `src/scss/style.scss`, built stylesheet and founder image: interaction, conversion events and restrained layout/performance work.
+- `package.json`, lockfile, `.env.example`: SMTP dependency and deployment configuration.
+- `__tests__/`, `browser-tests/`, `scripts/`: delivery/security/route checks, browser validation, asset/performance and public audit coverage.
+- Removed archive files listed above; current README, evidence and operational documentation updated.
+
+## 10. Highest-value Phase 3
+
+1. Finish SMTP and production rollout acceptance, including remote upload storage and proxy inspection.
+2. Confirm and exercise the B2B payment/code-distribution process and a real Crew Change demo; capture approved product screenshots from that demo.
+3. Use deployed inquiry/store events and Search Console to prioritize customer friction and maritime article topics. Validate physical phones before adding more features or decoration.
+
+## Information worth getting from the owner
+
+- The intended corporate inquiry mailbox and mail-provider setup.
+- An updated career record/current credentials if precise dates or certifications should be published, plus a newer professional portrait and recommendations cleared for website use.
+- Confirmed company payment/invoicing/distribution arrangements beyond individual crew discount codes.
+- Which production Crew Change workflows are ready for customer onboarding, and a controlled demo journey for authentic screenshots.

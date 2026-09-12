@@ -250,15 +250,15 @@
       "id": "AS-005",
       "name": "Authentic owner or work photograph",
       "type": "photo",
-      "priority": "optional_owner_supplied",
-      "provider": "Owner or commissioned photographer",
-      "status": "awaiting_optional_real_material",
+      "priority": "retain_existing_portrait",
+      "provider": "Existing repository",
+      "status": "existing_portrait_integrated",
       "brief_anchor": "as-005--one-authentic-photo-if-available",
       "placements": [
         {
           "route": "/about",
           "template": "views/about.ejs",
-          "location": "Near about-approach-heading after owner verifies caption"
+          "location": ".founder-portrait"
         }
       ],
       "master": {
@@ -266,21 +266,30 @@
         "format": "Original phone JPEG/HEIC or camera file"
       },
       "proposed_public_files": [
-        "amicus-real-work-1200.webp"
+        "jivko-atanassov-680.jpg"
       ],
       "max_bytes": 160000,
       "synthetic": false,
-      "alt_text": null,
-      "caption": null,
+      "alt_text": "Jivko Atanassov, founder of Amicus Shipping LLC",
+      "caption": "Founder, Amicus Shipping LLC",
       "fallback": "Current factual About copy",
       "generation_permitted": false,
       "review": {
-        "subject_identity": null,
+        "subject_identity": "Named repository portrait of Jivko Atanassov",
         "photographer": null,
-        "permission_evidence": null,
+        "permission_evidence": "Owner Phase 2 brief permits appropriate existing founder photographs",
         "caption_approved_at": null,
         "published_at": null
-      }
+      },
+      "current_path": "public/assets/media/jivko-atanassov-680.jpg",
+      "source_master_path": "public/assets/images/jivko4a.jpg",
+      "current_dimensions": {
+        "width": 680,
+        "height": 808
+      },
+      "current_bytes": 68416,
+      "order_required": false,
+      "provenance_status": "Named existing founder portrait visually reviewed and used under owner Phase 2 instruction; proportionally resized only. No generated likeness."
     },
     {
       "id": "VD-001",

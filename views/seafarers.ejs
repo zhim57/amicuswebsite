@@ -3,38 +3,38 @@
   <section class="page-intro">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Seafarers</li></ol></nav>
-      <p class="eyebrow">For seafarers</p>
-      <h1>Your next port. Your next connection.</h1>
-      <p class="lead">Plan your mobile data for crew-change travel, time ashore and the journey home. Start with the destination and device you will actually use.</p>
-      <div class="inline-links"><a class="button button-primary" href="<%= site.shopUrl %>" target="_blank" rel="noopener noreferrer" data-event="seafarer_cta_click">Find an eSIM plan <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="<%= site.helpUrl %>" target="_blank" rel="noopener noreferrer">Compatibility &amp; setup help <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+      <p class="eyebrow">Amicus solutions for seafarers</p>
+      <h1>For the journey between vessel and home.</h1>
+      <p class="lead">A crew change can take you from a vessel and launch boat to a port terminal, hotel and several airports. Amicus brings together connectivity, travel preparation and coordination tools for that journey.</p>
+      <div class="inline-links"><a class="button button-primary" href="<%= site.shopUrl %>" data-event="buy_esim_click">Find an eSIM plan</a><a class="text-link" href="#crew-preparation">Prepare for your crew change</a></div>
     </div>
   </section>
-  <section class="section" aria-labelledby="before-travel-heading">
+  <section class="section" aria-labelledby="seafarer-journey-heading" id="crew-preparation">
     <div class="container split">
-      <div><p class="eyebrow">Before you travel</p><h2 id="before-travel-heading">Three checks before you buy.</h2><p>A little preparation helps when your itinerary includes several countries or a short connection between flights.</p><%- include('partials/media', { media: media.crewConnectivity }) %></div>
+      <div><p class="eyebrow">Joining, travelling, signing off</p><h2 id="seafarer-journey-heading">Keep the next handover clear.</h2><p>Connectivity matters when you need to find the pickup point, reach your agent or tell family you have arrived. Prepare for the gaps between reliable connections.</p><%- include('partials/media', { media: media.crewConnectivity }) %></div>
       <ol class="numbered-list">
-        <li><h3>Check your phone.</h3><p>Confirm the exact model supports eSIM and that your phone is network-unlocked. Use the store's help guidance before purchasing.</p></li>
-        <li><h3>Match the plan to your journey.</h3><p>Review every destination where you need data, including transit stops. Check the data allowance, validity and coverage on the plan page.</p></li>
-        <li><h3>Read the activation instructions.</h3><p>Check when the plan starts and follow its setup instructions. Keep those instructions available for the journey.</p></li>
+        <li><h3>Before leaving home or the vessel</h3><p>Save joining instructions, tickets, the meeting point and your coordinator's contact details offline. Read the data plan's device, destination and activation guidance while you have an internet connection.</p></li>
+        <li><h3>Between airport, hotel and port</h3><p>Check coverage for the transit country as well as the joining country. Keep the person arranging your transfer informed when travel times change; an app update does not confirm a new pickup.</p></li>
+        <li><h3>After sign-off or during shore leave</h3><p>Check whether your plan is still valid and covers the next country. Arrange a way to contact the ship or coordinator before you leave, including a fallback if mobile data is unavailable.</p></li>
       </ol>
     </div>
   </section>
-  <section class="section section-soft" aria-labelledby="seafarer-help-heading">
+  <section class="section section-soft" aria-labelledby="seafarer-solutions-heading">
     <div class="container">
-      <div class="section-heading"><p class="eyebrow">Help along the way</p><h2 id="seafarer-help-heading">Choose your next step.</h2></div>
+      <div class="section-heading"><div><p class="eyebrow">Your Amicus services</p><h2 id="seafarer-solutions-heading">Choose what you need for the next leg.</h2></div></div>
       <div class="grid-three">
-        <article class="feature-card"><h3>Getting ready to travel</h3><p>A short checklist for device compatibility, plan selection and setup preparation.</p><a class="text-link" href="/resources/esim-before-you-travel" data-event="resource_view">Read the eSIM checklist</a></article>
-        <article class="feature-card"><h3>Already have a plan?</h3><p>Use the Amicus store's installation guidance for the next step in setting up your eSIM.</p><a class="text-link" href="<%= site.installationUrl %>" target="_blank" rel="noopener noreferrer">Installation help <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></article>
-        <article class="feature-card"><h3>Using the crew-change tool</h3><p>Register in the crew-change application to begin its workflow. Confirm arrangements with your responsible agent or coordinator.</p><a class="text-link" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_tool_click">Open crew-change tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></article>
+        <article class="feature-card"><p class="eyebrow">Connectivity</p><h3>Buy and manage mobile data.</h3><p>The dedicated Amicus eSIM store handles current plans, prices, coverage, phone checks, setup and orders.</p><a class="text-link" href="<%= site.shopUrl %>" data-event="buy_esim_click">Go to the Amicus eSIM store</a></article>
+        <article class="feature-card"><p class="eyebrow">Coordination</p><h3>Understand Amicus Crew Change.</h3><p>See how participating crew and coordinators share trip information and journey updates before opening the application.</p><a class="text-link" href="<%= site.crewLandingUrl %>">Explore the crew-change tool</a></article>
+        <article class="feature-card"><p class="eyebrow">Preparation</p><h3>Plan for a journey with several stops.</h3><p>Work through an itinerary country by country, including the connection where you may need to reach an agent or change a flight.</p><a class="text-link" href="/resources/crew-change-connectivity">Read the crew-change guide</a></article>
       </div>
-      <div class="callout support-links"><div><h3>Need help with an existing order?</h3><p>Use your store account for order information, or contact the eSIM support team.</p></div><div class="inline-links"><a class="text-link" href="<%= site.accountUrl %>" data-event="account_visit">Your eSIM account ↗</a><a class="text-link" href="<%= site.supportUrl %>" data-event="support_visit">Order &amp; connection support ↗</a></div></div>
+      <div class="callout support-links"><div><h3>Already have an eSIM order?</h3><p>Your store account, installation instructions and order support are together in Amicus eSIM.</p></div><div class="inline-links"><a class="text-link" href="<%= site.accountUrl %>" data-event="account_visit">Your eSIM account</a><a class="text-link" href="<%= site.installationUrl %>">Installation help</a><a class="text-link" href="<%= site.supportUrl %>" data-event="support_visit">Order &amp; connection support</a></div></div>
     </div>
   </section>
-  <section class="section"><div class="container faq-layout"><div><p class="eyebrow">Before you rely on a plan</p><h2>A few useful answers.</h2></div><div class="faq-list">
-    <details><summary>Will this work while the ship is at sea?</summary><div><p>Travel eSIMs use land-based mobile networks. They are not a substitute for the ship’s satellite connection. Check the plan’s destinations and coverage for ports and time ashore.</p></div></details>
-    <details><summary>Does an eSIM-capable phone guarantee compatibility?</summary><div><p>Your exact model and regional variant matter, and the phone must be carrier-unlocked. Check both before buying.</p><a class="text-link" href="<%= site.helpUrl %>">Read the device checks ↗</a></div></details>
-    <details><summary>Does installation start the plan’s validity?</summary><div><p>That depends on the selected plan. Read the plan and delivery instructions before installing or activating it.</p><a class="text-link" href="<%= site.installationUrl %>">Follow the installation guidance ↗</a></div></details>
+  <section class="section"><div class="container faq-layout"><div><p class="eyebrow">Ship and shore are different</p><h2>Know where mobile data can help.</h2></div><div class="faq-list">
+    <details><summary>Will a travel eSIM work while the vessel is at sea?</summary><div><p>Travel eSIMs use terrestrial mobile networks. They do not provide mid-ocean satellite service. Signal at a berth, anchorage or coast depends on local network reach and the plan; do not assume it is available because the ship is near land.</p></div></details>
+    <details><summary>Where should I check prices, coverage and my phone?</summary><div><p>Use the current plan details and device guidance in the Amicus eSIM store. Your exact phone model, regional variant and carrier-unlock status matter.</p><a class="text-link" href="<%= site.helpUrl %>">Read the store's compatibility guidance</a></div></details>
+    <details><summary>Does the crew-change tool arrange my local transfer?</summary><div><p>The tool helps participating people coordinate the journey. Your agent or responsible coordinator must confirm the transport, meeting point and local arrangements. Registration alone does not book a transfer.</p></div></details>
   </div></div></section>
-  <section class="section section-dark"><div class="container split"><div><p class="eyebrow">A question about your journey?</p><h2>Let us help you find the right starting point.</h2><p>Include your destination, travel dates and phone model so your inquiry has the details that matter.</p></div><div><a class="button button-light" href="<%= site.inquiryUrls.seafarer %>">Contact Amicus</a></div></div></section>
+  <section class="section section-dark"><div class="container split"><div><p class="eyebrow">Maritime experience behind Amicus</p><h2>Built with life around a port call in mind.</h2><p>Founder Jivko Atanassov's background spans ship agency, marine superintendent work and petroleum inspection.</p></div><div><a class="button button-light" href="/about">Meet Amicus Shipping</a></div></div></section>
 </main>
 <%- include('partials/footer') %>

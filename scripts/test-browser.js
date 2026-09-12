@@ -4,7 +4,9 @@ const { createApp } = require('../server');
 
 // Own the test server directly: no fixed port, existing app reuse, or orphaned
 // shell process on Windows. Closing the runner also closes the HTTP listener.
-const server = createApp({ NODE_ENV: 'test' }).listen(0, '127.0.0.1', () => {
+// Explicit dependency injection stays inside this runner. Production cannot
+// enable a fake mail transport through a request or an environment flag.
+const server = createApp({ NODE_ENV: 'test' }, { contactSendMail: async () => ({ accepted: true }) }).listen(0, '127.0.0.1', () => {
   const baseURL = `http://127.0.0.1:${server.address().port}`;
   const runner = spawn(process.execPath, [require.resolve('@playwright/test/cli'), 'test', ...process.argv.slice(2)], {
     stdio: 'inherit',

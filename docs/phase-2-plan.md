@@ -1,4 +1,5 @@
 # Amicus Shipping — Phase 2 plan
+> Historical plan from an earlier Phase 2 iteration. The current owner's refinement brief supersedes this scope; see [the implementation report](phase-2-report.md). Contact now sends through SMTP when configured, existing founder material is integrated, and obsolete upload/Rewards source has been deleted. Illustrations remain optional.
 Prepared: 2026-09-11. Baseline: committed Phase 1 rebuild `b77e66c`.
 
 Phase 2 should improve trust and customer journeys while adding a small, deliberate asset set. The owner has limited photography, so the plan keeps the existing maritime hero and uses two clearly illustrative supporting scenes. The [asset manifest and ready-to-paste prompts](asset-manifest.md) are ready; the [structured register](asset-manifest.json) records order and integration status.

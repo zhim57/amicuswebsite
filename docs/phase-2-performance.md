@@ -1,37 +1,33 @@
 # Phase 2 local performance snapshot
 
-Captured 2026-09-12T01:12:33.018Z using Chromium 153.0.8010.12 and the final local Phase 2 build. These are single local browser observations for development comparison, not a performance score, a physical-phone result or a field Core Web Vitals assessment.
+Captured 2026-09-12T13:45:48.438Z using Chromium 153.0.8010.12. These are single local Chromium observations at 375 by 812 pixels, not a Lighthouse score, physical-phone result or field Core Web Vitals assessment.
 
-| Route | Declared body bytes | Responses, including document | Navigation TTFB | Load event | Observed LCP | Observed CLS |
+| Route | Declared body bytes | Responses incl. document | TTFB | Load event | Observed LCP | Observed CLS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `/` | 87,484 | 6 | 17.6 ms | 116 ms | 188 ms | 0 |
-| `/seafarers` | 30,281 | 5 | 5.3 ms | 31.5 ms | 92 ms | 0 |
-| `/contact` | 29,030 | 5 | 7.6 ms | 75.8 ms | 84 ms | 0 |
+| `/` | 88,220 | 6 | 108.4 ms | 567.9 ms | 780 ms | 0 |
+| `/seafarers` | 30,784 | 5 | 29.8 ms | 421.5 ms | 528 ms | 0 |
+| `/operators` | 30,466 | 5 | 34.9 ms | 424 ms | 656 ms | 0 |
+| `/about` | 98,936 | 6 | 38.9 ms | 395.9 ms | 532 ms | 0 |
+| `/solutions/crew-change` | 29,748 | 5 | 38.1 ms | 456.8 ms | 604 ms | 0 |
+| `/resources` | 30,668 | 5 | 29.9 ms | 395.6 ms | 488 ms | 0 |
+| `/contact` | 29,754 | 5 | 35.8 ms | 419.3 ms | 484 ms | 0 |
 
-All responses were HTTP 200, and all supplied a Content-Length header. There were no failed local requests, page script errors or attempted external requests. Neither pending commissioned illustration was requested. The sharing card is link-preview metadata and was not downloaded as page content.
+All measured local responses were successful; no failed local requests or page errors were recorded. No outside requests were made. The corporate app used its actual unconfigured contact state for that route, including the direct-email notice. No inquiry was submitted.
 
-The shared stylesheet was 16,140 bytes and the corporate script was 2,792 bytes. The homepage's retained photograph was 55,629 bytes. This identifies the existing hero as the largest initial body on the homepage; it does not establish a reason to replace the image or infer mobile-network timing.
+The final shared stylesheet is 16281 bytes and corporate JavaScript is 2501 bytes before transfer compression. The retained homepage image is 55,629 bytes. The founder portrait was proportionally resized from 655,397 to 68,416 bytes (680 by 808 JPEG, quality 85), keeping the original file and appearance. The sharing card is metadata and is not downloaded as page content. Pending illustrative media is not requested.
 
-## What was measured
+## Method and limits
 
-`scripts/measure-performance.js` starts its own Express app in test mode on a random loopback port and launches headless Chromium. Each route gets a fresh browser context at 375 by 812 CSS pixels, device scale factor 1, with no network or CPU throttling. This is a narrow desktop-browser viewport, not emulated phone hardware. The browser process and server are reused across the three samples, so later routes can benefit from process/server warmup even though browser contexts are fresh.
+Command: `npm.cmd run measure:performance` with `PLAYWRIGHT_BROWSERS_PATH` set to `.qa/browsers`. The script owns a loopback Express server, uses a fresh browser context per route, blocks outside requests and observes 1.5 seconds after load. It records response Content-Length totals including HTML; this excludes headers and is not compressed production transfer size. The final resource-category spacing is included.
 
-Response totals sum the declared Content-Length for the HTML document and resources actually loaded during the observation. They exclude HTTP headers and are not production compressed transfer sizes. The raw report lists absent length headers separately. Counts represent responses, not unique URLs: the same small SVG is loaded for the brand image and favicon. Request routing blocks outside services and disables the browser HTTP cache. Production analytics is omitted by test mode.
+No CPU/network throttling, physical mobile hardware or production proxy/CDN configuration was measured. LCP is the last initial buffered candidate and CLS is the largest observed initial shift session; neither measures the full user visit. Loopback timing varies with machine load and is useful only for like-for-like development checks. Field INP and real mobile connectivity are unmeasured.
 
-Navigation TTFB is Navigation Timing's `responseStart`, and load is `loadEventEnd`, both measured from navigation start. Buffered PerformanceObservers capture the last Largest Contentful Paint candidate and the maximum layout-shift session observed until 1.5 seconds after load. Layout shifts following recent input are excluded; sessions use a maximum five-second window with gaps below one second. These pages were neither scrolled nor interacted with. Zero observed CLS applies only to this short initial viewport interval, and no INP measurement is claimed.
+## Retained performance choices
 
-The runner writes `.qa/performance.json`, including per-resource sizes, timings, observer support and errors. This local QA artifact is not published. It closes each browser context, the browser and the HTTP server on completion or failure.
+- Server-rendered pages and system fonts; no framework rewrite or added font requests.
+- Eager, explicitly sized hero; lazy, explicitly sized founder portrait.
+- Approximately 2.44 KiB of corporate JavaScript; legacy utility bundles are not loaded on corporate pages.
+- Existing production-only analytics configuration retained. It is absent from these test-mode measurements.
+- No autoplay media, decorative image-per-card loading or unapproved placeholders.
 
-## Reproduce
-
-Build first, then use the same local Chromium installation as the browser suite:
-
-```powershell
-npm.cmd run build
-$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) '.qa/browsers'
-npm.cmd run measure:performance
-```
-
-The runner installs nothing and does not require a fixed port or an existing preview process. If Chromium is missing, use the existing browser setup instructions in the README. Each run replaces `.qa/performance.json`; update the dated table above only after inspecting a new report.
-
-Before interpreting timing changes, compare the same build mode, browser, viewport, cache policy and machine conditions. Repeat after approved media is integrated. Production checks must separately account for the VPS, TLS, compression, network latency, analytics, real devices and longer sessions. Establish field metrics after deployment and sufficient real traffic rather than extrapolating them from this snapshot.
+Raw measurement details are in ignored `.qa/performance.json`. Run production/mobile lab and field checks after release; these local numbers do not establish real-world loading speed.

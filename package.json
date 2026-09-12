@@ -6,7 +6,8 @@
   "dependencies": {
     "dotenv": "^17.0.1",
     "ejs": "^3.1.10",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemailer": "^10.0.9"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -27,7 +28,7 @@
     "test": "jest",
     "start": "node server.js",
     "build": "webpack",
-    "lint": "eslint server.js src/server src/site-data.js src/media.js src/js/site.js src/js/contact.js src/js/analytics.js scripts __tests__ browser-tests *.config.js",
+    "lint": "eslint server.js src/server src/site-data.js src/resources.js src/media.js src/js/site.js src/js/contact.js src/js/analytics.js scripts __tests__ browser-tests *.config.js",
     "typecheck": "tsc -p tsconfig.site.json",
     "test:browser": "node scripts/test-browser.js",
     "check:links": "node scripts/check-links.js",

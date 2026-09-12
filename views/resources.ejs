@@ -1,35 +1,40 @@
-<%- include('partials/header') %>
+﻿<%- include('partials/header') %>
+<% const categories = [...new Set(resources.map(resource => resource.category))]; const categoryId = category => category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, ''); %>
 <main id="main-content">
   <section class="page-intro">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Resources</li></ol></nav>
-      <p class="eyebrow">Amicus field notes</p>
-      <h1>A little preparation goes a long way.</h1>
-      <p class="lead">Focused guides for seafarers and the people supporting them. Start with travel connectivity, crew-change preparation or the right tool for the job.</p>
+      <p class="eyebrow">Practical maritime guides</p>
+      <h1>Prepare for the next handover.</h1>
+      <p class="lead">From a three-airport crew change to the connection between vessel and home: focused reading for seafarers, agents and the people coordinating the journey.</p>
+      <nav class="inline-links" aria-label="Resource categories"><% categories.forEach(category => { %><a class="text-link" href="#<%= categoryId(category) %>"><%= category %></a><% }) %></nav>
     </div>
   </section>
-  <section class="section" aria-labelledby="guides-heading">
-    <div class="container">
-      <div class="section-heading"><p class="eyebrow">Practical reading</p><h2 id="guides-heading">Guides from Amicus.</h2></div>
-      <div class="resource-list">
-        <% resources.forEach(function(resource) { %>
-          <article class="resource-row">
-            <div><p class="meta"><%= resource.category %> <span aria-hidden="true">/</span> <%= resource.readTime %></p><h3><a href="/resources/<%= resource.slug %>" data-event="resource_view"><%= resource.title %></a></h3><p><%= resource.summary %></p></div>
-            <a class="text-link" href="/resources/<%= resource.slug %>" data-event="resource_view" aria-label="Read <%= resource.title %>">Read guide <span aria-hidden="true">→</span></a>
-          </article>
-        <% }) %>
+  <% categories.forEach(category => { %>
+    <section class="section resource-category" aria-labelledby="<%= categoryId(category) %>">
+      <div class="container">
+        <div class="section-heading"><h2 id="<%= categoryId(category) %>"><%= category %></h2></div>
+        <div class="resource-list">
+          <% resources.filter(resource => resource.category === category).forEach(resource => { %>
+            <article class="resource-row">
+              <div><p class="meta"><%= resource.readTime %></p><h3><a href="/resources/<%= resource.slug %>"><%= resource.title %></a></h3><p><%= resource.summary %></p></div>
+              <a class="text-link" href="/resources/<%= resource.slug %>" aria-label="Read <%= resource.title %>">Read guide <span aria-hidden="true">→</span></a>
+            </article>
+          <% }) %>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  <% }) %>
   <section class="section section-soft" aria-labelledby="resources-tools-heading">
     <div class="container split">
-      <div><p class="eyebrow">Working tools</p><h2 id="resources-tools-heading">Ready to take the next step?</h2><p>Go directly to the application or guidance you need.</p></div>
+      <div><p class="eyebrow">From reading to action</p><h2 id="resources-tools-heading">Choose the next step for your task.</h2><p>Use the store for current eSIM setup guidance. Read the tool overviews before opening an application.</p></div>
       <div class="stack">
-        <div><h3>eSIM help &amp; installation</h3><p>Use the store's help pages for device checks, plan questions and installation guidance.</p><a class="text-link" href="<%= site.helpUrl %>" target="_blank" rel="noopener noreferrer">Open the eSIM help center <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
-        <div><h3>Petroleum inspection practice</h3><p>An independent study tool for petroleum inspection exam preparation. It does not award certification or replace official examination materials.</p><a class="text-link" href="<%= site.inspectionUrl %>" target="_blank" rel="noopener noreferrer">Open inspection practice <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+        <div><h3>eSIM help &amp; installation</h3><p>Check the phone and follow the instructions for the plan you purchase.</p><a class="text-link" href="<%= site.helpUrl %>" data-event="resource_cta_click">Open the eSIM help center <span aria-hidden="true">→</span></a></div>
+        <div><h3>Crew Change</h3><p>Understand the tool and discuss how it could fit your coordination process.</p><a class="text-link" href="/solutions/crew-change" data-event="resource_cta_click">Explore Crew Change <span aria-hidden="true">→</span></a></div>
+        <div><h3>Petroleum inspection practice</h3><p>Independent study alongside official materials, with clear limits on what practice results mean.</p><a class="text-link" href="/solutions/inspection" data-event="resource_cta_click">About inspection practice <span aria-hidden="true">→</span></a></div>
       </div>
     </div>
   </section>
-  <section class="section"><div class="container split"><div><p class="eyebrow">Help improve these guides</p><h2>Have a maritime question or a correction?</h2><p>Tell us which guide you are reading and what would make it more useful.</p></div><div><a class="button button-secondary" href="/contact">Contact Amicus</a></div></div></section>
+  <section class="section"><div class="container split"><div><p class="eyebrow">Help improve these guides</p><h2>Have a maritime question or a correction?</h2><p>Tell us which guide you are reading and what would make it more useful.</p></div><div><a class="button button-secondary" href="/contact" data-event="resource_cta_click">Contact Amicus</a></div></div></section>
 </main>
 <%- include('partials/footer') %>

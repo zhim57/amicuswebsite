@@ -3,36 +3,29 @@
   <section class="page-intro"><div class="container"><nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li>Contact</li></ol></nav><p class="eyebrow">A direct conversation</p><h1>What can we help with?</h1><p class="lead">Tell us about your crew, your journey or the operational problem you’re working on.</p></div></section>
   <section class="section"><div class="container contact-layout">
     <div>
-      <% if (form.preparedMailto) { %>
-      <div id="email-draft" class="success-panel" tabindex="-1" role="status">
-        <h2>Your email draft is ready</h2>
-        <p>Your inquiry has not been sent yet. Open your email app, review the draft and send it to Amicus.</p>
-        <div class="inline-links"><a class="button button-primary" href="<%= form.preparedMailto %>" data-event="contact_submit">Open email draft ↗</a><a class="text-link" href="/contact">Start another inquiry</a></div>
-        <p class="form-note">Using webmail? Copy the subject and message below into your email service, then send them to <a href="mailto:<%= site.email %>"><%= site.email %></a>.</p>
-      </div>
+      <% if (!contactAvailable && !Object.keys(form.errors).length && !form.success) { %>
+      <div class="callout" role="status"><h2>Contact us by email</h2><p>Online inquiry sending is temporarily unavailable. Please <a href="mailto:<%= site.email %>">email Amicus directly</a> so we can help.</p></div>
       <% } %>
-      <% if (form.preparedBody) { %>
-      <div class="draft-copy">
-        <div class="field"><label for="prepared-subject">Subject</label><input id="prepared-subject" type="text" value="<%= form.preparedSubject %>" readonly></div>
-        <div class="field"><label for="prepared-message">Your prepared message</label><textarea id="prepared-message" rows="8" readonly aria-describedby="copy-message-help"><%= form.preparedBody %></textarea></div>
-        <p class="form-note" id="copy-message-help">You can select and copy the text above. Review it in your email service before sending.</p>
-        <button class="button button-secondary" type="button" data-copy-message hidden>Copy message</button>
-        <p class="form-note copy-status" id="copy-message-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <% if (form.success) { %>
+      <div id="contact-success" class="success-panel" tabindex="-1" role="status">
+        <h2>Thank you. Your inquiry has been sent.</h2>
+        <p>Our mail service has accepted your message for delivery to Amicus. We will reply to the email address you provided.</p>
+        <div class="inline-links"><a class="button button-primary" href="/contact">Start another inquiry</a><a class="text-link" href="/solutions">Explore Amicus solutions</a></div>
       </div>
       <% } %>
       <% if (Object.keys(form.errors).length) { %>
       <div id="form-errors" class="error-summary" tabindex="-1"><h2>Please check your inquiry</h2><ul><% Object.entries(form.errors).forEach(([field, error]) => { %><li><% if (field !== 'form') { %><a href="#<%= field %>"><%= error %></a><% } else { %><%= error %><% } %></li><% }) %></ul></div>
       <% } %>
-      <% if (form.preparedMailto) { %><details class="optional-details edit-inquiry"><summary>Edit inquiry details</summary><% } %>
-      <form action="/contact" method="post" aria-describedby="contact-explanation">
+      <% if (!form.success) { %>
+      <form action="/contact" method="post" aria-describedby="contact-explanation" data-contact-form>
         <input type="hidden" name="formToken" value="<%= form.token %>">
         <div class="honeypot" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
         <div class="form-grid">
         <% [{ name: 'name', label: 'Name', type: 'text', autocomplete: 'name' }, { name: 'email', label: 'Email', type: 'email', autocomplete: 'email' }].forEach(field => { %>
           <div class="field"><label for="<%= field.name %>"><%= field.label %></label><input id="<%= field.name %>" name="<%= field.name %>" type="<%= field.type %>" autocomplete="<%= field.autocomplete %>" maxlength="<%= contactOptions.fieldLimits[field.name] %>" value="<%= form.values[field.name] || '' %>" required <%- form.errors[field.name] ? 'aria-invalid="true" aria-describedby="' + field.name + '-error"' : '' %>><% if (form.errors[field.name]) { %><p class="field-error" id="<%= field.name %>-error"><%= form.errors[field.name] %></p><% } %></div>
         <% }); %>
-        <% [{ name: 'visitorType', label: 'I am a…', options: contactOptions.visitorTypes }, { name: 'interest', label: 'Interested in', options: contactOptions.interests }].forEach(field => { %>
-          <div class="field"><label for="<%= field.name %>"><%= field.label %></label><select id="<%= field.name %>" name="<%= field.name %>" required <%- form.errors[field.name] ? 'aria-invalid="true" aria-describedby="' + field.name + '-error"' : '' %>><option value="">Select an option</option><% field.options.forEach(option => { %><option value="<%= option %>" <%- form.values[field.name] === option ? 'selected' : '' %>><%= option %></option><% }) %></select><% if (form.errors[field.name]) { %><p class="field-error" id="<%= field.name %>-error"><%= form.errors[field.name] %></p><% } %></div>
+        <% [{ name: 'visitorType', label: 'I am a… (optional)', options: contactOptions.visitorTypes, required: false }, { name: 'interest', label: 'Interested in', options: contactOptions.interests, required: true }].forEach(field => { %>
+          <div class="field"><label for="<%= field.name %>"><%= field.label %></label><select id="<%= field.name %>" name="<%= field.name %>" <%- field.required ? 'required' : '' %> <%- form.errors[field.name] ? 'aria-invalid="true" aria-describedby="' + field.name + '-error"' : '' %>><option value="">Select an option</option><% field.options.forEach(option => { %><option value="<%= option %>" <%- form.values[field.name] === option ? 'selected' : '' %>><%= option %></option><% }) %></select><% if (form.errors[field.name]) { %><p class="field-error" id="<%= field.name %>-error"><%= form.errors[field.name] %></p><% } %></div>
         <% }); %>
           <div class="field field-full"><label for="message">How can we help?</label><textarea id="message" name="message" rows="6" maxlength="<%= contactOptions.fieldLimits.message %>" required <%- form.errors.message ? 'aria-invalid="true" aria-describedby="message-error"' : '' %>><%= form.values.message || '' %></textarea><% if (form.errors.message) { %><p class="field-error" id="message-error"><%= form.errors.message %></p><% } %></div>
           <details class="optional-details field-full" <%- form.values.company || form.values.phone || form.errors.company || form.errors.phone ? 'open' : '' %>>
@@ -44,10 +37,11 @@
             </div>
           </details>
         </div>
-        <p class="form-note" id="contact-explanation">This form prepares an email for you to send from your own email app. Your details are checked by this website but are not saved as an inquiry. See our <a href="/privacy">privacy notice</a>.</p>
-        <div class="inline-links"><button class="button button-primary" type="submit">Prepare email <span aria-hidden="true">→</span></button></div>
+        <p class="form-note" id="contact-explanation">Your inquiry is sent to Amicus by email so we can respond. Please leave out passwords, payment card details and sensitive travel documents. See our <a href="/privacy">privacy notice</a>.</p>
+        <div class="inline-links"><button class="button button-primary" type="submit">Send inquiry <span aria-hidden="true">→</span></button></div>
+        <p class="form-note" id="contact-submit-status" role="status" aria-live="polite" aria-atomic="true"></p>
       </form>
-      <% if (form.preparedMailto) { %></details><% } %>
+      <% } %>
     </div>
     <aside class="contact-aside">
       <p class="eyebrow">Talk to Amicus</p><h2>Start with what you need.</h2><p>For a business inquiry, useful details include your travel routes, approximate crew numbers and the task you want to simplify.</p>

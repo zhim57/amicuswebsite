@@ -30,9 +30,15 @@
   <% if (analyticsEnabled) { %>
   <script defer src="<%= site.analyticsOrigin %>/script.js" data-website-id="<%= site.analyticsWebsiteId %>" data-domains="amicusshippingllc.com,www.amicusshippingllc.com" data-do-not-track="true" data-exclude-search="true"></script>
   <% } %>
-  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: site.url + '/assets/images/favicon.svg', contactPoint: { '@type': 'ContactPoint', email: site.email, contactType: 'customer inquiries' } }).replace(/</g, '\\u003c') %></script>
+  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', '@id': site.url + '/#organization', name: site.name, legalName: site.legalName, url: site.url + '/', logo: site.url + '/assets/images/favicon.svg', founder: { '@type': 'Person', '@id': site.founder.id, name: site.founder.name }, sameAs: site.sameAs, contactPoint: { '@type': 'ContactPoint', url: site.url + '/contact', contactType: 'customer inquiries' } }).replace(/</g, '\\u003c') %></script>
+  <% if (page.view === 'about') { %>
+  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'Person', '@id': site.founder.id, name: site.founder.name, url: site.founder.id, image: site.url + site.founder.image, jobTitle: 'Founder', worksFor: { '@id': site.url + '/#organization' }, description: 'Founder of Amicus Shipping LLC, with a background in ship agency, marine superintendent work and petroleum inspection.' }).replace(/</g, '\\u003c') %></script>
+  <% } %>
+  <% if (page.view === 'article') { %>
+  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: page.heading, description: page.description, mainEntityOfPage: canonicalUrl, dateModified: page.dateModified, author: { '@type': 'Organization', '@id': site.url + '/#organization', name: site.name }, publisher: { '@id': site.url + '/#organization' } }).replace(/</g, '\\u003c') %></script>
+  <% } %>
   <% if (currentPath !== '/' && !page.noindex) { %>
-  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' }, ...(page.view === 'article' ? [{ '@type': 'ListItem', position: 2, name: 'Resources', item: site.url + '/resources' }] : []), { '@type': 'ListItem', position: page.view === 'article' ? 3 : 2, name: page.heading || page.title.split(' | ')[0], item: canonicalUrl }] }).replace(/</g, '\\u003c') %></script>
+  <script type="application/ld+json" nonce="<%= cspNonce %>"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' }, ...(page.view === 'article' ? [{ '@type': 'ListItem', position: 2, name: 'Resources', item: site.url + '/resources' }] : page.parent === 'solutions' ? [{ '@type': 'ListItem', position: 2, name: 'Solutions', item: site.url + '/solutions' }] : []), { '@type': 'ListItem', position: page.view === 'article' || page.parent === 'solutions' ? 3 : 2, name: page.heading || page.title.split(' | ')[0], item: canonicalUrl }] }).replace(/</g, '\\u003c') %></script>
   <% } %>
 </head>
 <body>
@@ -44,13 +50,13 @@
         <span class="brand-type">AMICUS<span>SHIPPING LLC</span></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <% site.nav.forEach(item => { %><a href="<%= item.href %>" <%- currentPath === item.href || (item.href === '/resources' && currentPath.startsWith('/resources/')) ? 'aria-current="page"' : '' %>><%= item.label %></a><% }) %>
+        <% site.nav.forEach(item => { %><a href="<%= item.href %>" <%- currentPath === item.href ? 'aria-current="page"' : currentPath.startsWith(item.href + '/') ? 'aria-current="location"' : '' %>><%= item.label %></a><% }) %>
       </nav>
-      <a class="button button-primary header-cta" href="<%= site.shopUrl %>" data-event="buy_esim_click">Buy eSIM <span aria-hidden="true">↗</span></a>
+      <a class="button button-primary header-cta" href="<%= site.shopUrl %>" data-event="buy_esim_click">Buy eSIM <span aria-hidden="true">→</span></a>
       <details class="mobile-nav">
         <summary aria-label="Main menu"><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></summary>
         <nav aria-label="Mobile navigation">
-          <% site.nav.forEach(item => { %><a href="<%= item.href %>" <%- currentPath === item.href ? 'aria-current="page"' : '' %>><%= item.label %></a><% }) %>
+          <% site.nav.forEach(item => { %><a href="<%= item.href %>" <%- currentPath === item.href ? 'aria-current="page"' : currentPath.startsWith(item.href + '/') ? 'aria-current="location"' : '' %>><%= item.label %></a><% }) %>
         </nav>
       </details>
     </div>

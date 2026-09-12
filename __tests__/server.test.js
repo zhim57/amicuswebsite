@@ -17,7 +17,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  app = createApp({ UPLOAD_DIR: tempDir, NODE_ENV: 'test' });
+  app = createApp({ UPLOAD_DIR: tempDir, NODE_ENV: 'test' }, { contactSendMail: async () => ({ accepted: true }) });
 });
 
 afterAll(() => {
@@ -46,6 +46,10 @@ function validInquiry(formToken, overrides = {}) {
 test.each([
   ['get', '/files'], ['post', '/files'], ['get', '/upload'], ['post', '/upload'],
   ['get', '/uploads/retained.html'], ['head', '/uploads/retained.html'], ['get', '/uploads'],
+  ['post', '/api/upload'], ['post', '/api/uploads'], ['post', '/resources/upload'],
+  ['get', '/rewards.html'], ['get', '/rewards_program.html'], ['get', '/rewards'],
+  ['get', '/uploads/Server%20Management%20Commands.html'], ['get', '/uploads/Python%20File%20Operations.htm'],
+  ['get', '/uploads/VPS%20Node.js%20Deployment.svg'], ['delete', '/upload'], ['options', '/upload'],
 ])('%s %s retires uploads without disclosure', async (method, url) => {
   const response = await request(app)[method](url);
   expect(response.status).toBe(410);
@@ -114,6 +118,19 @@ test.each(Object.keys(pages))('GET %s has unique metadata, one main heading and 
   expect(response.text).toMatch(/<meta\s+name="description"\s+content="[^"]+"/);
   expect(response.text).toContain(`rel="canonical" href="${site.url}${route}"`);
   expect(response.text).not.toContain('climat-bg.com');
+  const schemas = [...response.text.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
+  expect(schemas.find(schema => schema['@type'] === 'Organization')).toMatchObject({ legalName: site.name, founder: { name: 'Jivko Atanassov' } });
+  if (route === '/about') expect(schemas.find(schema => schema['@type'] === 'Person')).toMatchObject({ name: 'Jivko Atanassov', worksFor: { '@id': site.url + '/#organization' } });
+  if (pages[route].view === 'article') expect(schemas.find(schema => schema['@type'] === 'Article')).toMatchObject({ mainEntityOfPage: site.url + route });
+});
+
+test('favicon fallback leads to the declared valid SVG icon', async () => {
+  const response = await request(app).get('/favicon.ico');
+  expect(response.status).toBe(301);
+  expect(response.headers.location).toBe('/assets/images/favicon.svg');
+  const icon = await request(app).get(response.headers.location);
+  expect(icon.status).toBe(200);
+  expect(icon.headers['content-type']).toContain('image/svg+xml');
 });
 
 test.each([
@@ -121,7 +138,7 @@ test.each([
   ['/services.html', '/solutions'], ['/about.html', '/about'], ['/operators-agencies', '/operators'],
   ['/buy_sim.html', '/contact#existing-sim'], ['/buy_Dsim.html', '/contact#existing-sim'],
   ['/deleted_code/buy_sim.html', '/contact#existing-sim'], ['/deleted_code/buy_Dsim.html', '/contact#existing-sim'],
-  ['/crew_change.html', '/solutions#operations'], ['/deleted_code/crew_change.html', '/solutions#operations'],
+  ['/crew_change.html', '/solutions/crew-change'], ['/deleted_code/crew_change.html', '/solutions/crew-change'],
   ['/deleted_code/contact.html', '/contact'], ['/deleted_code/privacy_policy.html', '/privacy'],
 ])('%s permanently redirects to %s', async (from, to) => {
   const response = await request(app).get(from);
@@ -178,15 +195,14 @@ test('contact GET is not cached and does not create a tracking or session cookie
   expect(response.headers['set-cookie']).toBeUndefined();
 });
 
-test('valid inquiry prepares an encoded mailto draft without claiming delivery', async () => {
+test('valid inquiry confirms server-side sending without opening an email client', async () => {
   const formToken = await contactToken();
   const response = await request(app).post('/contact').type('form').send(validInquiry(formToken));
   expect(response.status).toBe(200);
   expect(response.headers['cache-control']).toBe('no-store');
   expect(response.headers['x-robots-tag']).toContain('noindex');
-  expect(response.text).toContain(`mailto:${site.email}?subject=Amicus%20inquiry`);
-  expect(response.text).toContain('casey%40example.com');
-  expect(response.text).not.toMatch(/inquiry (?:was |has been )?sent|message (?:was |has been )?sent/i);
+  expect(response.text).toContain('id="contact-success"');
+  expect(response.text).not.toContain('?subject=Amicus%20inquiry');
 });
 
 test('invalid contact fields return an accessible error and retain safe values', async () => {

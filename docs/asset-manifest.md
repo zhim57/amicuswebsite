@@ -1,4 +1,5 @@
 # Amicus Shipping — Phase 2 asset manifest
+> September 12 refinement: AS-005 now uses the existing founder portrait, resized to a 68 KB JPEG for About. The original remains in the repository. AS-002/003 remain optional and are not required for launch; current content takes priority over commissioning illustrations. See [content evidence](content-evidence.md) and the [current report](phase-2-report.md).
 Prepared: 2026-09-11. Baseline: repository commit `b77e66c`.
 
 **Recommendation: commission two supporting illustrations in Leonardo first. Keep the existing port photograph. Create a sharing card from an approved asset. Defer video and Mureka music until a short explainer has a clear use.**
@@ -13,7 +14,7 @@ AS-004 has now been designed locally and integrated for the next deployment. No 
 | AS-002 | Crew ashore connectivity | Seafarers page, below initial purchase/help actions | Order first |
 | AS-003 | Port-call preparation | Operators page, alongside inquiry preparation | Order second, matching AS-002 |
 | AS-004 | Corporate sharing card | Link previews in messaging and social platforms | Created locally; integrated, awaiting deployment |
-| AS-005 | One authentic owner/work photo | About page | Optional; a good phone photo is enough |
+| AS-005 | Existing founder portrait | About page | Integrated as a 68 KB JPEG; newer professional photo optional |
 | VD-001 | 20-second preparation explainer | Optional play button on Seafarers page | Defer until stills are approved |
 | MU-001 | Original instrumental | Soundtrack within VD-001 only | Defer; silent video remains an option |
 

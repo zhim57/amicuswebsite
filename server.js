@@ -8,9 +8,10 @@ dotenv.config({ quiet: true });
 const { site, pages, resources } = require('./src/site-data');
 const { securityHeaders, parseTrustProxy } = require('./src/server/security');
 const { createContact, contactOptions } = require('./src/server/contact');
+const { createMailer } = require('./src/server/mail');
 const { getMedia } = require('./src/media');
 
-function createApp(environment = process.env) {
+function createApp(environment = process.env, integrations = {}) {
   const app = express();
   const assetsDir = path.join(__dirname, 'public', 'assets');
   const quarantinedPhoto = path.join(assetsDir, 'images', 'ps4.jpg');
@@ -22,8 +23,6 @@ function createApp(environment = process.env) {
   app.set('trust proxy', parseTrustProxy(environment.TRUST_PROXY));
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, 'views'));
-  // Preserve the deployment setting and existing files without creating or serving storage.
-  app.locals.uploadDir = uploadDir;
   app.locals.analyticsEnabled = environment.NODE_ENV === 'production' && environment.ANALYTICS_ENABLED !== 'false';
   app.locals.media = { crewConnectivity: getMedia('crewConnectivity'), operations: getMedia('operations') };
   app.use(securityHeaders({ production: environment.NODE_ENV === 'production', analyticsOrigin: site.analyticsOrigin }));
@@ -35,7 +34,11 @@ function createApp(environment = process.env) {
     return next();
   });
 
-  const contact = createContact({ secret: environment.CONTACT_FORM_SECRET });
+  // UPLOAD_DIR is read only as a deny boundary for old deployment configurations.
+  // It is never storage used by this application.
+  const mailer = createMailer({ environment, recipient: site.email, transport: integrations.mailTransport });
+  const contact = createContact({ secret: environment.CONTACT_FORM_SECRET, sendMail: integrations.contactSendMail || mailer.sendMail });
+  app.locals.contactAvailable = mailer.configured || typeof integrations.contactSendMail === 'function';
   const canonicalOrigin = new URL(site.url).origin;
 
   function renderPage(req, res, route = req.path, extra = {}) {
@@ -58,7 +61,7 @@ function createApp(environment = process.env) {
   }
 
   // All methods are blocked before parsing bodies or touching the filesystem.
-  app.use(['/upload', '/uploads', '/files'], gone);
+  app.use(['/upload', '/uploads', '/files', '/api/upload', '/api/uploads', '/api/resources', '/resources/upload', '/rewards', '/rewards.html', '/rewards_program.html'], gone);
 
   const redirects = {
     '/index.html': '/',
@@ -68,7 +71,7 @@ function createApp(environment = process.env) {
     '/about.html': '/about',
     '/buy_sim.html': '/contact#existing-sim',
     '/buy_Dsim.html': '/contact#existing-sim',
-    '/crew_change.html': '/solutions#operations',
+    '/crew_change.html': '/solutions/crew-change',
     '/operators-agencies': '/operators',
     '/privacy_policy.html': '/privacy',
     '/Terms_and_conditions.html': '/terms',
@@ -77,7 +80,7 @@ function createApp(environment = process.env) {
     '/deleted_code/resources.html': '/resources',
     '/deleted_code/buy_sim.html': '/contact#existing-sim',
     '/deleted_code/buy_Dsim.html': '/contact#existing-sim',
-    '/deleted_code/crew_change.html': '/solutions#operations',
+    '/deleted_code/crew_change.html': '/solutions/crew-change',
     '/deleted_code/privacy_policy.html': '/privacy',
     '/deleted_code/Terms_and_conditions.html': '/terms',
   };
@@ -88,6 +91,8 @@ function createApp(environment = process.env) {
     });
   }
   app.use('/deleted_code', gone);
+
+  app.get('/favicon.ico', (req, res) => res.redirect(301, '/assets/images/favicon.svg'));
 
   // Only reviewed site assets are public. Never expose an UPLOAD_DIR nested here,
   // including an asset symlink that resolves into retained upload storage.
@@ -134,10 +139,14 @@ function createApp(environment = process.env) {
     },
     contact.rateLimit,
     express.urlencoded({ extended: false, limit: '16kb', parameterLimit: 20 }),
-    (req, res) => {
-      const form = contact.process(req, canonicalOrigin, site.email);
-      res.status(form.status);
-      return renderPage(req, res, '/contact', { form });
+    async (req, res, next) => {
+      try {
+        const form = await contact.process(req, canonicalOrigin);
+        res.status(form.status);
+        return renderPage(req, res, '/contact', { form });
+      } catch (error) {
+        return next(error);
+      }
     });
 
   for (const route of Object.keys(pages)) {

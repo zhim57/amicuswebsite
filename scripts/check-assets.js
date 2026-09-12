@@ -23,6 +23,7 @@ function main() {
   const existing = [
     { name: 'Homepage hero', file: 'public/assets/images/cs1.jpg', maxBytes: 60000 },
     { name: 'Corporate sharing card', file: 'public/assets/media/amicus-social-card-1200x630.jpg', maxBytes: 180000 },
+    { name: 'Founder portrait', file: 'public/assets/media/jivko-atanassov-680.jpg', maxBytes: 80000 },
   ];
   for (const asset of existing) {
     try {
@@ -34,7 +35,7 @@ function main() {
     }
   }
   if (errors.length) throw new Error(errors.join('\n'));
-  console.log('Assets checked: 2 existing images, ' + approved + ' approved illustration slots, ' + pending + ' pending. Human content, rights and crop review remains required for new deliveries.');
+  console.log('Assets checked: ' + existing.length + ' existing images, ' + approved + ' approved illustration slots, ' + pending + ' pending. Human content, rights and crop review remains required for new deliveries.');
 }
 
 if (require.main === module) {

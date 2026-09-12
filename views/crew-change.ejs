@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+<main id="main-content">
+  <section class="page-intro">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/solutions">Solutions</a></li><li aria-current="page">Amicus Crew Change</li></ol></nav>
+      <p class="eyebrow">Amicus Crew Change</p>
+      <h1>One journey. Several people who need the same update.</h1>
+      <p class="lead">Crew-change information can be scattered across messages, spreadsheets and individual participants. Amicus Crew Change brings the trip, people and journey updates into a shared workflow.</p>
+      <div class="inline-links"><a class="text-link" href="#how-it-works">See how it works</a><a class="text-link" href="<%= site.inquiryUrls.operations %>" data-event="operator_inquiry">Discuss use by your team</a></div>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="crew-tool-features-heading">
+    <div class="container">
+      <div class="section-heading"><div><p class="eyebrow">What the tool brings together</p><h2 id="crew-tool-features-heading">Trip details, journey stages and communication.</h2></div></div>
+      <div class="grid-three">
+        <article class="feature-card"><h3>The crew-change record</h3><p>Vessel and port details, the joining or leaving crew, and the people participating in the operation.</p></article>
+        <article class="feature-card"><h3>The travel sequence</h3><p>Journey legs and a timeline help participants follow the trip through its recorded stages.</p></article>
+        <article class="feature-card"><h3>Updates in context</h3><p>Messages and alerts sit alongside the crew change so the participating team can find the update and the journey it concerns.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section section-soft" aria-labelledby="crew-tool-audience-heading">
+    <div class="container split">
+      <div><p class="eyebrow">Who it is for</p><h2 id="crew-tool-audience-heading">Crew on the move. Coordinators ashore and aboard.</h2></div>
+      <div class="stack"><p>The application supports crew members alongside invited operators, ship officers, agents, travel agents, transport companies and drivers. Access depends on each participant's role and connection to the crew change.</p><p>Crew members can register directly. Coordination roles need an appropriate invitation from the responsible team or administrator. If you are introducing the tool to an organization, contact Amicus to discuss the workflow and access first.</p><a class="text-link" href="<%= site.inquiryUrls.operations %>" data-event="operator_inquiry">Talk about your team's crew changes</a></div>
+    </div>
+  </section>
+  <section class="section" id="how-it-works" aria-labelledby="crew-tool-flow-heading">
+    <div class="container split">
+      <div><p class="eyebrow">How it works</p><h2 id="crew-tool-flow-heading">Set up the operation, then follow the journey.</h2><p>Agree who maintains the information and who confirms each local arrangement before relying on the workflow.</p></div>
+      <ol class="numbered-list">
+        <li><h3>Join with the right access.</h3><p>Register as crew, or use your team's invitation for an operational role.</p></li>
+        <li><h3>Connect the crew change and participants.</h3><p>The coordinator records the vessel, port and crew details and connects the people involved.</p></li>
+        <li><h3>Build and review the itinerary.</h3><p>Record journey legs and check the travel sequence with the responsible participants.</p></li>
+        <li><h3>Share updates as the trip develops.</h3><p>Use the journey view and messages to keep the operation's information together. Confirm changed plans with the person responsible.</p></li>
+      </ol>
+    </div>
+  </section>
+  <section class="section section-dark" aria-labelledby="crew-tool-open-heading">
+    <div class="container split">
+      <div><p class="eyebrow">Continue to the application</p><h2 id="crew-tool-open-heading">Open Amicus Crew Change.</h2><p>The application currently runs at <strong>crew.ship-port.com</strong> in a separate tab. You will arrive at its registration page.</p><p class="small-text">Registration does not book transport or confirm port arrangements. Availability, permissions and services must be agreed with the responsible coordinator.</p></div>
+      <div><a class="button button-light" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_change_click">Open Crew Change <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>

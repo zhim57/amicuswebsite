@@ -4,43 +4,38 @@
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Solutions</li></ol></nav>
       <p class="eyebrow">Amicus solutions</p>
-      <h1>Practical tools for maritime life.</h1>
-      <p class="lead">Connectivity for the journey. Tools for the work. Find the right starting point for you or your crew.</p>
-      <div class="inline-links"><a href="#connectivity" class="text-link">Crew connectivity</a><a href="#operations" class="text-link">Crew change &amp; operations</a><a href="#tools" class="text-link">Maritime resources</a></div>
+      <h1>Connectivity for the journey. Coordination for the crew.</h1>
+      <p class="lead">Arrange mobile data in the Amicus eSIM store, discuss crew connectivity for your company, or explore the tools that support maritime work.</p>
+      <div class="inline-links"><a class="button button-primary" href="<%= site.shopUrl %>" data-event="buy_esim_click">Buy eSIM</a><a href="/operators" class="text-link">Connectivity for your crew</a></div>
     </div>
   </section>
   <section class="section" id="connectivity" aria-labelledby="connectivity-heading">
     <div class="container split">
-      <div><p class="eyebrow">01 / Crew connectivity</p><h2 id="connectivity-heading">Mobile data between ship and shore.</h2></div>
+      <div><p class="eyebrow">01 / Amicus eSIM</p><h2 id="connectivity-heading">Mobile data between ship and shore.</h2></div>
       <div class="stack">
-        <p>Explore eSIM plans for crew-change travel, international transit, port calls and shore leave. The dedicated Amicus store brings plan selection and setup guidance into one place.</p>
-        <p>Check your device, destinations, data allowance and plan validity before buying. Coverage and activation conditions depend on the plan you choose.</p>
-        <div class="inline-links"><a class="button button-primary" href="<%= site.shopUrl %>" target="_blank" rel="noopener noreferrer" data-event="buy_esim_click">Explore eSIM plans <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="/seafarers">Connectivity for seafarers</a></div>
+        <p>Find eSIM plans for international transit, crew changes, port calls and shore leave. The dedicated Amicus store handles plan selection, prices, coverage, device checks and checkout.</p>
+        <p>Check each destination, data allowance and validity before buying. Mobile service depends on the selected plan and local terrestrial networks; it does not replace onboard satellite connectivity.</p>
+        <div class="inline-links"><a class="button button-primary" href="<%= site.shopUrl %>" data-event="buy_esim_click">Explore eSIM plans</a><a class="text-link" href="/seafarers">Solutions for seafarers</a></div>
       </div>
+    </div>
+  </section>
+  <section class="section section-dark" id="crew-connectivity" aria-labelledby="business-connectivity-heading">
+    <div class="container split">
+      <div><p class="eyebrow">02 / For companies</p><h2 id="business-connectivity-heading">Prepare joining crew before they leave.</h2></div>
+      <div class="stack"><p>Operators, ship managers, manning companies and agents can discuss crew discount-code batches, travel countries and repeat rotations. Agree the arrangement, then give crew a clear purchasing and setup path.</p><p>Company payment or a different distribution process needs confirmation. Describe the workflow your team needs so we can discuss the options.</p><div class="inline-links"><a class="button button-light" href="<%= site.inquiryUrls.connectivity %>" data-event="operator_inquiry">Discuss Crew Connectivity</a><a class="text-link" href="/operators">See the crew workflow</a></div></div>
     </div>
   </section>
   <section class="section section-soft" id="operations" aria-labelledby="operations-heading">
     <div class="container split">
-      <div><p class="eyebrow">02 / Crew change &amp; operations</p><h2 id="operations-heading">A clearer starting point for crew-change planning.</h2></div>
-      <div class="stack">
-        <p>The Amicus crew-change application gives crews and maritime teams a dedicated place to begin their crew-change workflow.</p>
-        <p>Open the tool to register, or contact us with your location, timing and operational requirements to discuss how it could fit your work. Confirm local arrangements and availability with the people handling your crew change.</p>
-        <div class="inline-links"><a class="button button-primary" href="<%= site.crewUrl %>" target="_blank" rel="noopener noreferrer" data-event="crew_tool_click">Open crew-change tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="/operators">For operators &amp; agencies</a></div>
-      </div>
+      <div><p class="eyebrow">03 / Amicus Crew Change</p><h2 id="operations-heading">Give the journey a shared place.</h2></div>
+      <div class="stack"><p>Connect the crew change's vessel and port details, participants, journey stages and messages in one workflow. Learn how the application works and who it is for before registering.</p><p>Local arrangements and responsibilities must still be confirmed with the people handling the operation.</p><div class="inline-links"><a class="button button-secondary" href="<%= site.crewLandingUrl %>">Explore Amicus Crew Change</a><a class="text-link" href="<%= site.inquiryUrls.operations %>" data-event="operator_inquiry">Discuss a crew-change workflow</a></div></div>
     </div>
   </section>
   <section class="section" id="tools" aria-labelledby="tools-heading">
     <div class="container split">
-      <div><p class="eyebrow">03 / Maritime tools &amp; resources</p><h2 id="tools-heading">Useful preparation for the work ahead.</h2></div>
-      <div class="stack">
-        <p>Read focused guides on travel connectivity and choosing the right Amicus tool. Petroleum inspection practice is also available through the existing study application.</p>
-        <p>The inspection application is an independent study tool. It does not award certification or replace official training and examination materials.</p>
-        <div class="inline-links"><a class="button button-primary" href="/resources">Browse resources</a><a class="text-link" href="<%= site.inspectionUrl %>" target="_blank" rel="noopener noreferrer">Petroleum inspection practice <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
-      </div>
+      <div><p class="eyebrow">04 / Maritime knowledge</p><h2 id="tools-heading">Prepare for the work ahead.</h2></div>
+      <div class="stack"><p>Read maritime guides on connectivity and crew-change travel. The petroleum inspection study tool offers a separate place for question practice.</p><p>Study practice supports preparation; it does not award certification or replace official training, procedures or examination materials.</p><div class="inline-links"><a class="text-link" href="/resources">Browse maritime resources</a><a class="text-link" href="<%= site.inspectionLandingUrl %>">Petroleum inspection study</a></div></div>
     </div>
-  </section>
-  <section class="section section-dark">
-    <div class="container split"><div><p class="eyebrow">Talk to Amicus</p><h2>Have a recurring crew or operations need?</h2><p>Tell us what your team needs to get done, and where the current process gets difficult.</p></div><div><a class="button button-light" href="/contact" data-event="operator_inquiry">Discuss your requirements</a></div></div>
   </section>
 </main>
 <%- include('partials/footer') %>

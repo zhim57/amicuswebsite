@@ -151,7 +151,7 @@ async function main() {
       limitations: 'One sample per route on this computer. Test mode omits analytics; outside requests are blocked and listed. Browser process and server are reused, while browser contexts are fresh. No mobile hardware, mobile-network, production proxy/compression, field INP or lifetime CLS claims.',
       pages: [],
     };
-    for (const route of ['/', '/seafarers', '/contact']) {
+    for (const route of ['/', '/seafarers', '/operators', '/about', '/solutions/crew-change', '/resources', '/contact']) {
       const result = await measurePage(browser, baseURL, route);
       report.pages.push(result);
       console.log(route + ': ' + result.declaredBodyBytes + ' declared body bytes, ' + result.responseCount + ' responses, TTFB ' + result.navigationTtfbMs + ' ms, load ' + result.navigationLoadMs + ' ms, LCP ' + result.lcpMs + ' ms, observed CLS ' + result.cls + '.');
